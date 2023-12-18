@@ -44,13 +44,8 @@ session.commit()
 session.close()"""
 
 def start_ftrack_session():
-        session = ftrack_api.Session(
-            server_url=SERVER_URL,
-            api_key=API_KEY,
-            api_user=API_USER
-        )
-        
-        return session
+    session = ftrack_api.Session(server_url = SERVER_URL, api_key = API_KEY, api_user = API_USER)
+    return session
 
 def edit_task_status(task_name: str, parent_name: str, status_name: str, ftrack_project_name: str):
     
