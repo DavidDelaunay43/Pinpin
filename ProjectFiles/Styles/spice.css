@@ -1,0 +1,103 @@
+/* Style global pour l'application - Thème Piment Doux */
+QMainWindow {
+    background-color: rgb(46, 46, 46); /* Rouge foncé */
+    color: #ffffff;
+}
+
+QWidget {
+    background-color: rgb(102, 0, 0); /* Rouge sombre */
+    color: #ffffff;
+    border-radius: 0; /* Coins moins arrondis */
+}
+
+QVBoxLayout, QHBoxLayout, QGridLayout {
+    background-color: transparent;
+}
+
+QAbstractItemView, QLabel, QTreeWidget, QTreeWidgetItem, QTableWidgetItem,
+QMenu, QAction, QTabWidget, QTableWidget, QHeaderView,
+QListWidget, QListWidgetItem, QRadioButton {
+    background-color: rgb(128, 0, 0); /* Rouge moyen */
+    color: #ffffff;
+    border: 1px solid rgb(85, 85, 85);
+    border-radius: 3px; /* Coins légèrement moins arrondis */
+    padding: 5px;
+}
+
+QAbstractItemView::item:selected {
+    background-color: rgb(170, 0, 0); /* Rouge plus foncé pour la sélection */
+    color: #ffffff;
+}
+
+/* Style pour les boutons QPushButton - Thème Piment Doux */
+QPushButton {
+    background-color: rgb(102, 0, 0); /* Rouge sombre */
+    color: #ffffff;
+    border: 1px solid rgb(85, 0, 0); /* Bordure rouge foncé */
+    border-radius: 3px; /* Coins moins arrondis */
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: rgb(128, 0, 0); /* Rouge moyen au survol */
+    color: #ffffff;
+}
+
+/* Style pour les onglets du QTabWidget - Thème Piment Doux */
+QTabWidget::pane {
+    background-color: rgb(128, 0, 0); /* Rouge moyen */
+    border: 1px solid rgb(85, 0, 0); /* Bordure rouge foncé */
+    border-radius: 3px; /* Coins légèrement moins arrondis */
+}
+
+QTabWidget::tab-bar {
+    alignment: center;
+}
+
+QTabBar::tab {
+    background-color: rgb(102, 0, 0); /* Rouge sombre */
+    color: #ffffff;
+    border: 1px solid rgb(85, 0, 0); /* Bordure rouge foncé */
+    border-top-left-radius: 3px; /* Coins légèrement moins arrondis */
+    border-top-right-radius: 3px; /* Coins légèrement moins arrondis */
+    padding: 5px 10px;
+}
+
+QTabBar::tab:selected {
+    background-color: rgb(128, 0, 0); /* Rouge moyen lorsque sélectionné */
+    color: #ffffff;
+}
+
+/* Style pour les en-têtes de colonnes de QTableWidget et QTreeWidget - Thème Piment Doux */
+QHeaderView::section {
+    background-color: rgb(102, 0, 0); /* Rouge sombre */
+    color: #ffffff;
+    border: 1px solid rgb(85, 0, 0); /* Bordure rouge foncé */
+    padding: 5px;
+}
+
+/* Style pour les cases à cocher de QTreeWidgetItem - Thème Piment Doux */
+QTreeWidget::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+/* Style pour les éléments du menu contextuel - Thème Piment Doux */
+QMenu {
+    background-color: rgb(102, 0, 0); /* Rouge sombre */
+    color: #ffffff;
+}
+
+QMenu::item {
+    padding: 5px 20px;
+}
+
+QMenu::item:selected {
+    background-color: rgb(128, 0, 0); /* Rouge moyen au survol */
+}
+
+/* Style pour les boutons radio - Thème Piment Doux */
+QRadioButton {
+    background-color: transparent;
+    color: #ffffff;
+}

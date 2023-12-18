@@ -1,0 +1,389 @@
+/*------------------------------------------------------------------- global*/
+*{
+    border:none;
+    padding:0;
+    margin:0;
+    color: TERTEARY_COLOR ;
+    background-color:  MAIN_COLOR ;
+}
+
+QWidget{
+    background-color:  transparent ;
+    border-radius: 0;
+}
+
+QVBoxLayout,QHBoxLayout,QGridLayout{
+    background-color: transparent;
+}
+
+
+QLabel,QMenu,QTabWidget,QRadioButton{
+    background-color: transparent;
+    color:  TERTEARY_COLOR ;
+    border:  BORDER_SIZE  solid  MAIN_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+    padding: 5px;
+}
+
+
+
+/*------------------------------------------------------------------- QScrollBar*/
+
+
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+    background: none;
+    border-top-right-radius:  BORDER_RADIUS ;
+}
+
+QScrollBar:vertical {
+    background-color:  MAIN_COLOR ;
+    width: 15px;
+    border: 1px solid  SECONDARY_COLOR ;
+    border-top-right-radius:  BORDER_RADIUS ;
+}
+
+QScrollBar::handle:vertical {
+    background-color:  CUTE_COLOR ;
+    min-height: 20px;
+    border-radius:  BORDER_RADIUS ;
+}
+
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    background-color: transparent;
+    height: 10px;
+    border-top-right-radius:  BORDER_RADIUS ;
+}
+
+/*-------------------------------------------------------------------QTabWidget */
+QTabWidget::pane {
+    background-color:  MAIN_COLOR ;
+    border:  BORDER_SIZE  solid  MAIN_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+QTabBar::tab {
+    background-color:  SECONDARY_COLOR ;
+    color:  TERTEARY_COLOR ;
+    border:  BORDER_SIZE  solid  MAIN_COLOR ;
+    border-top-left-radius:  BORDER_RADIUS ;
+    border-top-right-radius:  BORDER_RADIUS ;
+    padding: 5px 10px;
+}
+
+QTabBar::tab:selected {
+    /*background-color:  MAIN_COLOR ;*/
+    color:  TERTEARY_COLOR ;
+    border:  BORDER_SIZE  solid  MAIN_COLOR ;
+}
+#browser_tab{
+    background-color:  MAIN_COLOR;
+    border-top-left-radius: 0px;
+    border-top-right-radius: BORDER_RADIUS;
+    border-bottom-left-radius: BORDER_RADIUS;
+    border-bottom-right-radius: BORDER_RADIUS;
+}
+#customize_tab_layout_widget{
+    background-color:  MAIN_COLOR ;
+    border-top-left-radius: 0px;
+    border-top-right-radius: BORDER_RADIUS;
+    border-bottom-left-radius: BORDER_RADIUS;
+    border-bottom-right-radius: BORDER_RADIUS;
+}
+
+
+
+/*------------------------------------------------------------------- Change the tab bar*/
+
+QTabBar::tab {
+    background-color:  SECONDARY_COLOR ;
+    padding:10px 20px  10px  20px;
+}
+
+QTabBar::tab:selected {
+    background-color:  MAIN_COLOR ;
+}
+
+QTabWidget::pane { 
+    border: 10;
+}
+
+
+
+/*  -------------------------------------------Qlist*/
+
+QListWidget{
+    background-color: SECONDARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+QListWidget::item{
+    height:15px;
+    padding:5px;
+    border: none  CUTE_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+QListWidget::item:selected{
+    background-color:  CUTE_COLOR ;
+    color:  MAIN_COLOR ;
+    padding:5px;
+}
+
+QListWidget::item:selected:hover{
+    background-color:  CUTE_COLOR ;
+    color:  MAIN_COLOR ;
+    padding:5px;
+}
+
+QListWidget::item:hover{
+    background-color: MAIN_COLOR ;
+    padding:5px;
+}
+
+/*-------------------------------------------------------------------QTreeWidget*/
+
+QTreeWidget {
+    background-color:  SECONDARY_COLOR ;
+    color:  TERTEARY_COLOR ;
+    border:  BORDER_SIZE  solid  MAIN_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+    padding: 5px;
+}
+
+QTreeView::branch:open:has-children {
+        image: url("C:/Program Files/Pinpin/ProjectFiles/Styles/downArrow_2.png");
+}
+
+QTreeView::branch:closed:has-children {
+        image: url("C:/Program Files/Pinpin/ProjectFiles/Styles/rightArrow_2.png");
+}
+
+QTreeView::item{
+    background-color:  SECONDARY_COLOR ;
+    color:  TERTEARY_COLOR ;
+    height:15px;
+    padding:5px;
+    border: none  CUTE_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+QTreeView::item:selected{
+    background-color:  CUTE_COLOR ;
+    color:  MAIN_COLOR ;
+    height:15px;
+    padding:5px;
+    border: none  CUTE_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+QTreeView::item:selected:hover{
+    background-color:  CUTE_COLOR ;
+    color:  MAIN_COLOR ;
+}
+
+QTreeView::item:hover{
+    background-color: MAIN_COLOR ;
+}
+
+/*------------------------------------------------------------------- QPushButton */
+QPushButton {
+    background-color:  SECONDARY_COLOR ;
+    color:  TERTEARY_COLOR ;
+    border:  BORDER_SIZE  solid  MAIN_COLOR ; 
+    border-radius:  BORDER_RADIUS ;
+}
+QPushButton::hover {
+    background-color:  COLOR_4 ;
+    color:  TERTEARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+QPushButton:checked  {
+    background-color:  CUTE_COLOR ;
+    color:  TERTEARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+QPushButton:checked:hover  {
+    background-color:  COLOR_4 ;
+    color:  TERTEARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+QPushButton:pressed  {
+    background-color: CUTE_COLOR ;
+    color:  TERTEARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+#dev_mode_button {
+    background-color:  MAIN_COLOR ;
+    color:  TERTEARY_COLOR ;
+    border:  BORDER_SIZE  solid  MAIN_COLOR ; 
+    border-radius:  BORDER_RADIUS ;
+}
+#dev_mode_button:hover {
+    background-color:  COLOR_4 ;
+    color:  TERTEARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+#dev_mode_button:checked:hover {
+    background-color:  COLOR_4 ;
+    color:  TERTEARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+
+/*------------------------------------------------------------------- QTreeWidget */
+QTreeWidget::indicator {
+    width: 16px;
+    height: 16px;
+}
+/*------------------------------------------------------------------- QAction */
+
+QPushButton QMenu {
+    background-color:  red ;
+    color:  TERTEARY_COLOR ;
+}
+
+QMenu::item {
+    padding: 5px 20px;
+}
+
+QMenu::item:selected {
+    background-color:  MAIN_COLOR ;
+}
+
+/*------------------------------------------------------------------- QRadioButton */
+QRadioButton {
+    background-color:  MAIN_COLOR ;
+    color:  TERTEARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+/*-------------------------------------------------------------------QMenuBar */
+ QMenuBar::item:selected {
+    background-color:  MAIN_COLOR ; /* Couleur au survol */
+    color:  TERTEARY_COLOR ;
+}
+
+ QMenuBar::item:pressed {
+    background-color:  MAIN_COLOR ; /* Couleur lorsque cliqué */
+    color:  TERTEARY_COLOR ;
+}
+
+
+/*------------------------------------------------------------------- QTableWidget */
+
+
+QTableWidget{
+    background-color: SECONDARY_COLOR ;
+    color:  TERTEARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+QTableWidget::item {
+    background-color:  MAIN_COLOR  !important; 
+    color:  TERTEARY_COLOR ;
+    border:  MAIN_COLOR  solid  MAIN_COLOR ;
+    padding: 0px;
+}
+
+QTableView::item:alternate {
+    background-color:  COLOR_4 ;
+}
+
+QTableView::item:selected {
+    background-color:  CUTE_COLOR ;
+    color:  MAIN_COLOR ;
+}
+
+QTableView::item:alternate:selected {
+    background-color:  CUTE_COLOR ;
+    color:  MAIN_COLOR ;
+}
+
+QHeaderView::up-arrow {
+    image: url(img/upArrow.png);
+    padding-right: 12px;
+    width: 8px;
+}
+
+QHeaderView{
+    background-color:  SECONDARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+QHeaderView::section{
+    background-color:  SECONDARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+    border-right: none;
+    border-left: none;
+    border-top: none;
+    font-weight: bold;
+}
+
+
+
+/*------------------------------------------------------------------- other */
+
+#_left_splitter{
+    background-color:  MAIN_COLOR ;
+}
+
+#user_label,#user_icon_label{
+    background-color:  MAIN_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+#themes_layout_widget{
+    background-color:  MAIN_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+#file_widget{
+    background-color:  MAIN_COLOR ;
+    padding-right: 0px;
+    border-radius:  BORDER_RADIUS ;
+}
+
+
+
+#dev_mode_layout_widget,#main_color_widget_layout,#secondary_color_widget_layout,
+#terteary_color_widget_layout,#color_4_widget_layout,#cute_color_widget_layout,
+#project_path_widget_layout,#project_layout_widget ,
+#maya_layout_main_pref_widget,#houdini_layout_main_pref_widget,#blender_layout_main_pref_widget
+,#krita_layout_main_pref_widget
+,#photoshop_layout_main_pref_widget
+,#davinci_layout_main_pref_widget
+,#nuke_layout_main_pref_widget
+,#zbrush_layout_main_pref_widget
+,#resolve_layout_main_pref_widget{
+    border-radius:  BORDER_RADIUS ;
+    background-color:  SECONDARY_COLOR ;
+}
+
+QLineEdit{
+    background-color: MAIN_COLOR;
+    border-radius:  BORDER_RADIUS ;
+    padding-left: 10px;
+}
+QComboBox{
+    background-color: MAIN_COLOR;
+    border-radius:  BORDER_RADIUS ;
+    padding-left: 10px;
+}
+
+#apply_button{
+    background-color:  MAIN_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}
+#apply_button:hover{
+    background-color:  COLOR_4 ;
+    border-radius:  BORDER_RADIUS ;
+}
+
+#dev_mode_button:checked,
+#checkable_button:checked{
+    background-color:  CUTE_COLOR ;
+    color:  SECONDARY_COLOR ;
+    border-radius:  BORDER_RADIUS ;
+}

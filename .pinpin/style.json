@@ -1,0 +1,10 @@
+{
+    "current_style": "dark.css",
+    "styles": [
+        "Combinear.qss",
+        "prism.qss",
+        "dark.css",
+        "spice.css",
+        "none"
+    ]
+}

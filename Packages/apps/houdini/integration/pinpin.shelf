@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<shelfDocument>
+  <!-- This file contains definitions of shelves, toolbars, and tools.
+ It should not be hand-edited when it is being used by the application.
+ Note, that two definitions of the same element are not allowed in
+ a single file. -->
+
+  <toolshelf name="pinpin" label="Pinpin">
+    <memberTool name="pinpin"/>
+    <memberTool name="screenshot"/>
+    <memberTool name="increment"/>
+  </toolshelf>
+
+  <tool name="pinpin" label="Pinpin" icon="C:/Program Files/Pinpin/ProjectFiles/Icons/pinpin_icon.png">
+    <script scriptType="python"><![CDATA[from sys import path
+path.append('C:/Program Files/Pinpin')
+from Packages.apps.houdini.ui.houdini_class import HoudiniPinpin
+HoudiniPinpin()]]></script>
+  </tool>
+
+  <tool name="screenshot" label="Screenshot" icon="C:/Program Files/Pinpin/ProjectFiles/Icons/thumbnail_icon.png">
+    <script scriptType="python"><![CDATA[from sys import path
+path.append('C:/Program Files/Pinpin')
+from Packages.apps.houdini.funcs.save_thumbnail import save_thumbnail
+save_thumbnail()]]></script>
+  </tool>
+
+  <tool name="increment" label="Increment" icon="C:/Program Files/Pinpin/ProjectFiles/Icons/save_as.png">
+    <script scriptType="python"><![CDATA[from sys import path
+path.append('C:/Program Files/Pinpin')
+from Packages.apps.houdini.ui.dialogs import EditDialog
+EditDialog()]]></script>
+  </tool>
+
+  <shelfSetEdit name="shelf_set_1" fileLocation="C:/PROGRA~1/SIDEEF~1/HOUDIN~1.640/houdini/toolbar/ShelfDefinitions.shelf">
+    <addMemberToolshelf name="pinpin" inPosition="15"/>
+  </shelfSetEdit>
+</shelfDocument>

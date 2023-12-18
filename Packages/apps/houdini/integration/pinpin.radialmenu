@@ -1,0 +1,28 @@
+{
+	"fileversion":"19.5.640",
+	"name":"pinpin",
+	"categories":"Standard",
+	"pane":"scene",
+	"label":"Pinpin",
+	"type":"submenu",
+	"items":{
+		"0":{
+			"label":"Increment",
+			"type":"script_action",
+			"icon":"C:/Program Files/Pinpin/ProjectFiles/Icons/save_as.png",
+			"script":"radialmenu.runShelfTool(kwargs, 'increment_edit')"
+		},
+		"1":{
+			"label":"Pinpin",
+			"type":"script_action",
+			"icon":"C:/Program Files/Pinpin/ProjectFiles/Icons/pinpin_icon.png",
+			"script":"radialmenu.runShelfTool(kwargs, 'pinpin')"
+		},
+		"7":{
+			"label":"Screenshot",
+			"type":"script_action",
+			"icon":"C:/Program Files/Pinpin/ProjectFiles/Icons/thumbnail_icon.png",
+			"script":"radialmenu.runShelfTool(kwargs, 'screenshot')"
+		}
+	}
+}

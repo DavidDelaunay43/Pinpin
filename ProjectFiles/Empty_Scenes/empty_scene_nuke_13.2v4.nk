@@ -1,0 +1,12 @@
+set cut_paste_input [stack 0]
+version 13.2 v4
+push $cut_paste_input
+Viewer {
+ frame 1
+ frame_range 1-100
+ monitorOutOutputTransform rec709
+ name Viewer1
+ selected true
+ xpos -40
+ ypos -9
+}

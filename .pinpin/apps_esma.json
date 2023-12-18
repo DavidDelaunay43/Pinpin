@@ -1,0 +1,13 @@
+{"blender": {"path": "C:/Program Files/Blender Foundation/Blender 3.6/blender.exe", "pref": ""}, 
+"fbxreview": {"path" :"C:/Program Files/Autodesk/FBX Review/fbxreview.exe", "pref": ""},
+"it": {"path" :"C:/Program Files/Pixar/RenderManProServer-25.2/bin/it.exe", "pref": ""},
+"krita": {"path": "C:/Program Files/Krita (x64)/bin/krita.exe", "pref": ""}, 
+"houdini": {"path": "C:/Program Files/Side Effects Software/Houdini 19.5.640/bin/houdini.exe", "pref": ""}, 
+"maya": {"path": "C:/Program Files/Autodesk/Maya2023/bin/maya.exe", "pref": ""}, 
+"nuke": {"path": "C:/Program Files/Nuke13.2v4/Nuke13.2.exe", "pref": ""}, 
+"photoshop": {"path": "C:/Program Files/Adobe/Adobe Photoshop 2023/Photoshop.exe", "pref": ""}, 
+"resolve": {"path": "C:/Program Files/Blackmagic Design/DaVinci Resolve/Resolve.exe", "pref": ""},
+"substance_designer": {"path": "C:/Program Files/Adobe/Adobe Substance 3D Designer/Adobe Substance 3D Designer.exe", "pref": ""},
+"substance_painter": {"path": "C:/Program Files/Adobe/Adobe Substance 3D Painter/Adobe Substance 3D Painter.exe", "pref": ""},
+"usdview": {"path": "", "pref": ""},
+"zbrush": {"path": "C:/Program Files/Pixologic/ZBrush 2022 FL/ZBrush.exe", "pref": ""}}

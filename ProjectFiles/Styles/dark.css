@@ -1,0 +1,136 @@
+/* Style global pour l'application */
+QMainWindow {
+    background-color: rgb(46, 46, 46);
+    color: #ffffff;
+}
+
+QWidget {
+    background-color: rgb(68, 68, 68);
+    color: #ffffff;
+    border-radius: 0; /* Coins moins arrondis */
+}
+
+QVBoxLayout, QHBoxLayout, QGridLayout {
+    background-color: transparent;
+}
+
+QAbstractItemView, QLabel, QTreeWidget, QTreeWidgetItem, QTableWidgetItem,
+QMenu, QAction, QTabWidget, QTableWidget, QHeaderView, QRadioButton {
+    background-color: rgb(49, 49, 49);
+    color: #ffffff;
+    border: 1px solid rgb(85, 85, 85);
+    border-radius: 3px; /* Coins légèrement moins arrondis */
+    padding: 5px;
+}
+
+QAbstractItemView::item:selected {
+    /*background-color: rgb(68, 125, 231);*/
+    color: #ffffff;
+    border: 2px solid rgb(68, 125, 231);
+}
+
+/* Style pour les boutons QPushButton */
+QPushButton {
+    background-color: rgb(85, 85, 85); /* Couleur légèrement plus claire */
+    color: #ffffff;
+    border: 1px solid rgb(102, 102, 102); /* Bordure légèrement plus foncée */
+    border-radius: 3px; /* Coins moins arrondis */
+    padding: 5px;
+}
+
+QPushButton:hover {
+    background-color: rgb(68, 125, 231); /* Couleur au survol */
+    color: #ffffff;
+}
+
+/* Style pour les onglets du QTabWidget */
+QTabWidget::pane {
+    background-color: rgb(68, 68, 68);
+    border: 1px solid rgb(85, 85, 85);
+    border-radius: 3px; /* Coins légèrement moins arrondis */
+}
+/*
+QTabWidget::tab-bar {
+    alignment: center;
+}*/
+
+QTabBar::tab {
+    background-color: rgb(68, 68, 68);
+    color: #ffffff;
+    border: 1px solid rgb(85, 85, 85);
+    border-top-left-radius: 3px; /* Coins légèrement moins arrondis */
+    border-top-right-radius: 3px; /* Coins légèrement moins arrondis */
+    padding: 5px 10px;
+}
+
+QTabBar::tab:selected {
+    /*background-color: rgb(68, 125, 231);*/
+    color: #ffffff;
+    border: 2px solid rgb(68, 125, 231);
+}
+
+/* Style pour les en-têtes de colonnes de QTableWidget et QTreeWidget */
+QHeaderView::section {
+    background-color: rgb(84, 84, 84);
+    color: #ffffff;
+    border: 1px solid rgb(106, 106, 106);
+    padding: 3px;
+}
+
+/* Style pour les cases à cocher de QTreeWidgetItem */
+QTreeWidget::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+/* Style pour les éléments du menu contextuel */
+QMenu {
+    background-color: rgb(68, 68, 68);
+    color: #ffffff;
+}
+
+QMenu::item {
+    padding: 5px 20px;
+}
+
+QMenu::item:selected {
+    background-color: rgb(68, 125, 231);
+}
+
+/* Style pour les boutons radio */
+QRadioButton {
+    background-color: transparent;
+    color: #ffffff;
+}
+
+/* Style pour les QPushButton et QAction au survol */
+QPushButton:hover, QMenuBar::item:selected {
+    background-color: rgb(47, 73, 94); /* Couleur au survol */
+    color: #ffffff;
+}
+
+/* Style pour les QPushButton et QAction lorsqu'ils sont cliqués */
+QPushButton:pressed, QMenuBar::item:pressed {
+    background-color: rgb(68, 125, 231); /* Couleur lorsque cliqué */
+    color: #ffffff;
+}
+
+QTableWidget::item {
+    background-color: rgba(33, 33, 33, 0.956) !important; /* Force le style */
+    color: #ffffff;
+    border: 1px solid rgb(85, 85, 85);
+    border-radius: 0px; /* Coins légèrement moins arrondis */
+    padding: 5px;
+}
+/*
+QListWidget:hover {
+    border: 2px solid rgb(68, 125, 231);
+}
+
+QTreeWidget:hover {
+    border: 2px solid rgb(68, 125, 231);
+}
+
+QTableWidget:hover {
+    border: 2px solid rgb(68, 125, 231);
+}*/

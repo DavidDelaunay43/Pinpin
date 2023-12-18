@@ -1,0 +1,198 @@
+
+    menuItem
+        -label "Pinpin" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.maya_class import MayaPinpin\");\npython(\"MayaPinpin()\");" 
+        -optionBox 0
+        -enable 1
+        -visible 1
+        -data 0
+        -radialPosition "N" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "pinpin_icon.png" 
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem6;
+
+    menuItem
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -optionBox 1
+        -enable 1
+        -visible 0
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem7;
+
+    menuItem
+        -label "Publish" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import PublishDialog\");\npython(\"PublishDialog()\");\n" 
+        -optionBox 0
+        -enable 1
+        -visible 1
+        -data 0
+        -radialPosition "NW" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "publish_icon.png" 
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem8;
+
+    menuItem
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -optionBox 1
+        -enable 1
+        -visible 0
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem9;
+
+    menuItem
+        -label "Usd Publish" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import PublishDialog\");\npython(\"PublishDialog(usd = True)\");" 
+        -optionBox 0
+        -enable 1
+        -visible 1
+        -data 0
+        -radialPosition "W" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "C:/Users/d.delaunay/Documents/__Esma_pipeline/Pinpin/ProjectFiles/Icons/usd_icon.ico" 
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem10;
+
+    menuItem
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -optionBox 1
+        -enable 1
+        -visible 0
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem11;
+
+    menuItem
+        -label "Increment Edit" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import EditDialog\");\npython(\"EditDialog()\");" 
+        -optionBox 0
+        -enable 1
+        -visible 1
+        -data 0
+        -radialPosition "NE" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "save_as_icon.png" 
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem12;
+
+    menuItem
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -optionBox 1
+        -enable 1
+        -visible 0
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem13;
+
+    menuItem
+        -label "Screenshot" 
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.funcs.playblast import update_thumbnail\");\npython(\"update_thumbnail()\");" 
+        -optionBox 0
+        -enable 1
+        -visible 1
+        -data 0
+        -radialPosition "E" 
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 1
+        -image "thumbnail_icon.png" 
+        -echoCommand 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem14;
+
+    menuItem
+        -divider 0
+        -subMenu 0
+        -tearOff 0
+        -optionBox 1
+        -enable 1
+        -visible 0
+        -data 0
+        -allowOptionBoxes 1
+        -postMenuCommandOnce 0
+        -enableCommandRepeat 0
+        -italicized 0
+        -boldFont 0
+        -sourceType "mel" 
+        -longDivider 1
+        menuEditorMenuItem15;
+
+setParent -m ..;
+
