@@ -1,4 +1,5 @@
 import ftrack_api
+from Packages.apps.ftrack_app.constants import *
 
 """SERVER_URL = 'https://esma-montpellier.ftrackapp.com/'
 API_KEY = 'MmMyM2RkMDMtNDcyMC00MjFkLWJlN2ItOWE3NDUyODAxZDNiOjpiYzQ4NzkyOC1kMDc0LTQ3ZDUtYjA4NC1kOThlNGE4NGI2ODk'
@@ -43,10 +44,6 @@ session.commit()
 session.close()"""
 
 def start_ftrack_session():
-        SERVER_URL = 'https://esma-montpellier.ftrackapp.com/'
-        API_KEY = 'MmMyM2RkMDMtNDcyMC00MjFkLWJlN2ItOWE3NDUyODAxZDNiOjpiYzQ4NzkyOC1kMDc0LTQ3ZDUtYjA4NC1kOThlNGE4NGI2ODk'
-        API_USER = 'D.DELAUNAY@mtp.ecolescreatives.com'
-
         session = ftrack_api.Session(
             server_url=SERVER_URL,
             api_key=API_KEY,
@@ -69,4 +66,4 @@ def edit_task_status(task_name: str, parent_name: str, status_name: str, ftrack_
     session.commit()
     session.close()
     
-edit_task_status('rig_body', 'Petru', 'WIP', 'coup_de_soleil')
+edit_task_status('rig_body', 'Chauve souris', 'WIP', 'coup_de_soleil')
