@@ -83,7 +83,6 @@ EXTS = {
     ".uasset": "unreal",
     ".zpr": "zbrush",
     ".ztl": "zbrush",
-    ".zpr": "zbrush",
     ".spp": "substance_painter",
     ".sbs": "substance_designer",
     ".sbsar": "substance_designer",
