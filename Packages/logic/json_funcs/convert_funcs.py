@@ -27,4 +27,3 @@ def dict_to_json(dictionary: dict, json_file_path: str):
     
     with open(json_file_path, 'w', encoding = 'utf-8') as file:
         json.dump(dictionary, file, indent = 4, ensure_ascii = False)
-    
