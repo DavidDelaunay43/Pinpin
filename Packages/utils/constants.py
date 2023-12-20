@@ -56,15 +56,16 @@ REVERSE_SORT_FILES = get_current(UI_PREFS_JSON_PATH, 'reverse_sort_file')
 
 #STYLE_JSON_PATH = os.path.join(PREFS, "style.json")
 
-PROJECT_JSON_PATH = os.path.join(PREFS, f"project_esma.json")
-APPS_JSON_PATH = os.path.join(PREFS, f'apps_esma.json')
-DEV_MODE_JSON = os.path.join(PREFS, f'dev_mode.json')
+PROJECT_JSON_PATH = os.path.join(PREFS, "project_esma.json")
+APPS_JSON_PATH = os.path.join(PREFS, 'apps_esma.json')
+DEV_MODE_JSON = os.path.join(PREFS, 'dev_mode.json')
 RECENT_FILES_JSON = os.path.join(PREFS, 'recent_files.json')
-
+SPECIAL_UI_JSON = os.path.join(PREFS, 'special_ui.json')
 # Json files
 #STYLES_LIST = get_list(STYLE_JSON_PATH, 'styles')
 CURRENT_STYLE = os.path.join(STYLE_PATH, 'biiiped.qss')
 PALETTE_PATH = os.path.join(STYLE_PATH, 'palette_1.json')
+SPECIAL_STYLE = os.path.join(r'\\GANDALF\3d4_23_24\_partage\pinpin\qs', 'biiiped.qss')
 
 EXTS = {
     ".abc": "fbxreview",
@@ -102,6 +103,7 @@ _CURRENT_PROJECT = get_current(PROJECT_JSON_PATH, 'current_project')
 CURRENT_PROJECT_NAME, CURRENT_PROJECT_PATH = next(iter(_CURRENT_PROJECT.items()))
 CURRENT_PROJECT_DATA_FOLDER = os.path.join(CURRENT_PROJECT_PATH, '.pinpin_data'.lower())
 CURRENT_PROJECT_PREVIEW_FOLDER = os.path.join(CURRENT_PROJECT_DATA_FOLDER, 'preview'.lower())
+CURRENT_PROJECT_ICON_FOLDER = os.path.join(CURRENT_PROJECT_DATA_FOLDER, 'icons'.lower())
 FILE_DATA_JSON_PATH = os.path.join(CURRENT_PROJECT_DATA_FOLDER, 'file_data.json')
 PREFIX_JSON_PATH = os.path.join(CURRENT_PROJECT_DATA_FOLDER, 'prefix.json')
 PREFIX = get_current(PREFIX_JSON_PATH, 'prefix')

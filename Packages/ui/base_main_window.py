@@ -1,11 +1,11 @@
 import os
-from PySide2.QtCore import Qt
+from PySide2.QtCore import Qt, QSize
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import (QTabWidget,QWidget,QVBoxLayout,QSizePolicy, QLineEdit,
                                QHBoxLayout,QAction,QMenu,QSplitter,QDialog,QTreeWidgetItem,
-                               QListWidgetItem,QPushButton,QButtonGroup)
+                               QListWidgetItem,QPushButton,QButtonGroup, QTableWidgetItem, QListWidget)
 
-from Packages.utils.constants import ICON_PATH, PROJECT_JSON_PATH
+from Packages.utils.constants import ICON_PATH, PROJECT_JSON_PATH, CURRENT_PROJECT_ICON_FOLDER
 from Packages.ui.dialogs import ProjectDialog, TextEntryDialog, CreateSoftProjectDialog
 from Packages.ui.widgets import (StatusBar, CustomListWidget, CustomTableWidget, CustomListWidgetItem, 
                                  CustomMenuBar, CustomMainWindow, CustomTreeWidget
@@ -302,7 +302,7 @@ class BaseMainWindow(CustomMainWindow):
 
         return tab_text
 
-    def _on_tab_changed(self, index):
+    def _on_tab_changed(self, index: int):
         
         tab_text = self.sender().tabText(index)
         
@@ -333,7 +333,7 @@ class BaseMainWindow(CustomMainWindow):
     def _get_active_radio_text(self):
         return next((value.text() for value in self.checkable_buttons if value.isChecked()), None)
     
-    def _click_tree_item_by_text(self, tree_widget: CustomTreeWidget, text_to_find: str, parent_item=None):
+    def _click_tree_item_by_text(self, tree_widget: CustomTreeWidget, text_to_find: str, parent_item: QTreeWidgetItem = None):
         if parent_item is None:
             # Si parent_item n'est pas spécifié, commencez la recherche depuis les éléments de niveau supérieur
             root_items = [tree_widget.topLevelItem(i) for i in range(tree_widget.topLevelItemCount())]
@@ -438,6 +438,7 @@ class BaseMainWindow(CustomMainWindow):
                     return
 
                 root = QTreeWidgetItem(self.tree_browser)
+                self.set_qtree_item_icon(root, directory)
                 root.setText(0, directory)
                 root.setFlags(root.flags() & ~Qt.ItemIsSelectable)
                 
@@ -447,6 +448,8 @@ class BaseMainWindow(CustomMainWindow):
                     #if not os.path.isdir(sub_directory_path): return #ATTENTION ici j'ai du caché une ligne, car sinon le if return car il trouve des fichier dans le .data
                     item = QTreeWidgetItem(root)
                     item.setText(0, sub_directory.capitalize())
+                    item.setSizeHint(0, QSize(40, 40))
+                    self.set_qtree_item_icon(item, sub_directory.capitalize())
         else:
             # The directory path does not exist, handle the error or take appropriate action
             logger.error(f"The path '{self.current_directory}' does not exist.")
@@ -677,13 +680,24 @@ class BaseMainWindow(CustomMainWindow):
         
         icon = QIcon(icon_file_path)
         widget.setIcon(icon)
+         
+    def set_qtree_item_icon(self, item: QTreeWidgetItem, item_name: str):
+        '''ajoute un icon au Qtree item si il  a une image au bon nom dans le .pinpin_data
+        '''
+        
+        item_name_file=f"{item_name}.png"
+        icons = os.listdir(CURRENT_PROJECT_ICON_FOLDER)
+        
+        if item_name_file in icons:
+            icon=QIcon(os.path.join(CURRENT_PROJECT_ICON_FOLDER, item_name_file))
+            item.setIcon(0,icon)
 
     def show_files(self):
         logger.info('Show files - - - - - - - - - - - - - - - - - - - - - - - -')
         self._browser_file_table.update_file_items(self.current_directory)
         logger.info('End show files - - - - - - - - - - - - - - - - - - - - - - - -')
         
-    def _add_file_to_table(self, filename):
+    def _add_file_to_table(self, filename: str):
         
         filepath = os.path.join(self.current_directory, filename)
         
@@ -712,7 +726,7 @@ class BaseMainWindow(CustomMainWindow):
         '''
         print('file image clicked')
     
-    def _on_file_item_clicked(self, item):
+    def _on_file_item_clicked(self, item: QTableWidgetItem):
         
         logger.info('file item clicked')
         
@@ -724,7 +738,7 @@ class BaseMainWindow(CustomMainWindow):
         else:
             self.status_bar.update(file_path)
         
-    def _select_item_from_text(self, parent_widget, text = ""):
+    def _select_item_from_text(self, parent_widget: QListWidget, text = ""):
         
         dico = {
             self.list_01: self.populate_list_02,

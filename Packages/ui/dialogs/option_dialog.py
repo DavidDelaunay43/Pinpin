@@ -1,17 +1,18 @@
-
+import json
+import os
 from PySide2.QtCore import Qt, QSize
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import (QDialog, QSizePolicy, QLabel, QPushButton, QSpacerItem, QLineEdit, 
                                QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLayout, QCheckBox,
                                QColorDialog,QScrollArea,QTabWidget, QGridLayout)
-import json
-import os
+from Packages.utils.funcs import (read_json_file, add_text_to_line_edit, set_style_sheet,
+                                  get_current, change_current, write_json_file) 
+from Packages.utils.constants import (CURRENT_STYLE, STYLE_PATH, PALETTE_PATH, PROJECT_JSON_PATH,
+                                      ICON_PATH, PROJECT_JSON_PATH, DEV_MODE_JSON, APPS_JSON_PATH,
+                                      UI_PREFS_JSON_PATH, SPECIAL_UI_JSON)
+from Packages.utils.logger import init_logger
 
-from Packages.utils.funcs import read_json_file, add_text_to_line_edit, set_style_sheet,get_current,change_current,write_json_file
-from Packages.utils.constants import (CURRENT_STYLE ,STYLE_PATH,PALETTE_PATH,PROJECT_JSON_PATH,ICON_PATH,PROJECT_JSON_PATH,DEV_MODE_JSON,APPS_JSON_PATH,
-                                      UI_PREFS_JSON_PATH
-)
-
+logger = init_logger(__file__)
 
 class OptionDialog(QDialog):
     def __init__(self,parent=None):
@@ -160,6 +161,29 @@ class OptionDialog(QDialog):
 
             return dev_mode_layout_widget
         
+        def create_special_ui_row():
+            self.special_ui_button = QPushButton()
+            self.special_ui_button.setObjectName("special_ui_button")
+            self.special_ui_button.setText("special ui :]")
+            self.special_ui_button.setCheckable(True)
+            self.special_ui_button.setMaximumSize(QSize(1000, 30))
+            self.special_ui_button.setMinimumSize(QSize(10, 30))
+   
+            special_ui_state=self.get_special_ui_state()
+            if special_ui_state == 1:
+                self.special_ui_button.setChecked(True)
+            else :
+                self.special_ui_button.setChecked(False)
+
+
+            special_ui_layout_widget = QWidget()
+            special_ui_layout_widget.setObjectName("special_ui_layout_widget")
+            special_ui_layout = QHBoxLayout(special_ui_layout_widget)
+            special_ui_layout.setObjectName("special_ui_layout")
+            special_ui_layout.addWidget(self.special_ui_button)
+
+
+            return special_ui_layout_widget
 
         def create_theme_row():
 
@@ -193,6 +217,7 @@ class OptionDialog(QDialog):
         self.theme_row=create_theme_row()
         self.project_row=create_project_row()
         self.dev_mode_row=create_dev_mode_row()
+        self.special_ui_row=create_special_ui_row()
 
         self.maya_pref_row,self.maya_path_line_edit,self.maya_pref_line_edit=create_variable_row("maya","pref")
         self.houdini_pref_row,self.houdini_path_line_edit,self.houdini_pref_line_edit=create_variable_row("houdini","pref")
@@ -306,6 +331,7 @@ class OptionDialog(QDialog):
         self.other_tab_scroll_area_layout.addWidget(self.restart_label)
         self.other_tab_scroll_area_layout.addWidget(self.project_row)
         self.other_tab_scroll_area_layout.addWidget(self.dev_mode_row)
+        self.other_tab_scroll_area_layout.addWidget(self.special_ui_row)
 
         self.other_tab_verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Minimum, QSizePolicy.Expanding)
         self.other_tab_scroll_area_layout.addItem(self.other_tab_verticalSpacer)
@@ -320,6 +346,7 @@ class OptionDialog(QDialog):
         self.dark_theme_button.clicked.connect(self.set_theme)
         self.light_theme_button.clicked.connect(self.set_theme)
         self.dev_mode_button.clicked.connect(self.change_dev_mode_state)
+        self.special_ui_button.clicked.connect(self.change_ui_special_state)
         self.project_combo_box.currentIndexChanged.connect(self.update_current_project)
 
         self.blender_path_line_edit.textChanged.connect(self.write_apps)
@@ -447,6 +474,35 @@ class OptionDialog(QDialog):
         write_json_file(PALETTE_PATH,"TERTEARY_COLOR",self.terteary_color_line_edit.text())
         write_json_file(PALETTE_PATH,"CUTE_COLOR",self.cute_color_line_edit.text())
         write_json_file(PALETTE_PATH,"COLOR_4",self.color_4_line_edit.text())
+        
+    def change_ui_special_state(self):
+
+        with open(SPECIAL_UI_JSON, 'r') as file:
+            special_ui_data = json.load(file)
+        old_special_ui=self.get_special_ui_state()
+
+        if old_special_ui == 0:
+            print("activaing special ui")
+            
+            special_ui_data["special_ui"]=1
+        else :
+            print("desactivating special ui")
+            special_ui_data["special_ui"]=0
+       
+        with open(SPECIAL_UI_JSON, 'w') as file:
+            json.dump(special_ui_data, file, indent=4)
+        new_special_ui=self.get_special_ui_state()
+
+        if new_special_ui == 0:
+            logger.info("special ui is disabled.")
+        else :
+            logger.info("special ui is enabled.")
+            
+    def get_special_ui_state(self):
+        with open(SPECIAL_UI_JSON, 'r') as file:
+            special_ui_data = json.load(file)
+        special_ui=special_ui_data["special_ui"]
+        return special_ui
 
     def write_apps(self):
 
