@@ -16,7 +16,7 @@ def json_to_dict(json_file_path: str) -> dict:
         
     return dico
 
-def dict_to_json(dictionary: dict, json_file_path: str):
+def dict_to_json(dictionary: dict, json_file_path: str) -> None:
     '''
     Convertit un dictionnaire Python en un fichier JSON.
 
