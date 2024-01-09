@@ -220,7 +220,11 @@ def clean_directory(path: str, dir: str):
     """
     """
     
-    return path if dir not in path else path.split(dir)[0]
+    if dir not in path:
+        return path
+    
+    else:
+        return path.split(dir)[0]
 
 def _get_files_by_extension(directory: str):
     '''
