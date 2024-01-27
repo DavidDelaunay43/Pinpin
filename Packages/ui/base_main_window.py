@@ -428,6 +428,8 @@ class BaseMainWindow(CustomMainWindow):
 
         # check if the path exist
         if os.path.exists(self.current_directory):
+
+            print(os.listdir(self.current_directory))
             
             for directory in os.listdir(self.current_directory):
 
@@ -435,7 +437,7 @@ class BaseMainWindow(CustomMainWindow):
                 if not os.path.isdir(os.path.join(self.current_directory, directory)): 
                     #print(os.path.join(self.current_directory, directory)+" is not a dir")#ATTENTION iici j'ai remplacé directory par os.path.join(self.current_directory, directory)
                     logger.warning(f'{os.path.join(self.current_directory, directory)} is not a directory.')
-                    return
+                    continue
 
                 root = QTreeWidgetItem(self.tree_browser)
                 self.set_qtree_item_icon(root, directory)
