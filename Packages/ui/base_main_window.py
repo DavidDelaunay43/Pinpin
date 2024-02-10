@@ -292,7 +292,10 @@ class BaseMainWindow(CustomMainWindow):
         for radio_btn in self.checkable_buttons:
             if text == radio_btn.text():
                 radio_btn.setChecked(True)
-                self.on_radio_button_clicked()
+                try:
+                    self.on_radio_button_clicked()
+                except TypeError:
+                    return
         
     # SLOTS
     def _get_active_tab_text(self):
