@@ -219,6 +219,9 @@ def return_increment_publish_name(file_name: str, publish_list: list):
 def clean_directory(path: str, dir: str):
     """
     """
+    print('Clean Directory')
+    print(f'Path : {path}')
+    print(f'Path : {path}')
     
     if dir not in path:
         return path

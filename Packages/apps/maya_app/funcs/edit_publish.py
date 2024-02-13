@@ -7,6 +7,7 @@ from Packages.logic.filefunc import return_increment_edit
 from Packages.logic.filefunc.publish_funcs import find_publish_directory
 from Packages.logic.filefunc.get_funcs import return_publish_name, get_files, return_increment_publish_name
 from Packages.logic.json_funcs import set_recent_file
+from Packages.apps.maya_app.funcs.debug_funcs import delete_colon, list_shading_nodes
 
 def increment_edit():
     '''
@@ -74,3 +75,7 @@ def publish():
     # 4
     cmds.file(publish_file_directory, force = True, options = "v=0", type = "mayaAscii", exportSelected = True, preserveReferences = False)
     create_thumbnail(publish_file_name, increment = True)
+    
+    # 5 delete colon
+    shading_nodes = list_shading_nodes()
+    delete_colon(publish_file_directory, shading_nodes)

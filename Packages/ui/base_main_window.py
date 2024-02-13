@@ -295,7 +295,7 @@ class BaseMainWindow(CustomMainWindow):
                 try:
                     self.on_radio_button_clicked()
                 except TypeError:
-                    return
+                    continue
         
     # SLOTS
     def _get_active_tab_text(self):
@@ -550,16 +550,20 @@ class BaseMainWindow(CustomMainWindow):
         
         DIR = item.text().lower()
         LIST = item.listWidget()
-        logger.info(f"{self.current_directory} 00")
+        
         for i in range(LIST.count()):
             ITEM = LIST.item(i).text().lower()
-            if f'\\{ITEM}' in self.current_directory:
-                self.current_directory = clean_directory(self.current_directory, ITEM)
-                break
+            if '\\cageot' in self.current_directory:
+                if f'\\{ITEM}' in self.current_directory:
+                    self.current_directory = clean_directory(self.current_directory, ITEM)
+                    break
+                
+            else:
+                if ITEM in self.current_directory:
+                    self.current_directory = clean_directory(self.current_directory, ITEM)
+                    break
         
-        logger.info(f"{self.current_directory} 01")
         self.current_directory = os.path.join(self.current_directory, DIR)
-        logger.info(f"{self.current_directory} 02")
         self.status_bar.update(self.current_directory)
 
     # DIALOGS

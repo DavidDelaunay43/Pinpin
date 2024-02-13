@@ -174,6 +174,15 @@ def init_pinpin():
 
     if not os.path.exists(PREFS):
         update_pinpin_prefs()
+        
+    prefs_files = (
+        'special_ui.json',
+        'ui_prefs.json'
+    )
+    
+    for file in prefs_files:
+        if not os.path.exists(os.path.join(PREFS, file)):
+            shutil.copy(os.path.join(PREF_SOURCE_PATH, file), PREFS)
 
     existing_version = check_existing_version()
     new_version = check_new_version()
