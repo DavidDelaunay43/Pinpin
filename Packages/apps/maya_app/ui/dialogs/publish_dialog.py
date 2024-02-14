@@ -1,7 +1,7 @@
 import os
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QDialog, QLabel, QVBoxLayout
+from PySide2.QtWidgets import QDialog, QLabel, QVBoxLayout, QCheckBox
 from Packages.apps.maya_app.ui.maya_main_window import maya_main_window
 from Packages.apps.maya_app.funcs.edit_publish import publish
 from Packages.apps.maya_app.funcs.usd import publish_usd_asset
@@ -15,7 +15,7 @@ from maya import cmds
 class PublishDialog(QDialog):
 
     def __init__(self, parent = maya_main_window(), file_path = cmds.file(query = True, sceneName = True), usd: bool = False) -> None:
-        super().__init__(parent)
+        super(PublishDialog, self).__init__(parent)
         
         self.USD = usd
         if self.USD:
@@ -38,13 +38,13 @@ class PublishDialog(QDialog):
             cmds.error('Nothing is selected.')
 
     def publish_as(self):
-        
+
         if self.USD:
             publish_usd_asset()
             update_file_data(forward_slash(return_publish_name(cmds.file(query = True, sceneName = True)), usd = True))
             
         else:
-            publish()
+            publish(self.cb_delete_colon.isChecked())
             update_file_data(forward_slash(return_publish_name(cmds.file(query = True, sceneName = True))))
 
         update_file_data(forward_slash(cmds.file(query = True, sceneName = True)))
@@ -65,3 +65,7 @@ class PublishDialog(QDialog):
 
         self._ok_cancel_widget = OkCancelWidget(ok_text = 'Publish as', ok_func = self.publish_as, cancel_func = self.close)
         self._main_layout.addWidget(self._ok_cancel_widget)
+
+        self.cb_delete_colon = QCheckBox('Delete colon')
+        self.cb_delete_colon.setChecked(True)
+        self._main_layout.addWidget(self.cb_delete_colon)

@@ -27,7 +27,7 @@ def increment_edit():
 
     update_thumbnail()
 
-def publish():
+def publish(del_colon = True):
     '''
     étapes :
     0 - indentifier le path et le name du fichier courant
@@ -77,5 +77,6 @@ def publish():
     create_thumbnail(publish_file_name, increment = True)
     
     # 5 delete colon
-    shading_nodes = list_shading_nodes()
-    delete_colon(publish_file_directory, shading_nodes)
+    if del_colon:
+        shading_nodes = list_shading_nodes()
+        delete_colon(publish_file_directory, shading_nodes)

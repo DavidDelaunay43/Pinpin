@@ -226,7 +226,7 @@ class BaseMainWindow(CustomMainWindow):
         self.list_01.itemClicked.connect(self.on_list_item_clicked)
         self.list_02.create_folder_action.triggered.connect(self._open_create_folder_dialog_02)
         self.list_02.itemClicked.connect(self.on_list_item_clicked)
-        self._select_item_from_text(self.list_02, 'scenes'.capitalize())
+        self._select_item_from_text(self.list_02, 'scenes')
         self.list_03.create_folder_action.triggered.connect(self._open_create_folder_dialog_03)
         self.list_03.itemClicked.connect(self.on_list_item_clicked)
         self.list_04.itemClicked.connect(self.on_list_item_clicked)
@@ -428,36 +428,33 @@ class BaseMainWindow(CustomMainWindow):
         self.list_04.clear()
         self._browser_file_table.setRowCount(0)
 
-
         # check if the path exist
-        if os.path.exists(self.current_directory):
-
-            print(os.listdir(self.current_directory))
-            
-            for directory in os.listdir(self.current_directory):
-
-                directory_path = os.path.join(self.current_directory, directory)
-                if not os.path.isdir(os.path.join(self.current_directory, directory)): 
-                    #print(os.path.join(self.current_directory, directory)+" is not a dir")#ATTENTION iici j'ai remplacé directory par os.path.join(self.current_directory, directory)
-                    logger.warning(f'{os.path.join(self.current_directory, directory)} is not a directory.')
-                    continue
-
-                root = QTreeWidgetItem(self.tree_browser)
-                self.set_qtree_item_icon(root, directory)
-                root.setText(0, directory)
-                root.setFlags(root.flags() & ~Qt.ItemIsSelectable)
-                
-                for sub_directory in os.listdir(directory_path):
-                    #print("sub  "+sub_directory)
-                    sub_directory_path = os.path.join(directory_path, sub_directory)
-                    #if not os.path.isdir(sub_directory_path): return #ATTENTION ici j'ai du caché une ligne, car sinon le if return car il trouve des fichier dans le .data
-                    item = QTreeWidgetItem(root)
-                    item.setText(0, sub_directory.capitalize())
-                    item.setSizeHint(0, QSize(40, 40))
-                    self.set_qtree_item_icon(item, sub_directory.capitalize())
-        else:
-            # The directory path does not exist, handle the error or take appropriate action
+        if not os.path.exists(self.current_directory):
             logger.error(f"The path '{self.current_directory}' does not exist.")
+            return
+
+        print(os.listdir(self.current_directory))
+        for directory in os.listdir(self.current_directory):
+
+            directory_path = os.path.join(self.current_directory, directory)
+            if not os.path.isdir(os.path.join(self.current_directory, directory)): 
+                #print(os.path.join(self.current_directory, directory)+" is not a dir")#ATTENTION iici j'ai remplacé directory par os.path.join(self.current_directory, directory)
+                logger.warning(f'{os.path.join(self.current_directory, directory)} is not a directory.')
+                continue
+
+            root = QTreeWidgetItem(self.tree_browser)
+            self.set_qtree_item_icon(root, directory)
+            root.setText(0, directory)
+            root.setFlags(root.flags() & ~Qt.ItemIsSelectable)
+            
+            for sub_directory in os.listdir(directory_path):
+                #print("sub  "+sub_directory)
+                sub_directory_path = os.path.join(directory_path, sub_directory)
+                #if not os.path.isdir(sub_directory_path): return #ATTENTION ici j'ai du caché une ligne, car sinon le if return car il trouve des fichier dans le .data
+                item = QTreeWidgetItem(root)
+                item.setText(0, sub_directory)
+                item.setSizeHint(0, QSize(40, 40))
+                self.set_qtree_item_icon(item, sub_directory)
     
     def populate_list_01(self, tree_item, column):
         if self.tree_browser.indexOfTopLevelItem(tree_item) != -1:
@@ -472,8 +469,8 @@ class BaseMainWindow(CustomMainWindow):
         for directory in os.listdir(self.current_directory):
             if not os.path.isdir(os.path.join(self.current_directory, directory)): continue
             
-            #item = QListWidgetItem(directory.capitalize())
-            item = CustomListWidgetItem(directory.capitalize(), self.list_01)
+            #item = QListWidgetItem(directory)
+            item = CustomListWidgetItem(directory, self.list_01)
             self._add_icon(item, directory)
             item.setData(32, os.path.join(self.current_directory, directory))
             #self.list_01.addItem(item)
@@ -487,12 +484,12 @@ class BaseMainWindow(CustomMainWindow):
         for directory in os.listdir(self.current_directory):
             if not os.path.isdir(os.path.join(self.current_directory, directory)): continue
             
-            item = QListWidgetItem(directory.capitalize())
+            item = QListWidgetItem(directory)
             self._add_icon(item, directory)
             item.setData(32, os.path.join(self.current_directory, directory))
             self.list_02.addItem(item)
         
-        self._select_item_from_text(self.list_02, 'scenes'.capitalize()) #
+        self._select_item_from_text(self.list_02, 'scenes') #
         
     def populate_list_03(self, parent_directory: str):
         
@@ -502,7 +499,7 @@ class BaseMainWindow(CustomMainWindow):
         for directory in os.listdir(self.current_directory):
             if not os.path.isdir(os.path.join(self.current_directory, directory)): continue
             
-            item = QListWidgetItem(directory.capitalize())
+            item = QListWidgetItem(directory)
             self._add_icon(item, directory)
             item.setData(32, os.path.join(self.current_directory, directory))
             self.list_03.addItem(item)
@@ -516,7 +513,7 @@ class BaseMainWindow(CustomMainWindow):
         for directory in os.listdir(self.current_directory):
             if not os.path.isdir(os.path.join(self.current_directory, directory)): return
             
-            item = QListWidgetItem(directory.capitalize())
+            item = QListWidgetItem(directory)
             self._add_icon(item, directory)
             item.setData(32, os.path.join(self.current_directory, directory))
             self.list_04.addItem(item)

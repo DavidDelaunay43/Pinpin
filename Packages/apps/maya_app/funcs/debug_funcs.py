@@ -274,7 +274,7 @@ def delete_colon(file_name: str, liste_strings: list) -> None:
 
             for chaine in liste_strings:
                 # Utilisation de l'expression régulière pour remplacer les occurrences
-                contenu = re.sub(rf':{chaine}\w*', chaine, contenu)
+                contenu = re.sub(rf'":{chaine}\w*', f'"{chaine}', contenu)
 
         with open(file_name, 'w') as fichier:
             fichier.write(contenu)

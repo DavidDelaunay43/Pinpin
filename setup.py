@@ -4,7 +4,7 @@ executables = [Executable("pinpin.py", icon = "ProjectFiles/Icons/pinpin_icon.ic
 
 setup(
     name="pinpin",
-    version="1.1.0",
+    version="1.1.1",
     description="",
     executables=executables,
     options={
