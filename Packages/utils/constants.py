@@ -114,3 +114,5 @@ COMP_DIR = os.path.join(CURRENT_PROJECT_PATH, '07_comp')
 PUBLISH_DIR = os.path.join(CURRENT_PROJECT_PATH, '09_publish')
 TEX_DIR = os.path.join(CURRENT_PROJECT_PATH, '10_texture')
 CACHE_DIR = os.path.join(CURRENT_PROJECT_PATH, '11_cache')
+
+VARIANTS_JSON_PATH = os.path.join(CURRENT_PROJECT_DATA_FOLDER, 'variants.json')

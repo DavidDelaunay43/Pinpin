@@ -111,7 +111,11 @@ def update_maya_prefs():
         'publish_icon.png',
         'save_as_icon.png',
         'thumbnail_icon.png',
-        'usd_icon.ico'
+        'usd_icon.ico',
+        'gpu_cache_icon.png',
+        'create_asset_icon.png',
+        'alembic_icon.png',
+        'set_project.png'
     )
 
     for file in files:
@@ -177,7 +181,13 @@ def init_pinpin():
         
     prefs_files = (
         'special_ui.json',
-        'ui_prefs.json'
+        'ui_prefs.json',
+        'recent_files.json',
+        'style.json',
+        'version.json',
+        'dev_mode.json',
+        'clicked_items.json',
+        'apps_esma.json',
     )
     
     for file in prefs_files:
