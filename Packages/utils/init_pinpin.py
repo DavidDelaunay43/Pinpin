@@ -115,7 +115,7 @@ def update_maya_prefs():
         'gpu_cache_icon.png',
         'create_asset_icon.png',
         'alembic_icon.png',
-        'set_project.png'
+        'set_project_icon.png'
     )
 
     for file in files:

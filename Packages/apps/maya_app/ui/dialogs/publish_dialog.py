@@ -30,10 +30,9 @@ class PublishDialog(QDialog):
 
         self.setWindowTitle('Publish as')
         self.setWindowFlag(Qt.WindowContextHelpButtonHint, False)
+        self.variant = ''
         self._init_ui()
         self.create_connections()
-        
-        self.variant = ''
         
         if cmds.ls(selection = True):
             self.exec_()
@@ -88,4 +87,5 @@ class PublishDialog(QDialog):
         
     def change_variant(self):
         self.variant = self.sender().currentText()
+        self._next_file_label.setText(f'Save as : {os.path.basename(return_publish_name(cmds.file(query = True, sceneName = True), variant = self.variant))}')
         print(self.variant)

@@ -141,7 +141,7 @@ def get_file_modification_date_time(file_path: str):
 
     return formatted_date_time
     
-def return_publish_name(file_name: str, usd: bool = False):
+def return_publish_name(file_name: str, usd: bool = False, variant: str = ''):
     '''Renomme un fichier en remplaçant la partie "_E_" suivie de chiffres par "_P".
 
     Parameters:
@@ -158,6 +158,15 @@ def return_publish_name(file_name: str, usd: bool = False):
     if usd:
         base_name = os.path.splitext(publish_file_name)[0]
         publish_file_name = f'{base_name}.usd'
+    
+    dirname = os.path.dirname(publish_file_name)
+    base_name = os.path.basename(publish_file_name)
+    # CDS_chr_petru_ldv_P.ma
+    pfx, asset_type, asset_name, dep, end = base_name.split('_')
+    asset_name = f'{asset_name}{variant}'
+    base_name = '_'.join([pfx, asset_type, asset_name, dep, end])
+    
+    publish_file_name = os.path.join(dirname, base_name)
     
     return publish_file_name
 
