@@ -10,6 +10,7 @@ from Packages.ui.widgets import OkCancelWidget
 from Packages.utils.constants import ICON_PATH
 from Packages.utils.funcs import forward_slash
 from Packages.logic.json_funcs import update_file_data, json_to_dict
+from Packages.logic.filefunc.get_funcs import get_file_base_folder
 from maya import cmds
 from Packages.utils.constants import VARIANTS_JSON_PATH
 

@@ -12,7 +12,7 @@ def get_gpu_cache_file_name() -> str:
     
     scene_name: str = os.path.basename(cmds.file(query = True, sceneName = True))
     prefix, seq_num, sh_num, _, _, _ = scene_name.split('_')
-    alembic_file_name: str = '_'.join([prefix, seq_num, sh_num, 'layout', 'P']) + '.abc'
+    alembic_file_name: str = '_'.join([prefix, seq_num, sh_num, 'layout', 'P'])
     
     return alembic_file_name
 
@@ -46,5 +46,3 @@ def export_gpu_cache():
     
     gpu_cache_cmd = f'gpuCache -startTime 0 -endTime 0 -optimize -optimizationThreshold 100 -dataFormat ogawa -useBaseTessellation -directory "{directory}" -fileName "{file_name}" {flags};'
     mel.eval(gpu_cache_cmd)
-    
-export_gpu_cache()

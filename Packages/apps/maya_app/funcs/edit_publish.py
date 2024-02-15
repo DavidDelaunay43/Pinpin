@@ -49,11 +49,12 @@ def publish(del_colon: bool = True, variant: str = ''):
     publish_file_name = return_publish_name(current_file_name) # CDS_chr_petru_ldv_P.ma
     
     # variant
-    pfx, asset_type, asset_name, department, end = publish_file_name.split('_')
-    asset_name = f'{asset_name}{variant}'
-    publish_file_name = '_'.join([pfx, asset_type, asset_name, department, end])
-    publish_file_directory = os.path.join(publish_directory, publish_file_name)
+    if variant != '':
+        pfx, asset_type, asset_name, department, end = publish_file_name.split('_')
+        asset_name = f'{asset_name}{variant}'
+        publish_file_name = '_'.join([pfx, asset_type, asset_name, department, end])
     
+    publish_file_directory = os.path.join(publish_directory, publish_file_name)
     # 3
     if not os.path.exists(publish_file_directory):
         cmds.file(publish_file_directory, force = True, options = "v=0", type = "mayaAscii", exportSelected = True, preserveReferences = False)

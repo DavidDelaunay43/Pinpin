@@ -162,11 +162,13 @@ def return_publish_name(file_name: str, usd: bool = False, variant: str = ''):
     dirname = os.path.dirname(publish_file_name)
     base_name = os.path.basename(publish_file_name)
     # CDS_chr_petru_ldv_P.ma
-    pfx, asset_type, asset_name, dep, end = base_name.split('_')
-    asset_name = f'{asset_name}{variant}'
-    base_name = '_'.join([pfx, asset_type, asset_name, dep, end])
-    
-    publish_file_name = os.path.join(dirname, base_name)
+    if get_file_base_folder(base_name) == 'asset':
+        
+        pfx, asset_type, asset_name, dep, end = base_name.split('_')
+        asset_name = f'{asset_name}{variant}'
+        base_name = '_'.join([pfx, asset_type, asset_name, dep, end])
+        
+        publish_file_name = os.path.join(dirname, base_name)
     
     return publish_file_name
 
