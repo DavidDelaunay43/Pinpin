@@ -9,6 +9,8 @@ VERSION = get_current(os.path.join(PREF_DEFAULT_PATH, 'version.json'), 'version'
 UNINSTALL_PATH = os.path.join(ROOT_PATH, "unins000.exe")
 SITE_PACKAGES_PATH = os.path.join(ROOT_PATH, "bin", "lib")
 
+PYTHON_W = os.path.join(ROOT_PATH, '.venv', 'Scripts', 'pythonw.exe')
+
 # Project Files
 PROJECT_FILES_PATH = os.path.join(ROOT_PATH, "ProjectFiles")
 

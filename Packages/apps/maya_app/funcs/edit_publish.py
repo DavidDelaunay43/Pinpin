@@ -8,6 +8,7 @@ from Packages.logic.filefunc.publish_funcs import find_publish_directory
 from Packages.logic.filefunc.get_funcs import return_publish_name, get_files, return_increment_publish_name
 from Packages.logic.json_funcs import set_recent_file
 from Packages.apps.maya_app.funcs.debug_funcs import delete_colon, list_shading_nodes
+from Packages.utils.constants import PYTHON_W
 
 def increment_edit():
     '''
@@ -85,5 +86,12 @@ def publish(del_colon: bool = True, variant: str = ''):
     
     # 5 delete colon
     if del_colon:
-        shading_nodes = list_shading_nodes()
-        delete_colon(publish_file_directory, shading_nodes)
+
+        try:
+            os.system(PYTHON_W, f'delete_colon.py "{publish_file_directory}"')
+            print('SUCCED PYTHON W')
+
+        except:
+            print('FAILED PYTHON W')
+            shading_nodes = list_shading_nodes()
+            delete_colon(publish_file_directory, shading_nodes)
