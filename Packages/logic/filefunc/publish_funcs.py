@@ -14,6 +14,15 @@ NAMING_DICT = {
     'masterLighting': '03_master_lighting'
 }
 
+def return_value(input_key: str, dico: dict):
+
+    if input_key in dico:
+        return dico[input_key]
+    
+    for key in dico.keys():
+        if key.lower() in input_key.lower():
+            return dico[key]
+
 def find_base_directory(file_path: str):
 
     dir_names = ('asset', 'sequence', 'shot')
@@ -40,7 +49,8 @@ def find_publish_directory(file_path: str):
 
         file_infos = SequenceFileInfos(file_name)
         sequence_num_folder = file_infos.SEQUENCE
-        sequence_department_folder = NAMING_DICT[file_infos.DEPARTMENT]
+        #sequence_department_folder = NAMING_DICT[file_infos.DEPARTMENT] old
+        sequence_department_folder = return_value(file_infos.DEPARTMENT, NAMING_DICT)
         asset_publish_directory = os.path.join(PUBLISH_DIR, base_folder, sequence_num_folder, sequence_department_folder)
         # 09_publish/sequence/seq010/01_master_layout/
 
