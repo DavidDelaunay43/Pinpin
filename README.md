@@ -1,5 +1,8 @@
 # Pinpin
 
+### About the project
+
+
 ### Features
 - file browser available in standalone application, Maya, Houdini
 
