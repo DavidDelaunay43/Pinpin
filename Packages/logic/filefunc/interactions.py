@@ -1,5 +1,6 @@
 from subprocess import Popen
 
+
 def open_explorer(path: str):
     '''Ouvre l'explorateur de fichiers de Windows pour afficher le contenu du répertoire spécifié.
 

@@ -150,6 +150,9 @@ class CustomTableWidget(QTableWidget):
         
         if isinstance(directory, str):
             file_list = get_files(directory)
+            
+            if not file_list:
+                return
 
             if get_current(UI_PREFS_JSON_PATH, 'reverse_sort_file'):
                 file_list = sorted(file_list, reverse = True)

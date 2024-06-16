@@ -1,18 +1,50 @@
 import os
 from PySide2.QtCore import Qt, QSize
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import (QTabWidget,QWidget,QVBoxLayout,QSizePolicy, QLineEdit,
-                               QHBoxLayout,QAction,QMenu,QSplitter,QDialog,QTreeWidgetItem,
-                               QListWidgetItem,QPushButton,QButtonGroup, QTableWidgetItem, QListWidget)
+from PySide2.QtWidgets import (
+                               QTabWidget,
+                               QWidget,
+                               QVBoxLayout,
+                               QSizePolicy,
+                               QLineEdit,
+                               QHBoxLayout,
+                               QAction,
+                               QMenu,
+                               QSplitter,
+                               QDialog,
+                               QTreeWidgetItem,
+                               QListWidgetItem,
+                               QPushButton,
+                               QButtonGroup,
+                               QTableWidgetItem,
+                               QListWidget
+                               )
 
 from Packages.utils.constants import ICON_PATH, PROJECT_JSON_PATH, CURRENT_PROJECT_ICON_FOLDER
-from Packages.ui.dialogs import ProjectDialog, TextEntryDialog, CreateSoftProjectDialog
-from Packages.ui.widgets import (StatusBar, CustomListWidget, CustomTableWidget, CustomListWidgetItem, 
-                                 CustomMenuBar, CustomMainWindow, CustomTreeWidget
+from Packages.ui.dialogs import (
+                                 ProjectDialog, 
+                                 TextEntryDialog,
+                                 CreateSoftProjectDialog
                                  )
-from Packages.logic.json_funcs import (get_current_project_name, get_current_project_path, 
-                                       get_file_data, update_file_data,
-                                       set_clicked_item, set_clicked_radio_button, get_clicked_radio_button, get_clicked_item
+from Packages.ui.widgets import (
+                                 StatusBar, 
+                                 CustomListWidget, 
+                                 CustomTableWidget, 
+                                 CustomListWidgetItem, 
+                                 CustomMenuBar, 
+                                 CustomMainWindow, 
+                                 CustomTreeWidget
+                                 )
+from Packages.logic.json_funcs import (
+                                       get_current_project_name, 
+                                       get_current_project_path, 
+                                       get_file_data, 
+                                       update_file_data,
+                                       set_clicked_item,
+                                       set_clicked_radio_button, 
+                                       set_clicked_radio_button, 
+                                       get_clicked_item,
+                                       get_clicked_radio_button
                                        )
 from Packages.logic.filefunc import clean_directory, open_explorer, increment_file_external
 from Packages.logic.file_opener import FileOpener
@@ -62,6 +94,7 @@ class BaseMainWindow(CustomMainWindow):
         self._asset_radio_button = create_checkable_button("Asset")
         self._sequence_radio_button = create_checkable_button('Sequence')
         self._shot_radio_button = create_checkable_button('Shot')
+        self._comp_radio_button = create_checkable_button('Comp')
         self._publish_radio_button = create_checkable_button('Publish')
         self._texture_radio_button = create_checkable_button('Texture')
         self._cache_radio_button = create_checkable_button('Cache')
@@ -72,6 +105,7 @@ class BaseMainWindow(CustomMainWindow):
             self._asset_radio_button, 
             self._sequence_radio_button, 
             self._shot_radio_button,
+            self._comp_radio_button,
             self._publish_radio_button,
             self._texture_radio_button,
             self._cache_radio_button,
@@ -362,6 +396,16 @@ class BaseMainWindow(CustomMainWindow):
         return False
     
     def on_radio_button_clicked(self):
+        
+        def find_top_level_item_by_text(tree_widget: CustomTreeWidget, texte: str) -> QTreeWidgetItem:
+            """ Trouve et retourne l'élément QTreeWidgetItem top level ayant le texte donné. """
+            items = tree_widget.findItems(texte, Qt.MatchExactly, 0)  # Recherche par texte exact dans la colonne 0
+            
+            for item in items:
+                if not item.parent():  # Vérifie si l'élément n'a pas de parent (top level)
+                    return item
+            
+            return None  # Retourne None si aucun élément correspondant n'est trouvé
 
         self._add_base_folder_to_dir()
         self._fill_tree_items()
@@ -372,7 +416,15 @@ class BaseMainWindow(CustomMainWindow):
         if not tree_item_text:
             return
         
-        item, column = self._click_tree_item_by_text(self.tree_browser, tree_item_text)
+        if isinstance(tree_item_text, list):
+            tree_item_text, parent_item_text = tree_item_text
+            
+            parent_item = find_top_level_item_by_text(self.tree_browser, parent_item_text)
+            item, column = self._click_tree_item_by_text(self.tree_browser, tree_item_text, parent_item=parent_item)
+            
+        else:
+            item, column = self._click_tree_item_by_text(self.tree_browser, tree_item_text)
+        
         self.on_tree_item_clicked(item, column)
         
     def on_tree_item_clicked(self, item, column):
@@ -383,6 +435,10 @@ class BaseMainWindow(CustomMainWindow):
         
         if item.parent():
             set_clicked_item(self._get_active_radio_text(), 'tree_item', f'{item.text(column)}')
+            
+            if '06_shot' in self.current_directory:
+                item_parent = item.parent()
+                set_clicked_item(self._get_active_radio_text(), 'tree_item', f'{item.text(column)}', shot=True, item_parent=f'{item_parent.text(column)}')
         
     def on_list_item_clicked(self, item):
         
@@ -697,7 +753,11 @@ class BaseMainWindow(CustomMainWindow):
         icons = os.listdir(CURRENT_PROJECT_ICON_FOLDER)
         
         if item_name_file in icons:
-            icon=QIcon(os.path.join(CURRENT_PROJECT_ICON_FOLDER, item_name_file))
+            icon_file_path: str = os.path.join(CURRENT_PROJECT_ICON_FOLDER, item_name_file)
+            if not os.path.exists(icon_file_path):
+                icon_file_path = os.path.join(CURRENT_PROJECT_ICON_FOLDER, item_name_file.capitalize())
+            
+            icon=QIcon(icon_file_path)
             item.setIcon(0,icon)
 
     def show_files(self):

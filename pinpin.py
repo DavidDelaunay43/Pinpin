@@ -11,3 +11,13 @@ app = PinpinApp(sys.argv)
 logger.info('Launch Pinpin standalone application.')
 app.exec_()
 logger.info('Close Pinpin standalone application.')
+
+"""
+- asset
+    - petru
+    - bob
+    
+- prop
+    - rien
+    - rerien
+"""

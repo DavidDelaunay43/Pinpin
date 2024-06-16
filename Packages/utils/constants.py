@@ -67,7 +67,6 @@ SPECIAL_UI_JSON = os.path.join(PREFS, 'special_ui.json')
 #STYLES_LIST = get_list(STYLE_JSON_PATH, 'styles')
 CURRENT_STYLE = os.path.join(STYLE_PATH, 'biiiped.qss')
 PALETTE_PATH = os.path.join(STYLE_PATH, 'palette_1.json')
-SPECIAL_STYLE = os.path.join(r'\\GANDALF\3d4_23_24\_partage\pinpin\qs', 'biiiped.qss')
 
 EXTS = {
     ".abc": "fbxreview",

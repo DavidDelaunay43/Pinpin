@@ -3,13 +3,31 @@ import re
 import datetime
 import operator
 from functools import partial
+from typing import Literal
 from Packages.logic.filefunc.file_class import AssetFileInfos, SequenceFileInfos, ShotFileInfos
 
-_OS_DICT = {'dir': os.path.isdir, 'file': os.path.isfile}
 
-def _get_items(directory_path: str, type: str, exclude_type: list = []) -> list:
+def get_items(directory_path: str, type: Literal['dir', 'file'], exclude_type: list = []) -> list:
     """
+    Retourne une liste triée des noms d'éléments (fichiers ou répertoires) dans le chemin spécifié.
+
+    Args:
+    - directory_path (str): Chemin du répertoire où chercher les éléments.
+    - type (str): Type d'éléments à rechercher ('dir' pour répertoires, 'file' pour fichiers).
+    - exclude_type (list, optional): Liste des extensions à exclure pour les fichiers. Par défaut, vide.
+
+    Returns:
+    - list: Liste triée des noms des éléments correspondants aux critères spécifiés.
     """
+    
+    os_dict = {
+        'dir': os.path.isdir, 
+        'file': os.path.isfile
+    }
+    
+    if type not in ['dir', 'file']:
+        raise ValueError("Le paramètre 'type' doit être soit 'dir' soit 'file'.")
+    
     item_names = []
     for item in os.listdir(directory_path):
 
@@ -18,20 +36,39 @@ def _get_items(directory_path: str, type: str, exclude_type: list = []) -> list:
         if item.endswith(tuple(exclude_type)):
             continue
 
-        if _OS_DICT[type](item_path):
+        if os_dict[type](item_path):
             item_names.append(item)
             
     return sorted(item_names)
 
-get_dirs = partial(_get_items, type = 'dir')
-get_files = partial(_get_items, type = 'file', exclude_type = [".txt", '.mel', '.db'])
+
+def get_dirs(directory_path: str):
+    print(f'Search directories in directory : {directory_path}')
+    return get_items(directory_path=directory_path, type='dir')
+    
+
+def get_files(directory_path: str):
+    print(f'Search files in directory : {directory_path}')
+    return get_items(directory_path=directory_path, type='file', exclude_type = [".txt", '.mel', '.db'])
+
 
 def get_version_file(version: str, parent_directory: str):
+    """
+    Renvoie le nom du fichier contenant la version spécifiée dans le répertoire parent.
+
+    Args:
+    - version (str): Version recherchée dans le nom du fichier.
+    - parent_directory (str): Chemin du répertoire parent où rechercher le fichier.
+
+    Returns:
+    - str: Nom du fichier contenant la version spécifiée.
+    """
     
     for file in get_files(parent_directory):
         if version in file:
             return file
-        
+
+       
 def get_file_base_folder(filename: str):
     '''
     '''
@@ -43,7 +80,8 @@ def get_file_base_folder(filename: str):
     
     else:
         return 'asset'
-        
+    
+    
 def get_version_num(filename: str):
     '''Récupère un numéro de version à trois chiffres à partir du nom de fichier spécifié.
 
@@ -112,6 +150,7 @@ def get_version_num(filename: str):
     else:
         return ''
 
+
 def get_file_modification_date_time(file_path: str):
     '''Récupère la date et l'heure de modification d'un fichier spécifié au format "jj/mm/aaaa hh:mm".
 
@@ -141,6 +180,7 @@ def get_file_modification_date_time(file_path: str):
 
     return formatted_date_time
     
+
 def return_publish_name(file_name: str, usd: bool = False, variant: str = ''):
     '''Renomme un fichier en remplaçant la partie "_E_" suivie de chiffres par "_P".
 
@@ -172,6 +212,7 @@ def return_publish_name(file_name: str, usd: bool = False, variant: str = ''):
     
     return publish_file_name
 
+
 def extract_increment(file_name: str, mode = 'E'):
     '''Extrait l'incrément numérique d'un nom de fichier contenant un suffixe "_E_" suivi d'un nombre.
 
@@ -189,6 +230,7 @@ def extract_increment(file_name: str, mode = 'E'):
     
     increment_string = re.search(r'\d+', match).group()
     return int(increment_string)
+
 
 def return_increment_edit(file_path: str):
     '''Modifie le nom de fichier en ajoutant un suffixe numérique incrémenté "_E_" à la fin du nom
@@ -214,6 +256,7 @@ def return_increment_edit(file_path: str):
     
     return file_path.replace(match, new_increment)
 
+
 def return_increment_publish_name(file_name: str, publish_list: list):
     
     if not publish_list:
@@ -227,6 +270,7 @@ def return_increment_publish_name(file_name: str, publish_list: list):
 
     return new_last_publish_file_name
 
+
 def clean_directory(path: str, dir: str):
     """
     """
@@ -239,6 +283,7 @@ def clean_directory(path: str, dir: str):
     
     else:
         return path.split(dir)[0]
+
 
 def _get_files_by_extension(directory: str):
     '''
@@ -258,7 +303,8 @@ def _get_files_by_extension(directory: str):
                 
     return return_dict
 
-def _get_recent_files(dictionnary: dict, num: int = 10):
+
+def get_recent_files(dictionnary: dict, num: int = 10):
     # Triez le dictionnaire en fonction des dates de modification (values) de manière décroissante
     sorted_files = sorted(dictionnary.items(), key = operator.itemgetter(1), reverse = True)
     
@@ -272,11 +318,13 @@ def _get_recent_files(dictionnary: dict, num: int = 10):
     
     return recent_files
 
+
 def get_recent_files_old(directory: str, num: int = 10):
     
     files = _get_files_by_extension(directory)
-    recent_files = _get_recent_files(files, num = num)
+    recent_files = get_recent_files(files, num = num)
     return recent_files
+
 
 def get_publish_files(directory: str):
     '''
