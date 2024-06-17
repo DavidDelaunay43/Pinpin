@@ -1,10 +1,7 @@
-import os
-from PySide2.QtCore import Qt
-from Packages.logic.json_funcs import get_dev_mode_state
 from Packages.ui.base_main_window import BaseMainWindow
 from Packages.ui.widgets import OpenFileWidget
 from Packages.utils.logger import init_logger
-from Packages.logic.json_funcs import get_recent_files
+from Packages.logic import json_funcs
 
 logger = init_logger(__file__)
 
@@ -40,7 +37,7 @@ class MainWindowStandalone(BaseMainWindow):
     def on_recent_tab_active(self):
         super().on_recent_tab_active()
         self._open_file_widget_recent.update_buttons(None)
-        recent_files = get_recent_files()
+        recent_files = json_funcs.get_recent_files()
         self._recent_file_table.update_file_items(recent_files)
  
     def open_file_in_app(self):
@@ -71,7 +68,7 @@ class MainWindowStandalone(BaseMainWindow):
         
     def add_dev_mode(self):
 
-        if get_dev_mode_state():
+        if json_funcs.get_dev_mode_state():
             self._open_file_widget_browser.prefs_button.show()
 
         else:

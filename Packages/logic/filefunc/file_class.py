@@ -1,5 +1,5 @@
 import os
-from Packages.logic.filefunc.utils import del_upper
+from Packages.logic.filefunc import utils
 
 class AssetFileInfos:
 
@@ -11,7 +11,7 @@ class AssetFileInfos:
         self.PROJECT = infos[0]
         self.ASSET_TYPE = infos[1]
         self.ASSET_NAME = infos[2]
-        self.DEPARTMENT = del_upper(infos[3])
+        self.DEPARTMENT = utils.del_upper(infos[3])
         self.STEP = infos[4]
 
         if self.STEP == 'E':

@@ -2,7 +2,6 @@ import os
 import re
 import datetime
 import operator
-from functools import partial
 from typing import Literal
 from Packages.logic.filefunc.file_class import AssetFileInfos, SequenceFileInfos, ShotFileInfos
 
@@ -210,6 +209,7 @@ def return_publish_name(file_name: str, usd: bool = False, variant: str = ''):
         
         publish_file_name = os.path.join(dirname, base_name)
     
+    print(f'Return Publish Name : {publish_file_name}')
     return publish_file_name
 
 

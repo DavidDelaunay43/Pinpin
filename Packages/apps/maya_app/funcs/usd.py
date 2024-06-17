@@ -2,9 +2,9 @@ import os
 import shutil
 from maya import mel, cmds
 import maya.api.OpenMaya as om
-from Packages.apps.maya_app.funcs.playblast import create_thumbnail
-from Packages.logic.filefunc.publish_funcs import find_publish_directory
-from Packages.logic.filefunc.get_funcs import return_publish_name, get_files, return_increment_publish_name
+from Packages.apps.maya_app.funcs import playblast
+from Packages.logic.filefunc import publish_funcs
+from Packages.logic.filefunc import get_funcs
 from Packages.utils.funcs import forward_slash
 
 def export_usd(output_file_path: str):
@@ -36,30 +36,30 @@ def publish_usd_asset():
     current_file_name = os.path.basename(current_file_path)
 
     # 1 
-    publish_directory = find_publish_directory(current_file_path)
+    publish_directory = publish_funcs.find_publish_directory(current_file_path)
     
     # 2 
-    publish_file_name = return_publish_name(current_file_name)
+    publish_file_name = get_funcs.return_publish_name(current_file_name)
     publish_file_name = publish_file_name.replace('.ma', '.usd')
     publish_file_directory = os.path.join(publish_directory, publish_file_name)
 
     # 3
     if not os.path.exists(publish_file_directory):
         export_usd(publish_file_directory)
-        create_thumbnail(publish_file_name, increment = True, ext = '.usd')
+        playblast.create_thumbnail(publish_file_name, increment = True, ext = '.usd')
         return
 
     old_publish_directory = os.path.join(publish_directory, 'old') # path du répertoire old
     os.mkdir(old_publish_directory) if not os.path.exists(old_publish_directory) else None # créer le répertoire old s'il n'existe pas
-    old_publish_list = get_files(old_publish_directory, exclude_type = [".txt", '.mel', '.db', '.ma', '.mb'])
+    old_publish_list = get_funcs.get_files(old_publish_directory, exclude_type = [".txt", '.mel', '.db', '.ma', '.mb'])
     for old_file in old_publish_list:
         if not old_file.startswith(os.path.splitext(publish_file_name)[0]):
             old_publish_list.remove(old_file)
 
-    new_increment_publish_name = return_increment_publish_name(publish_file_name, old_publish_list) # trouver le dernier incrément
+    new_increment_publish_name = get_funcs.return_increment_publish_name(publish_file_name, old_publish_list) # trouver le dernier incrément
     os.rename(publish_file_directory, os.path.join(publish_directory, new_increment_publish_name)) # renommer le dernier publish par le denrier incrément
     shutil.move(os.path.join(publish_directory, new_increment_publish_name), old_publish_directory) # déplacer le dernier pulbish dans old
 
     # 4
     export_usd(publish_file_directory)
-    create_thumbnail(publish_file_name, increment = True, ext = '.usd')
+    playblast.create_thumbnail(publish_file_name, increment = True, ext = '.usd')

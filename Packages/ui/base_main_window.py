@@ -707,6 +707,7 @@ class BaseMainWindow(CustomMainWindow):
             self._asset_radio_button: "04_asset",
             self._sequence_radio_button: "05_sequence",
             self._shot_radio_button: "06_shot",
+            self._publish_radio_button: "07_comp",
             self._publish_radio_button: "09_publish",
             self._texture_radio_button: "10_texture",
             self._cache_radio_button: "11_cache",

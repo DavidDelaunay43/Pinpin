@@ -16,7 +16,7 @@ def get_pref(app_name: str) -> str:
     
     return pref
 
-def get_recent_files(ext: list, length: int = 20) -> list:
+def get_recent_files(ext: list = [], length: int = 20) -> list:
     '''
     '''
     

@@ -35,14 +35,15 @@ def find_publish_directory(file_path: str):
 
     file_name = os.path.basename(file_path)
     base_folder = find_base_directory(file_path)
-    asset_publish_directory = None
+    print(f'Base Folder : {base_folder}')
+    base_publish_directory = None
 
     if base_folder == 'asset':
 
         file_infos = AssetFileInfos(file_name)
         asset_type_folder = NAMING_DICT[file_infos.ASSET_TYPE]
         asset_department_folder = file_infos.DEPARTMENT
-        asset_publish_directory = os.path.join(PUBLISH_DIR, base_folder, asset_type_folder, asset_department_folder)
+        base_publish_directory = os.path.join(PUBLISH_DIR, base_folder, asset_type_folder, asset_department_folder)
         # 09_publish/asset/01_character/geo/
 
     elif base_folder == 'sequence':
@@ -51,7 +52,7 @@ def find_publish_directory(file_path: str):
         sequence_num_folder = file_infos.SEQUENCE
         #sequence_department_folder = NAMING_DICT[file_infos.DEPARTMENT] old
         sequence_department_folder = return_value(file_infos.DEPARTMENT, NAMING_DICT)
-        asset_publish_directory = os.path.join(PUBLISH_DIR, base_folder, sequence_num_folder, sequence_department_folder)
+        base_publish_directory = os.path.join(PUBLISH_DIR, base_folder, sequence_num_folder, sequence_department_folder)
         # 09_publish/sequence/seq010/01_master_layout/
 
     elif base_folder == 'shot':
@@ -59,10 +60,10 @@ def find_publish_directory(file_path: str):
         file_infos = ShotFileInfos(file_name)
         sequence_num_folder = file_infos.SEQUENCE
         shot_num_folder = file_infos.SHOT
-        asset_publish_directory = os.path.join(PUBLISH_DIR, base_folder, sequence_num_folder, shot_num_folder)
+        base_publish_directory = os.path.join(PUBLISH_DIR, base_folder, sequence_num_folder, shot_num_folder)
         # 09_publish/shot/seq010/sh010/
 
     else:
         print('ERROR') # temporaire
 
-    return asset_publish_directory
+    return base_publish_directory
