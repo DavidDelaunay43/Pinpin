@@ -8,14 +8,14 @@ class CustomMainWindow(QMainWindow):
     '''
     '''
     def __init__(self, parent = None, set_style: bool = False):
-        super().__init__(parent)
+        super(CustomMainWindow, self).__init__(parent)
         
         self.PARENT = parent
         
         if set_style:
             self.set_style()
     
-    def set_display_basics(self, title = f'Pinpin - {VERSION}', icon = "pinpin_icon.ico", size = [820, 900], project = ""):
+    def init_ui(self, title = f'Pinpin - {VERSION}', icon = "pinpin_icon.ico", size = [820, 900], project = ""):
         '''
         '''
         

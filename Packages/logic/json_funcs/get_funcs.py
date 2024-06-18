@@ -115,6 +115,12 @@ def get_clicked_item(radio_button: str, item_index: str) -> str:
     return clicked_items_dict[CURRENT_PROJECT_NAME][radio_button][item_index]
 
 
+def get_clicked_items(radio_button: str):
+
+    all_clicked_items_dict: dict = convert_funcs.json_to_dict(CLICKED_ITEMS_JSON_PATH)
+    return all_clicked_items_dict[radio_button]
+
+
 def get_dev_mode_state() -> int:
     with open(DEV_MODE_JSON, 'r') as file:
         dev_mode_data = json.load(file)

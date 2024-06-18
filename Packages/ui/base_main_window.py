@@ -61,7 +61,7 @@ class BaseMainWindow(CustomMainWindow):
         self.PARENT = parent
         self.PROJECT_NAME = get_current_project_name(PROJECT_JSON_PATH)
         self.PROJECT_PATH = get_current_project_path(PROJECT_JSON_PATH)
-        self.set_display_basics(project = self.PROJECT_NAME)
+        self.init_ui(project = self.PROJECT_NAME)
         self._ensure_project()
         self.current_directory = None
 
@@ -91,15 +91,25 @@ class BaseMainWindow(CustomMainWindow):
             self.button_group.addButton(checkable_button)
             return checkable_button
             
-        self._asset_radio_button = create_checkable_button("Asset")
-        self._sequence_radio_button = create_checkable_button('Sequence')
-        self._shot_radio_button = create_checkable_button('Shot')
-        self._comp_radio_button = create_checkable_button('Comp')
-        self._publish_radio_button = create_checkable_button('Publish')
-        self._texture_radio_button = create_checkable_button('Texture')
-        self._cache_radio_button = create_checkable_button('Cache')
-        self._rd_radio_button = create_checkable_button('Test')
-        self._ressource_radio_button = create_checkable_button('Ressource')
+        self._asset_radio_button: QPushButton = create_checkable_button("Asset")
+        self._sequence_radio_button: QPushButton = create_checkable_button('Sequence')
+        self._shot_radio_button: QPushButton = create_checkable_button('Shot')
+        self._comp_radio_button: QPushButton = create_checkable_button('Comp')
+        self._publish_radio_button: QPushButton = create_checkable_button('Publish')
+        self._texture_radio_button: QPushButton = create_checkable_button('Texture')
+        self._cache_radio_button: QPushButton = create_checkable_button('Cache')
+        self._rd_radio_button: QPushButton = create_checkable_button('Test')
+        self._ressource_radio_button: QPushButton = create_checkable_button('Ressource')
+
+        self._asset_radio_button.setProperty('directory', '04_asset')
+        self._sequence_radio_button.setProperty('directory', '05_sequence')
+        self._shot_radio_button.setProperty('directory', '06_shot')
+        self._comp_radio_button.setProperty('directory', '07_comp')
+        self._publish_radio_button.setProperty('directory', '09_publish')
+        self._texture_radio_button.setProperty('directory', '10_texture')
+        self._cache_radio_button.setProperty('directory', '11_cache')
+        self._rd_radio_button.setProperty('directory', '12_test')
+        self._ressource_radio_button.setProperty('directory', '02_ressource')
 
         self.checkable_buttons = (
             self._asset_radio_button, 
@@ -703,19 +713,10 @@ class BaseMainWindow(CustomMainWindow):
 
     # UTILS
     def _get_active_radio(self):
-        WORKFLOW_DICT = {
-            self._asset_radio_button: "04_asset",
-            self._sequence_radio_button: "05_sequence",
-            self._shot_radio_button: "06_shot",
-            self._publish_radio_button: "07_comp",
-            self._publish_radio_button: "09_publish",
-            self._texture_radio_button: "10_texture",
-            self._cache_radio_button: "11_cache",
-            self._rd_radio_button: "12_test",
-            self._ressource_radio_button: "02_ressource"
-        }
-        
-        return next((value for key, value in WORKFLOW_DICT.items() if key.isChecked()), None)
+
+        for radio_button in self.checkable_buttons:
+            if radio_button.isChecked():
+                return radio_button.property('directory')
 
     def increment_file(self):
         increment_file_external(self.current_directory)

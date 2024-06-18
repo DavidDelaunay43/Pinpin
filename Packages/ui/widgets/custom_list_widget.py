@@ -8,6 +8,7 @@ class CustomListWidget(QListWidget):
         super(CustomListWidget, self).__init__()
         self.init_widget(parent, max_height)
 
+        # on crée l'attribut "data" qui va stocker le répertoire auquel correspond le CustomLitWidget
         self.data = ''
         self.itemSelectionChanged.connect(self.update_data)
 
@@ -16,7 +17,7 @@ class CustomListWidget(QListWidget):
         if selected_items:
             self.data = os.path.dirname(selected_items[0].data(32))
         else:
-             self.data = ""
+             self.data = ''
 
     def set_data(self, data_arg: str):
         self.data = data_arg
