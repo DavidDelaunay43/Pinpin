@@ -1,5 +1,6 @@
 import json
 
+
 def json_to_dict(json_file_path: str) -> dict:
     '''
     Convertit un fichier JSON en un dictionnaire Python.
@@ -15,6 +16,7 @@ def json_to_dict(json_file_path: str) -> dict:
         dico = json.load(file)
         
     return dico
+
 
 def dict_to_json(dictionary: dict, json_file_path: str) -> None:
     '''

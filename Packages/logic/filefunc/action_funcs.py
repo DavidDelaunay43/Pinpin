@@ -14,8 +14,8 @@ def increment_file_external(file_path: str):
 
     '''
     
-    parent_directory = os.path.dirname(file_path)
-    new_file_name = get_funcs.return_increment_edit(file_path)
+    parent_directory = os.path.dirname(file_path) # récupérer le répertoire parent
+    new_file_name = get_funcs.return_increment_edit(file_path) # récupérer le nom du fichier incrémenté
     new_file_path = os.path.join(parent_directory, new_file_name)
     print(new_file_path)
     print(parent_directory)
