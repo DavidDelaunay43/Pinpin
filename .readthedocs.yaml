@@ -1,0 +1,25 @@
+# Fichier de configuration pour Read the Docs
+
+version: 2
+
+# Configuration de construction
+build:
+  os: windows-10
+  tools:
+    python: "3.9"  # Version de Python à utiliser
+
+# Configuration Python
+python:
+  install:
+    - method: pip
+      path: .  # Installer votre projet en utilisant setup.py ou pyproject.toml
+    - requirements: requirements.txt  # Fichier des dépendances additionnelles
+
+# Configuration Sphinx
+sphinx:
+  configuration: docs/conf.py  # Chemin vers votre fichier de configuration Sphinx
+
+# Configuration des formats de sortie
+formats:
+  - pdf
+  - epub
