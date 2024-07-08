@@ -20,35 +20,26 @@ from PySide2.QtWidgets import (
                                QListWidget
                                )
 
-from Packages.utils.constants import ICON_PATH, PROJECT_JSON_PATH, CURRENT_PROJECT_ICON_FOLDER
+from Packages.utils.constants.project_pinpin_data import CURRENT_PROJECT, CURRENT_PROJECT_JSON_PATH, pinpin_data_ICONS
+from Packages.utils.constants.project_files import ICON_PATH
 from Packages.ui.dialogs import (
-                                 ProjectDialog, 
                                  TextEntryDialog,
                                  CreateSoftProjectDialog
                                  )
-from Packages.ui.widgets import (
-                                 StatusBar, 
-                                 CustomListWidget, 
-                                 CustomTableWidget, 
-                                 CustomListWidgetItem, 
-                                 CustomMenuBar, 
-                                 CustomMainWindow, 
-                                 CustomTreeWidget
-                                 )
+from Packages.ui.widgets import StatusBar, CustomListWidget, CustomTableWidget, CustomListWidgetItem, CustomMenuBar, CustomMainWindow, CustomTreeWidget
 from Packages.logic.json_funcs import (
-                                       get_current_project_name, 
-                                       get_current_project_path, 
                                        get_file_data, 
                                        update_file_data,
                                        set_clicked_item,
-                                       set_clicked_radio_button, 
-                                       set_clicked_radio_button, 
+                                       set_clicked_radio_button,
                                        get_clicked_item,
                                        get_clicked_radio_button
                                        )
 from Packages.logic.filefunc import clean_directory, open_explorer, increment_file_external
 from Packages.logic.file_opener import FileOpener
+from Packages.utils.funcs import get_current_value
 from Packages.utils.logger import init_logger
+from Packages.utils.init_project import InitProject
 
 logger = init_logger(__file__)
 
@@ -57,14 +48,16 @@ class BaseMainWindow(CustomMainWindow):
     """
     def __init__(self, parent = None, set_style: bool = False):
         super(BaseMainWindow, self).__init__(parent, set_style)
-
-        self.PARENT = parent
-        self.PROJECT_NAME = get_current_project_name(PROJECT_JSON_PATH)
-        self.PROJECT_PATH = get_current_project_path(PROJECT_JSON_PATH)
-        self.init_ui(project = self.PROJECT_NAME)
-        self._ensure_project()
+        
+        if CURRENT_PROJECT == '':
+            init_project_dialog = InitProject()
+            init_project_dialog.exec_()
+        self.PROJECT_PATH = get_current_value(CURRENT_PROJECT_JSON_PATH, 'current_project')
+        self.PROJECT_NAME = os.path.basename(self.PROJECT_PATH)
+        
         self.current_directory = None
 
+        self.init_ui(project = self.PROJECT_NAME)
         self.create_widgets()
         self.create_layout()
         self.create_connections()
@@ -72,9 +65,8 @@ class BaseMainWindow(CustomMainWindow):
 
         self.setMenuBar(CustomMenuBar(self))
         self.status_bar = StatusBar(parent = self._central_layout, text = self.PROJECT_PATH)
-        self.auto_clic()
-        self.show()
-        self._get_active_tab_text()
+        #self.auto_clic()
+        #self._get_active_tab_text()
      
     # UI
     def create_widgets(self):
@@ -630,22 +622,6 @@ class BaseMainWindow(CustomMainWindow):
         self.status_bar.update(self.current_directory)
 
     # DIALOGS
-    def _ensure_project(self):
-        """
-        """
-        if self.PROJECT_NAME:
-            pass
-        else:
-            self.dialog = ProjectDialog(parent=self)
-            self.dialog.show()
-            self.dialog.finished.connect(self.show)
-            
-    def _open_project_dialog(self):
-        """
-        """
-        
-        dialog = ProjectDialog(parent=self)
-        dialog.show()
     
     def open_comment_dialog(self):
         
@@ -752,12 +728,12 @@ class BaseMainWindow(CustomMainWindow):
         '''
         
         item_name_file=f"{item_name}.png"
-        icons = os.listdir(CURRENT_PROJECT_ICON_FOLDER)
+        icons = os.listdir(pinpin_data_ICONS)
         
         if item_name_file in icons:
-            icon_file_path: str = os.path.join(CURRENT_PROJECT_ICON_FOLDER, item_name_file)
+            icon_file_path: str = os.path.join(pinpin_data_ICONS, item_name_file)
             if not os.path.exists(icon_file_path):
-                icon_file_path = os.path.join(CURRENT_PROJECT_ICON_FOLDER, item_name_file.capitalize())
+                icon_file_path = os.path.join(pinpin_data_ICONS, item_name_file.capitalize())
             
             icon=QIcon(icon_file_path)
             item.setIcon(0,icon)

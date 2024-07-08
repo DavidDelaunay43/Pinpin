@@ -8,8 +8,9 @@ from Packages.logic.json_funcs import get_file_data
 from Packages.logic.filefunc import get_files
 from Packages.ui.widgets.image_widget import ImageWidget
 from Packages.utils.funcs import get_size, forward_slash
-from Packages.utils.constants import ICON_PATH, UI_PREFS_JSON_PATH
-from Packages.utils.funcs import get_current
+from Packages.utils.constants.project_files import ICON_PATH
+from Packages.utils.constants.preferences import UI_PREFS_JSON_PATH
+from Packages.utils.funcs import get_current_value
 
 class CustomTableWidget(QTableWidget):
     
@@ -154,9 +155,9 @@ class CustomTableWidget(QTableWidget):
             if not file_list:
                 return
 
-            if get_current(UI_PREFS_JSON_PATH, 'reverse_sort_file'):
+            if get_current_value(UI_PREFS_JSON_PATH, 'reverse_sort_file'):
                 file_list = sorted(file_list, reverse = True)
-            file_list = file_list[:get_current(UI_PREFS_JSON_PATH, 'num_files')]
+            file_list = file_list[:get_current_value(UI_PREFS_JSON_PATH, 'num_files')]
             
             if not file_list:
                 return

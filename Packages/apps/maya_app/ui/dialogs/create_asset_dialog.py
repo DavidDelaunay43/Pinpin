@@ -2,7 +2,7 @@ import os
 import shutil
 from PySide2.QtWidgets import QDialog, QWidget, QVBoxLayout, QRadioButton, QPushButton, QLabel, QLineEdit, QCheckBox, QGridLayout
 from Packages.apps.maya_app.ui.maya_main_window import maya_main_window
-from Packages.utils.constants import ASSET_DIR, PREFIX, WORKSPACE_MEL_PATH
+from Packages.utils.constants.constants_old import ASSET_DIR, PREFIX, WORKSPACE_MEL_PATH
 from maya import cmds
 import maya.api.OpenMaya as om
 

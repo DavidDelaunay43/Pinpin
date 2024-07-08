@@ -2,7 +2,7 @@ import os
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QPixmap
 from PySide2.QtWidgets import QLabel
-from Packages.utils.constants import ICON_PATH
+from Packages.utils.constants.project_files import ICON_PATH
 
 ALIGNMENT_DICT = {
     'center': Qt.AlignmentFlag.AlignCenter,

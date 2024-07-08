@@ -7,7 +7,7 @@ from Packages.logic.filefunc import publish_funcs
 from Packages.logic.filefunc import get_funcs
 from Packages.logic import json_funcs
 from Packages.apps.maya_app.funcs import debug_funcs
-from Packages.utils.constants import PYTHON_W
+from Packages.utils.constants.constants_old import PYTHON_W
 
 def increment_edit():
     '''

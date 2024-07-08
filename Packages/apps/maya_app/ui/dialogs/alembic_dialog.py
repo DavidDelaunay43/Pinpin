@@ -10,7 +10,7 @@ from PySide2.QtWidgets import (
     QCheckBox,
     QRadioButton
 )
-from Packages.utils.constants import CACHE_DIR
+from Packages.utils.constants.constants_old import CACHE_DIR
 from Packages.apps.maya_app.funcs.alembic import (
     get_time_slider_range,
     get_char_sets,

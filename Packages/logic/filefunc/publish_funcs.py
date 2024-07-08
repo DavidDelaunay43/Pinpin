@@ -1,6 +1,6 @@
 import os
 from Packages.logic.filefunc.file_class import AssetFileInfos, SequenceFileInfos, ShotFileInfos
-from Packages.utils.constants import PUBLISH_DIR
+from Packages.utils.constants.constants_old import PUBLISH_DIR
 
 NAMING_DICT = {
     'chr': '01_character',

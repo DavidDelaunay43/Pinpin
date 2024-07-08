@@ -1,6 +1,6 @@
 import os
 from maya import cmds
-from Packages.utils.constants import CURRENT_PROJECT_PREVIEW_FOLDER
+from Packages.utils.constants.constants_old import CURRENT_PROJECT_PREVIEW_FOLDER
 from Packages.utils.logger import init_logger
 
 logger = init_logger(__file__)

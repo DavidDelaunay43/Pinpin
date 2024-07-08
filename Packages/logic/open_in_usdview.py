@@ -1,6 +1,6 @@
 import os
 import subprocess
-from Packages.utils.constants import ROOT_PATH
+from Packages.utils.constants.constants_old import ROOT_PATH
 
 run_usdview_bat_path = os.path.join(ROOT_PATH, 'Scripts', 'run_usdview.bat')
 

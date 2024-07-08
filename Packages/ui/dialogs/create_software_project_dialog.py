@@ -5,7 +5,7 @@ from PySide2.QtWidgets import QDialog, QSizePolicy, QListWidget, QPushButton, QM
 from Packages.logic.create_project import create_project
 from Packages.ui.dialogs import TextEntryDialog
 from Packages.ui.widgets import CustomListWidgetItem
-from Packages.utils.constants import PINPIN_ICON_PATH, ICON_PATH
+from Packages.utils.constants.constants_old import PINPIN_ICON_PATH, ICON_PATH
 
 class SubFolderList(QListWidget):
     

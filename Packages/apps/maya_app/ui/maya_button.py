@@ -4,7 +4,7 @@ from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QPushButton
 from Packages.apps.maya_app.funcs.get_file import (open_maya_file, import_file, reference_file, import_file_with_file_namespace, import_file_with_custom_namespace,
                                                    reference_file_with_file_namespace, reference_file_with_user_namespace)
-from Packages.utils.constants import ICON_PATH
+from Packages.utils.constants.constants_old import ICON_PATH
 
 class MayaButton(QPushButton):
     '''

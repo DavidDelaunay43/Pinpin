@@ -3,7 +3,7 @@ from typing import Literal
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QPushButton
 from Packages.apps.houdini.funcs.get_file import open_houdini_file
-from Packages.utils.constants import ICON_PATH
+from Packages.utils.constants.constants_old import ICON_PATH
 
 class HoudiniButton(QPushButton):
     '''

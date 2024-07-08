@@ -1,11 +1,9 @@
 import os
 from PySide2.QtCore import QSize
-from PySide2.QtGui import QIcon
 from PySide2.QtGui import Qt
 from PySide2.QtWidgets import *
 from Packages.logic.json_funcs import json_to_dict, dict_to_json
-from Packages.logic.file_opener import FileOpener
-from Packages.utils.constants import APPS_JSON_PATH,PREFS
+from Packages.utils.constants.preferences import USER_PREFS, APPS_JSON_PATH
 from Packages.logic.filefunc import open_explorer
         
 class devModeWidget(QWidget):
@@ -72,8 +70,4 @@ class devModeWidget(QWidget):
         dict_to_json(app_dict, APPS_JSON_PATH)
 
     def open_pinpin_user(self):
-        dir = PREFS
-        open_explorer(os.path.dirname(dir))
-        
-        
-
+        open_explorer(os.path.dirname(USER_PREFS))

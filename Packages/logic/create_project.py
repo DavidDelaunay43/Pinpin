@@ -1,6 +1,6 @@
 import os
 import shutil
-from Packages.utils.constants import WORKSPACE_MEL_PATH, EMPTY_MAYA_MA_PATH, EMPTY_NUKE_PATH, EMPTY_HOUDINI_NC_PATH, EMPTY_HOUDINI_PATH
+from Packages.utils.constants.constants_old import WORKSPACE_MEL_PATH, EMPTY_MAYA_MA_PATH, EMPTY_NUKE_PATH, EMPTY_HOUDINI_NC_PATH, EMPTY_HOUDINI_PATH
 
 def create_project(directory: str, parent_directory_name: str, sub_directories: list):
     """

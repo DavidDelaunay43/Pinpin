@@ -1,272 +1,57 @@
 {
-    "Charogne": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "radio_button": null,
+    "04_asset": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     },
-    "Coup de Soleil": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "05_sequence": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     },
-    "Gallimard": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "06_shot": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     },
-    "Lucioles": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "07_comp": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     },
-    "Sleep with the fishes": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "09_publish": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     },
-    "Le Meles": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "10_texture": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     },
-    "Lucky": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "11_cache": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     },
-    "Mecha": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "12_test": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     },
-    "Wilson": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
-    },
-    "Template": {
-        "radio_button": null,
-        "Asset": {
-            "tree_item": null
-        },
-        "Sequence": {
-            "tree_item": null
-        },
-        "Shot": {
-            "tree_item": null
-        },
-        "Publish": {
-            "tree_item": null
-        },
-        "Texture": {
-            "tree_item": null
-        },
-        "Cache": {
-            "tree_item": null
-        },
-        "Test": {
-            "tree_item": null
-        },
-        "Ressource": {
-            "tree_item": null
-        }
+    "02_ressource": {
+        "tree_item": null,
+        "list_item_01": null,
+        "list_item_02": null,
+        "list_item_03": null
     }
 }

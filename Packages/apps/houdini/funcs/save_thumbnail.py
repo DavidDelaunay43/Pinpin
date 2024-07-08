@@ -1,6 +1,6 @@
 import hou
 import os
-from Packages.utils.constants import CURRENT_PROJECT_PREVIEW_FOLDER
+from Packages.utils.constants.constants_old import CURRENT_PROJECT_PREVIEW_FOLDER
 
 def save_thumbnail():
     cur_desktop = hou.ui.curDesktop()

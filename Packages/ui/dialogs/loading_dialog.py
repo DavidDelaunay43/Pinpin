@@ -1,12 +1,11 @@
 
 from PySide2.QtCore import Qt, QSize
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QDialog, QSizePolicy, QLabel, QPushButton, QSpacerItem, QLineEdit, QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLayout, QColorDialog,QScrollArea
-import json
+from PySide2.QtWidgets import QDialog, QSizePolicy, QLabel, QWidget, QVBoxLayout, QLayout
 import os
 
-from Packages.utils.funcs import read_json_file, add_text_to_line_edit, set_style_sheet,get_current,change_current,write_json_file
-from Packages.utils.constants import CURRENT_STYLE ,STYLE_PATH,PALETTE_PATH,PROJECT_JSON_PATH,ICON_PATH,PROJECT_JSON_PATH,DEV_MODE_JSON,APPS_JSON_PATH
+from Packages.utils.funcs import set_style_sheet
+from Packages.utils.constants.project_files import CURRENT_STYLE, STYLE_PATH, PALETTE_PATH, ICON_PATH
 
 
 class loadingDialog(QDialog):

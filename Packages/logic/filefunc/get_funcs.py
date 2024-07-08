@@ -41,17 +41,17 @@ def get_items(directory_path: str, type: Literal['dir', 'file'], exclude_type: l
     return sorted(item_names)
 
 
-def get_dirs(directory_path: str):
+def get_dirs(directory_path: str) -> list[str]:
     print(f'Search directories in directory : {directory_path}')
     return get_items(directory_path=directory_path, type='dir')
     
 
-def get_files(directory_path: str):
+def get_files(directory_path: str) -> list[str]:
     print(f'Search files in directory : {directory_path}')
     return get_items(directory_path=directory_path, type='file', exclude_type = [".txt", '.mel', '.db'])
 
 
-def get_version_file(version: str, parent_directory: str):
+def get_version_file(version: str, parent_directory: str) -> str:
     """
     Renvoie le nom du fichier contenant la version spécifiée dans le répertoire parent.
 
@@ -329,6 +329,8 @@ def get_recent_files_old(directory: str, num: int = 10):
 def get_publish_files(directory: str):
     '''
     '''
+    if not os.path.exists(directory):
+        return []
     
     filepaths = []
     

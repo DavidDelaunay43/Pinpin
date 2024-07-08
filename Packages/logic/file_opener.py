@@ -3,9 +3,36 @@ import os
 import subprocess
 
 from Packages.logic.json_funcs import set_recent_file, get_pref
-from Packages.utils.constants import APPS_JSON_PATH, EXTS, ROOT_PATH
+from Packages.utils.constants.preferences import APPS_JSON_PATH
+from Packages.utils.constants.pinpin import PINPIN_PATH
 from Packages.utils.logger import init_logger
 from Packages.logic.open_in_usdview import open_in_usd_view
+
+EXTS = {
+    ".abc": "fbxreview",
+    ".blend": "blender",
+    ".fbx": "fbxreview",
+    ".kra": "krita",
+    ".hip": "houdini",
+    ".hipnc": "houdini",
+    ".ma": "maya",
+    ".mb": "maya",
+    ".nk": "nuke",
+    ".obj": "fbxreview",
+    ".psd": "photoshop",
+    ".drp": "resolve",
+    ".uasset": "unreal",
+    ".zpr": "zbrush",
+    ".ztl": "zbrush",
+    ".spp": "substance_painter",
+    ".sbs": "substance_designer",
+    ".sbsar": "substance_designer",
+    ".png": "it",
+    ".exr": "it",
+    ".tex": "it",
+    ".usd": "usdview",
+    ".usda": "usdview"
+}
 
 logger = init_logger(__file__)
 
@@ -99,7 +126,7 @@ class FileOpener:
 
         if application == "maya":
             env["QT_PLUGIN_PATH"] = r"C:\Program Files\Autodesk\Maya2023\plugins\platforms"
-            env["PYTHONPATH"] = ROOT_PATH
+            env["PYTHONPATH"] = PINPIN_PATH
 
         if application == 'zbrush':
             file_path = file_path.replace('/', '\\')

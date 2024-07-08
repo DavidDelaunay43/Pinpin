@@ -1,7 +1,7 @@
 from PySide2.QtWidgets import QMenuBar, QAction
 from Packages.ui.widgets.corner_widget import CornerWidget
 from Packages.ui.dialogs.option_dialog import OptionDialog
-from Packages.utils.constants import USERNAME
+from Packages.utils.constants.user import USERNAME
 from Packages.utils.open_documentation import open_documentation
 
 class CustomMenuBar(QMenuBar):

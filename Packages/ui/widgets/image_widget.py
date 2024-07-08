@@ -3,7 +3,8 @@ import sys
 from PySide2.QtCore import Qt
 from PySide2.QtGui import QPixmap, QDropEvent, QImageReader
 from PySide2.QtWidgets import QMenu, QAction, QLabel, QFileDialog
-from Packages.utils.constants import CURRENT_PROJECT_PREVIEW_FOLDER, NO_PREVIEW_FILEPATH, SITE_PACKAGES_PATH
+from Packages.utils.constants.constants_old import NO_PREVIEW_FILEPATH, SITE_PACKAGES_PATH
+from Packages.utils.constants.project_pinpin_data import pinpin_data_PREVIEW
 
 class ImageWidget(QLabel):
     
@@ -17,7 +18,7 @@ class ImageWidget(QLabel):
             self._FILE_PATH = filepath
             self._FILE_NAME = os.path.basename(filepath)
             self._IMAGE_NAME = f'{self._FILE_NAME}.png'
-            self._IMAGE_PATH = os.path.join(CURRENT_PROJECT_PREVIEW_FOLDER, self._IMAGE_NAME)
+            self._IMAGE_PATH = os.path.join(pinpin_data_PREVIEW, self._IMAGE_NAME)
         
         self._set_image()
         self.data = {}
@@ -116,7 +117,7 @@ class ImageWidget(QLabel):
         
         file_name = os.path.basename(file_path)
         
-        preview_image_path = os.path.join(CURRENT_PROJECT_PREVIEW_FOLDER, f'{file_name}.png')
+        preview_image_path = os.path.join(pinpin_data_PREVIEW, f'{file_name}.png')
         
         if os.path.exists(preview_image_path):
             os.remove(preview_image_path)

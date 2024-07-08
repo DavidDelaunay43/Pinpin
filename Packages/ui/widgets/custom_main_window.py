@@ -1,7 +1,8 @@
 import os
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QMainWindow, QDesktopWidget
-from Packages.utils.constants import ICON_PATH, CURRENT_STYLE, STYLE_PATH, PALETTE_PATH, VERSION
+from Packages.utils.constants.project_files import ICON_PATH, CURRENT_STYLE, STYLE_PATH, PALETTE_PATH
+from Packages.utils.constants.version import VERSION
 from Packages.utils.funcs import set_style_sheet
 
 class CustomMainWindow(QMainWindow):

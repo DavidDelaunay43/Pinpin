@@ -1,20 +1,17 @@
 import os
 import json
 from Packages.logic.json_funcs.convert_funcs import json_to_dict, dict_to_json
-from Packages.logic.json_funcs.get_funcs import CURRENT_PROJECT_NAME
-from Packages.utils.funcs import forward_slash
-from Packages.utils.constants import (PROJECT_JSON_PATH, CLICKED_ITEMS_JSON_PATH, FILE_DATA_JSON_PATH,
-                                      RECENT_FILES_JSON, USERNAME)
-from Packages.utils.logger import init_logger
-
-logger = init_logger(__file__)
+from Packages.utils.constants.preferences import RECENT_FILES_JSON_PATH, CLICKED_ITEMS_JSON_PATH
+from Packages.utils.constants.project_pinpin_data import pinpin_data_FILE_DATA, CURRENT_PROJECT_NAME
+from Packages.utils.constants.preferences import CURRENT_PROJECT_JSON_PATH
+from Packages.utils.constants.user import USERNAME
 
 def set_recent_file(file_path: str):
     '''
     '''
     
     # récupérer la liste des fichiers récents dans le .json
-    recent_files_dict = json_to_dict(RECENT_FILES_JSON)
+    recent_files_dict = json_to_dict(RECENT_FILES_JSON_PATH)
     recent_files_list = recent_files_dict['recent_files']
     
     # si le fichier est déjà dans la liste, le placer au début de la liste
@@ -24,7 +21,7 @@ def set_recent_file(file_path: str):
     
     # mettre à jour la liste et l'envoyer dans le .json
     recent_files_dict['recent_files'] = recent_files_list
-    dict_to_json(recent_files_dict, RECENT_FILES_JSON)
+    dict_to_json(recent_files_dict, RECENT_FILES_JSON_PATH)
 
 
 def set_current_project(project_path: str) -> str:
@@ -39,13 +36,13 @@ def set_current_project(project_path: str) -> str:
     
     project_name = os.path.basename(project_path)
     
-    with open(PROJECT_JSON_PATH, 'r') as file:
+    with open(CURRENT_PROJECT_JSON_PATH, 'r') as file:
         project_dict = json.load(file)
     
     project_dict['current_project'] = {project_name: project_path}
     project_dict['projects'][project_name] = project_path
 
-    with open(PROJECT_JSON_PATH, 'w') as file:
+    with open(CURRENT_PROJECT_JSON_PATH, 'w') as file:
         json.dump(project_dict, file, indent=4)
         
     return project_name
@@ -88,8 +85,8 @@ def update_file_data(file_path: str, comment_string: str = '') -> None:
     '''
     '''
     
-    file_path = forward_slash(file_path)
-    file_infos_dict = json_to_dict(FILE_DATA_JSON_PATH)
+    file_path = file_path.replace('\\', '/')
+    file_infos_dict = json_to_dict(pinpin_data_FILE_DATA)
     
     if not file_path in file_infos_dict.keys():
         file_infos_dict[file_path] = {'comment': None, 'user': None}
@@ -100,6 +97,4 @@ def update_file_data(file_path: str, comment_string: str = '') -> None:
     if bool(comment_string.strip()):
         file_infos_dict[file_path]['comment'] = comment_string
         
-    dict_to_json(file_infos_dict, FILE_DATA_JSON_PATH)
-    
-    logger.info(f'Update file data :\n comment: {comment_string}\n user : {USERNAME}')
+    dict_to_json(file_infos_dict, pinpin_data_FILE_DATA)

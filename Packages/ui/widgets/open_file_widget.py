@@ -5,8 +5,35 @@ from PySide2.QtGui import Qt
 from PySide2.QtWidgets import QPushButton, QWidget, QHBoxLayout, QFileDialog
 from Packages.logic.json_funcs import json_to_dict, dict_to_json
 from Packages.logic.file_opener import FileOpener
-from Packages.utils.constants import ICON_PATH, EXTS, APPS_JSON_PATH
-        
+from Packages.utils.constants.project_files import ICON_PATH
+from Packages.utils.constants.preferences import APPS_JSON_PATH
+
+EXTS = {
+    ".abc": "fbxreview",
+    ".blend": "blender",
+    ".fbx": "fbxreview",
+    ".kra": "krita",
+    ".hip": "houdini",
+    ".hipnc": "houdini",
+    ".ma": "maya",
+    ".mb": "maya",
+    ".nk": "nuke",
+    ".obj": "fbxreview",
+    ".psd": "photoshop",
+    ".drp": "resolve",
+    ".uasset": "unreal",
+    ".zpr": "zbrush",
+    ".ztl": "zbrush",
+    ".spp": "substance_painter",
+    ".sbs": "substance_designer",
+    ".sbsar": "substance_designer",
+    ".png": "it",
+    ".exr": "it",
+    ".tex": "it",
+    ".usd": "usdview",
+    ".usda": "usdview"
+}
+
 class OpenFileWidget(QWidget):
     
     def __init__(self, parent = None, file_directory = None) -> None:

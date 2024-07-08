@@ -1,15 +1,12 @@
-import json
 import os
 from PySide2.QtCore import Qt, QSize
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import (QDialog, QSizePolicy, QLabel, QPushButton, QSpacerItem, QLineEdit, 
                                QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLayout, QCheckBox,
                                QColorDialog,QScrollArea,QTabWidget, QGridLayout)
-from Packages.utils.funcs import (read_json_file, add_text_to_line_edit, set_style_sheet,
-                                  get_current, change_current, write_json_file) 
-from Packages.utils.constants import (CURRENT_STYLE, STYLE_PATH, PALETTE_PATH, PROJECT_JSON_PATH,
-                                      ICON_PATH, PROJECT_JSON_PATH, DEV_MODE_JSON, APPS_JSON_PATH,
-                                      UI_PREFS_JSON_PATH, SPECIAL_UI_JSON)
+from Packages.utils.funcs import read_json_file, add_text_to_line_edit, set_style_sheet, write_json_file
+from Packages.utils.constants.preferences import UI_PREFS_JSON_PATH, APPS_JSON_PATH
+from Packages.utils.constants.project_files import CURRENT_STYLE, STYLE_PATH, PALETTE_PATH, ICON_PATH
 from Packages.utils.logger import init_logger
 
 logger = init_logger(__file__)
@@ -407,8 +404,8 @@ class OptionDialog(QDialog):
         self.num_files_line_edit.setText(str(num_files))
 
     def fill_project_combobox(self,combo_box):
-
-        with open(PROJECT_JSON_PATH, 'r') as file:
+        pass
+        """with open(PROJECT_JSON_PATH, 'r') as file:
             project_json = json.load(file)
 
         projects = project_json["projects"]
@@ -417,7 +414,7 @@ class OptionDialog(QDialog):
         for i in projects.keys():
             combo_box.addItem(i)
 
-        combo_box.setCurrentText(current_project)
+        combo_box.setCurrentText(current_project)"""
 
 #UTILS
     def showColorDialog(self):
@@ -476,8 +473,8 @@ class OptionDialog(QDialog):
         write_json_file(PALETTE_PATH,"COLOR_4",self.color_4_line_edit.text())
         
     def change_ui_special_state(self):
-
-        with open(SPECIAL_UI_JSON, 'r') as file:
+        pass
+        """with open(SPECIAL_UI_JSON, 'r') as file:
             special_ui_data = json.load(file)
         old_special_ui=self.get_special_ui_state()
 
@@ -496,13 +493,14 @@ class OptionDialog(QDialog):
         if new_special_ui == 0:
             logger.info("special ui is disabled.")
         else :
-            logger.info("special ui is enabled.")
+            logger.info("special ui is enabled.")"""
             
     def get_special_ui_state(self):
-        with open(SPECIAL_UI_JSON, 'r') as file:
+        pass
+        """with open(SPECIAL_UI_JSON, 'r') as file:
             special_ui_data = json.load(file)
         special_ui=special_ui_data["special_ui"]
-        return special_ui
+        return special_ui"""
 
     def write_apps(self):
 
@@ -524,22 +522,22 @@ class OptionDialog(QDialog):
         set_style_sheet(papa,style_path,PALETTE_PATH)
 
     def change_current_project(self,current_project):
-        
-        old_current_project=get_current(PROJECT_JSON_PATH,"current_project")
+        pass
+        """old_current_project=get_current_value(PROJECT_JSON_PATH,"current_project")
         old_current_project=list(old_current_project.keys())[0]
         print(old_current_project)
         change_current(PROJECT_JSON_PATH,"current_project","projects",current_project)
-        new_current_project=get_current(PROJECT_JSON_PATH,"current_project")
+        new_current_project=get_current_value(PROJECT_JSON_PATH,"current_project")
         new_current_project=list(new_current_project.keys())[0]
 
-        print("change from the project",old_current_project,"to",new_current_project)
+        print("change from the project",old_current_project,"to",new_current_project)"""
 
     def update_current_project(self):
         self.change_current_project(self.project_combo_box.currentText())
     
     def change_dev_mode_state(self):
-
-        with open(DEV_MODE_JSON, 'r') as file:
+        pass
+        """with open(DEV_MODE_JSON, 'r') as file:
             dev_mode_data = json.load(file)
 
         old_dev_mode=self.get_dev_mode_state()
@@ -561,15 +559,16 @@ class OptionDialog(QDialog):
         if new_dev_mode == 0:
             print("dev mode is desactivate")
         else :
-            print("dev mode is activate")
+            print("dev mode is activate")"""
         
     def get_dev_mode_state(self):
-        with open(DEV_MODE_JSON, 'r') as file:
+        pass
+        """with open(DEV_MODE_JSON, 'r') as file:
             dev_mode_data = json.load(file)
 
         dev_mode=dev_mode_data["dev_mode"]
 
-        return dev_mode
+        return dev_mode"""
 
     def update_line_edit(self):
         palette = read_json_file(PALETTE_PATH)

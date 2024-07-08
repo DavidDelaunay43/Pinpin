@@ -1,5 +1,25 @@
 import os
 import json
+import re
+
+def find_directory(parent_directory: str, directory_string: str, return_type: str = 'str', exclude_strings = []) -> str:
+        directories: list[str] = os.listdir(parent_directory)
+        directories_to_return = []
+        for dir in directories:
+            if dir.startswith(directory_string):
+                if dir in exclude_strings:
+                        continue
+                if return_type == 'str':
+                    return dir
+                else:
+                    directories_to_return.append(dir)
+        return directories_to_return
+
+
+def is_four_digits(string: str):
+    '''
+    '''
+    return bool(re.match(r'^\d{4}$', string))
 
 def forward_slash(file_path: str):
     '''
@@ -36,14 +56,23 @@ def get_list(json_file: str, key: str):
         
     return styles_list
 
-def get_current(json_file: str, key: str):
+def get_current_value(json_file: str, key: str, fail_return: str = 'none'):
     """
     """
     
+    if not os.path.exists(json_file):
+        if fail_return == 'none':
+            return
+        else:
+            return ''
+    
     with open(json_file, 'r') as file:
-        style_dict = json.load(file)
-    current_style = style_dict[key]
-    return current_style
+        dictionnary: dict = json.load(file)
+        
+    if not key in dictionnary.keys():
+        return
+    
+    return dictionnary[key]
 
 def change_current(json_file: str,json_current_dict_name: str,json_other_dict_name: str, new_current_name: str):
     """
