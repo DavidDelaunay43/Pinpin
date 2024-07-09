@@ -10,6 +10,7 @@ from Packages.utils.constants.project_pinpin_data import BLANK_PINPIN_DATA, pinp
 class InitProject(QDialog):
     
     PROJECT = ''
+    ACCEPTED = False
     
     def __init__(self, parent=None) -> None:
         super().__init__(parent)
@@ -68,4 +69,5 @@ class InitProject(QDialog):
         project_dict: dict = json_to_dict(CURRENT_PROJECT_JSON_PATH)
         project_dict['current_project'] = self.PROJECT
         dict_to_json(dictionary=project_dict, json_file_path=CURRENT_PROJECT_JSON_PATH)
+        self.ACCEPTED = True
         self.accept()

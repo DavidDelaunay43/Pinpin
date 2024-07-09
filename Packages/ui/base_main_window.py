@@ -20,7 +20,7 @@ from PySide2.QtWidgets import (
                                QListWidget
                                )
 
-from Packages.utils.constants.project_pinpin_data import CURRENT_PROJECT, CURRENT_PROJECT_JSON_PATH, pinpin_data_ICONS
+from Packages.utils.constants.project_pinpin_data import CURRENT_PROJECT, pinpin_data_ICONS
 from Packages.utils.constants.project_files import ICON_PATH
 from Packages.ui.dialogs import (
                                  TextEntryDialog,
@@ -37,9 +37,7 @@ from Packages.logic.json_funcs import (
                                        )
 from Packages.logic.filefunc import clean_directory, open_explorer, increment_file_external
 from Packages.logic.file_opener import FileOpener
-from Packages.utils.funcs import get_current_value
 from Packages.utils.logger import init_logger
-from Packages.utils.init_project import InitProject
 
 logger = init_logger(__file__)
 
@@ -49,11 +47,8 @@ class BaseMainWindow(CustomMainWindow):
     def __init__(self, parent = None, set_style: bool = False):
         super(BaseMainWindow, self).__init__(parent, set_style)
         
-        if CURRENT_PROJECT == '':
-            init_project_dialog = InitProject()
-            init_project_dialog.exec_()
-        self.PROJECT_PATH = get_current_value(CURRENT_PROJECT_JSON_PATH, 'current_project')
-        self.PROJECT_NAME = os.path.basename(self.PROJECT_PATH)
+        self.PROJECT_PATH = CURRENT_PROJECT
+        self.PROJECT_NAME = os.path.basename(CURRENT_PROJECT)
         
         self.current_directory = None
 

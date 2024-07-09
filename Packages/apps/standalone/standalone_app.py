@@ -1,10 +1,11 @@
 import os
 import shutil
 import sys
-from PySide2.QtWidgets import QApplication
+from PySide2.QtWidgets import QApplication, QDialog
 from Packages.apps.standalone.main_window_standalone import MainWindowStandalone
 from Packages.logic.json_funcs.convert_funcs import dict_to_json
 from Packages.utils.constants.version import VERSION, USER_VERSION
+from Packages.utils.constants.project_pinpin_data import CURRENT_PROJECT
 from Packages.utils.constants.preferences import (
     USER_PREFS, BLANK_PREFS,
     VERSION_JSON_PATH, BLANK_VERSION_JSON_PATH,
@@ -23,6 +24,7 @@ from Packages.utils.constants.houdini_pref import (
     HOUDINI_SHELF_PATH, HOUDINI_MENU_PATH
 )
 from Packages.utils.app_finder import AppFinder
+from Packages.utils.init_project import InitProject
 
 #logger = init_logger(__file__)
 
@@ -38,6 +40,15 @@ class PinpinApp(QApplication):
         super(PinpinApp, self).__init__(argv)
         self.check_pref()
         self.find_apps()
+        
+        if CURRENT_PROJECT == '':
+            init_project_dialog = InitProject()
+            init_project_dialog.exec_()
+            
+            if not init_project_dialog.ACCEPTED:
+                self.quit()
+                sys.exit(0)
+                
         self.create_main_window()
         
         
