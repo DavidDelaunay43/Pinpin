@@ -38,6 +38,8 @@ from Packages.logic.json_funcs import (
 from Packages.logic.filefunc import clean_directory, open_explorer, increment_file_external
 from Packages.logic.file_opener import FileOpener
 from Packages.utils.logger import init_logger
+from Packages.utils.funcs import get_current_value
+from Packages.utils.constants.preferences import CURRENT_PROJECT_JSON_PATH
 
 logger = init_logger(__file__)
 
@@ -47,8 +49,8 @@ class BaseMainWindow(CustomMainWindow):
     def __init__(self, parent = None, set_style: bool = False):
         super(BaseMainWindow, self).__init__(parent, set_style)
         
-        self.PROJECT_PATH = CURRENT_PROJECT
-        self.PROJECT_NAME = os.path.basename(CURRENT_PROJECT)
+        self.PROJECT_PATH = get_current_value(json_file=CURRENT_PROJECT_JSON_PATH, key='current_project')
+        self.PROJECT_NAME = os.path.basename(self.PROJECT_PATH)
         
         self.current_directory = None
 

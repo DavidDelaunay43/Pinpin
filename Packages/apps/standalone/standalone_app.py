@@ -54,7 +54,11 @@ class PinpinApp(QApplication):
         
     def find_apps(self):
         apps_dict = AppFinder().app_dict
-        dict_to_json(dictionary=apps_dict, json_file_path=APPS_JSON_PATH)
+        #dict_to_json(dictionary=apps_dict, json_file_path=APPS_JSON_PATH)
+        import json
+        
+        with open(APPS_JSON_PATH, 'w', encoding = 'utf-8') as file:
+            json.dump(apps_dict, file, indent = 4, ensure_ascii = False)
     
 
     def check_pref(self):
