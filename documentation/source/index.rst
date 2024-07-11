@@ -12,6 +12,7 @@ Pinpin is a pipeline manager created for ESMA Montpellier 2023-2024 films.
 
 Installation
 ==================
+Go to this url : https://github.com/DavidDelaunay43/Pinpin/tree/install
 
 Standalone
 ==================
