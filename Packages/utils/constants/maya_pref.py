@@ -35,3 +35,4 @@ MAYA_SHELF_PATH = os.path.join(MAYA_YEAR_PATH, 'prefs', 'shelves')
 MAYA_MENU_PATH = os.path.join(MAYA_YEAR_PATH, 'prefs', 'markingMenus')
 MAYA_SCRIPTS_PATH = os.path.join(MAYA_YEAR_PATH, 'scripts')
 MAYA_ICON_PATH = os.path.join(MAYA_YEAR_PATH, 'prefs', 'icons')
+
