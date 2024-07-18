@@ -26,6 +26,8 @@ Pinpin 1.1.4 Documentation
     --------
 
 .. toctree::
+   :maxdepth: 2
+   :numbered: 2
 
    installation
    standalone
