@@ -28,4 +28,4 @@ Pinpin 1.1.4 Documentation
    maya
    houdini
 
-.. sphinx-build E:\Art\3D\Dev\Pinpin\documentation\source E:\Art\3D\Dev\Pinpin\documentation\html index.rst
+.. sphinx-build E:\Art\3D\Dev\Pinpin\documentation\source E:\Art\3D\Dev\Pinpin\documentation\html E:\Art\3D\Dev\Pinpin\documentation\source\index.rst
