@@ -22,5 +22,11 @@ class JsonFile:
         return
     
     
-    def get_value(self, key: str):
+    def get_value(self, key: str) -> int | str:
         return self.json_to_dict().get(key)
+    
+    
+    def set_value(self, key: str, value: int | str) -> None:
+        dictionnary: dict = self.json_to_dict()
+        dictionnary[key] = value
+        self.dict_to_json(dictionnary)
