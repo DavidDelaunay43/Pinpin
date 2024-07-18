@@ -3,6 +3,14 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+.. image::
+   ../images/pinpin_icon.png
+
+
+==================================
+Pinpin 1.1.4 documentation
+==================================
+
 Introduction
 ==================================
 
