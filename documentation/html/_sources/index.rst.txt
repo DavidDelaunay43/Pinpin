@@ -27,3 +27,5 @@ Pinpin 1.1.4 Documentation
    standalone
    maya
    houdini
+
+.. sphinx-build E:\Art\3D\Dev\Pinpin\documentation\source E:\Art\3D\Dev\Pinpin\documentation\html index.rst
