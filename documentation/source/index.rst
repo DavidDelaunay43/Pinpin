@@ -8,7 +8,7 @@
 
 
 ==================================
-Pinpin 1.1.4 documentation
+Pinpin 1.1.4 Documentation
 ==================================
 
 .. only:: not latex
@@ -20,28 +20,13 @@ Pinpin 1.1.4 documentation
 
 ------------
 
-Introduction
-==================================
+.. only:: not latex
 
-Pinpin is a pipeline manager created for ESMA Montpellier 2023-2024 films.
+    Contents
+    --------
 
-Installation
-==================
-Go to this url : https://github.com/DavidDelaunay43/Pinpin/tree/install \\
-Download installer and follow instructions.
+.. toctree::
 
-Standalone
-==================
-
-Maya
-==================
-Description maya Pinpin
-
-.. _Alembic workflow:
-
-Alembic workflow
-----------------
-Description du workflow Alembic dans Maya.
-
-Houdini
-==================
+   installation
+   standalone
+   maya
