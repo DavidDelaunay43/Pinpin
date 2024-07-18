@@ -4,12 +4,21 @@
    contain the root `toctree` directive.
 
 .. image::
-   ../images/pinpin_icon.png
+   ../images/pinpin_image.png
 
 
 ==================================
 Pinpin 1.1.4 documentation
 ==================================
+
+.. only:: not latex
+
+   Pinpin is a pipeline manager created for ESMA Montpellier 2023-2024 films.
+
+   Quick Links : `GitHub repository <https://github.com/DavidDelaunay43/Pinpin>`_ /
+   `Demo video <https://drive.google.com/file/d/10YehbPR1uPyZ06t0iNpxC801drbTmxbr/view?usp=sharing>`_
+
+------------
 
 Introduction
 ==================================
