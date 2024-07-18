@@ -20,15 +20,10 @@ Pinpin 1.1.4 Documentation
 
 ------------
 
-.. only:: not latex
-
-    Contents
-    --------
-
 .. toctree::
    :maxdepth: 2
-   :numbered: 2
 
    installation
    standalone
    maya
+   houdini
