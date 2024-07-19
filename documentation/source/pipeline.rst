@@ -11,31 +11,36 @@ Here is the structure of the parent directories of an ESMA Montpellier film:
 .. list-table::
 
     * - **.pinpin_data**
-    * - 00_managment
-    * - 01_externalData
-    * - 02_ressources
-    * - 03_preprod
-    * - 04_asset
-    * - 05_sequence
-    * - 06_shot
-    * - 07_comp
-    * - 08_editing
-    * - 09_publish
-    * - 10_texture
-    * - 11_cache
-    * - 12_test
-    * - 13_jury
-    * - 14_com
+    * - **00_managment**
+    * - **01_externalData**
+    * - **02_ressources**
+    * - **03_preprod**
+    * - **04_asset**
+    * - **05_sequence**
+    * - **06_shot**
+    * - **07_comp**
+    * - **08_editing**
+    * - **09_publish**
+    * - **10_texture**
+    * - **11_cache**
+    * - **12_test**
+    * - **13_jury**
+    * - **14_com**
 
 When you set your project, Pinpin will copy this directory **.pinpin_data** to the root of the project:
 
 .. list-table::
 
     * - **preview**
+      - contains png thumbnails of files
     * - **icons**
-    * - **file_data.json**
-    * - **prefix.json**
-    * - **variants.json**
+      - contains asset icons (optionnal)
+    * - file_data.json
+      - comments associated with the files 
+    * - prefix.json
+      - prefix of the project (optionnal)
+    * - variants.json
+      - variants for publish asset (optionnal)
 
 ------------
 
@@ -44,9 +49,7 @@ Asset
 
 Assets are sorted by these categories:
 
-* 04_asset
-
-.. list-table:: 
+.. list-table::
    :header-rows: 1
 
    * - Asset type
@@ -79,24 +82,56 @@ Assets are sorted by these categories:
 
 For each asset, the departments are sorted by name, software and department:
 
-* 01_character
-    * <assetName>
-        * houdini
-        * mari
-        * marvelous
-        * maya 
-        * substance
-        * zbrush 
+.. list-table::
+    :header-rows: 1
 
-The folder **maya** is a maya project, with these departments : modeling (geo), lookdev (ldv), rigging (rig):
+    * - Asset type
+      - Asset name
+      - Software project
+    * - 
+      - 
+      - **houdini**
+    * - 
+      - 
+      - **mari**
+    * - 
+      - 
+      - **marvelous**
+    * - 
+      - 
+      - **maya**
+    * - 
+      - 
+      - **substance**
+    * - 
+      - 
+      - **zbrush**
 
-* <assetName>
-    * maya 
-        * scenes
-            * geo
-            * ldv
-            * rig
-        * workspace.mel
+For example, the folder **maya** is a maya project, with these departments : modeling (geo), lookdev (ldv), rigging (rig):
+
+.. list-table::
+    :header-rows: 1
+
+    * - Asset name
+      - Software project
+      - Software folder
+      - Department
+    * - **marcel**
+      - **maya**
+      - **scenes**
+      - **geo**
+    * - 
+      - 
+      - 
+      - **ldv**
+    * - 
+      - 
+      - 
+      - **rig**
+    * - 
+      - 
+      - workspace.mel
+      - 
 
 Here is an example of an asset file nomenclature:
 
@@ -131,7 +166,7 @@ Here is an example of an asset file nomenclature:
 * chr : abbreviation of the asset type in three lower case letters.
 * marcel : asset name.
 * geo : abbreviation of the department in three lower case letters.
-* E : abbreviation for **Edit** because the asset is in edition.
+* E : abbreviation for *Edit* because the asset is in edition.
 * 001 : increment.
 * .ma : file extension.
 
@@ -229,9 +264,9 @@ The publish directory is divided into these directories:
 
 .. list-table::
 
-   * - asset
-   * - sequence 
-   * - shot
+   * - **asset**
+   * - **sequence**
+   * - **shot**
 
 Asset publish
 ^^^^^^^^^^^^^
@@ -240,24 +275,24 @@ The asset publish directory is divided into these directories:
 
 .. list-table::
 
-   * - 01_character
-   * - 02_prop
-   * - 03_item
-   * - 04_enviro
-   * - 05_module
-   * - 06_diorama
-   * - 07_fx
-   * - 08_camera
+   * - **01_character**
+   * - **02_prop**
+   * - **03_item**
+   * - **04_enviro**
+   * - **05_module**
+   * - **06_diorama**
+   * - **07_fx**
+   * - **08_camera**
 
 Each asset type directory is divied in to these directories:
 
 .. list-table::
 
-   * - clo 
-   * - geo
-   * - grm
-   * - ldv 
-   * - rig
+   * - **clo** 
+   * - **geo**
+   * - **grm**
+   * - **ldv** 
+   * - **rig**
 
 Here is an example of a published file tree:
 
@@ -281,7 +316,7 @@ Here is an example of a published file tree:
      - CDS_chr_petru_geo_P.ma
      -
    * - 
-     - *OLD*
+     - **OLD**
      - CDS_chr_chauvesouris_geo_P_001.ma
    * - 
      - 
@@ -309,7 +344,7 @@ Here is an example of a published file tree:
      - CDS_chr_petru_ldv_P.ma
      -
    * - 
-     - *OLD*
+     - **OLD**
      - 
    
    * - **rig**
@@ -325,5 +360,5 @@ Here is an example of a published file tree:
      - CDS_chr_petru_rig_P.ma
      -
    * - 
-     - *OLD*
+     - **OLD**
      - 
