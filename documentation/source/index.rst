@@ -24,6 +24,7 @@ Pinpin 1.1.4 Documentation
    :maxdepth: 10
 
    installation
+   pipeline
    standalone
    maya
    houdini
