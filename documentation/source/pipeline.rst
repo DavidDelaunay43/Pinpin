@@ -251,3 +251,64 @@ Each asset type directory is divied in to these directories:
    * - grm
    * - ldv 
    * - rig
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - department directory
+     - publish file
+     - old publish file
+    
+   * - **geo**
+     - CDS_chr_chauvesouris_geo_P.ma
+     - 
+   * - 
+     - CDS_chr_marcel_geo_P.ma
+     - 
+   * - 
+     - CDS_chr_marcelBob_geo_P.ma
+     - 
+   * - 
+     - CDS_chr_petru_geo_P.ma
+     -
+   * - *old*
+     - 
+     - CDS_chr_chauvesouris_geo_P_001.ma
+   * - 
+     - 
+     - CDS_chr_chauvesouris_geo_P_002.ma
+   * - 
+     - 
+     - CDS_chr_marcel_geo_P_001.ma
+   * - 
+     - 
+     - CDS_chr_marcelBob_geo_P_001.ma
+   * - 
+     - 
+     - CDS_chr_petru_geo_P_001.ma
+   
+   * - **ldv**
+     - CDS_chr_chauvesouris_ldv_P.ma
+     -
+   * -
+     - CDS_chr_marcel_ldv_P.ma
+     -
+   * -
+     - CDS_chr_marcelBob_ldv_P.ma
+     -
+   * -
+     - CDS_chr_petru_ldv_P.ma
+     -
+   
+   * - **rig**
+     - CDS_chr_chauvesouris_rig_P.ma
+     -
+   * -
+     - CDS_chr_marcel_rig_P.ma
+     -
+   * -
+     - CDS_chr_marcelBob_rig_P.ma
+     -
+   * -
+     - CDS_chr_petru_rig_P.ma
+     -
