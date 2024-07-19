@@ -88,8 +88,8 @@ For each asset, the departments are sorted by name, software and department:
     * - Asset type
       - Asset name
       - Software project
-    * - 
-      - 
+    * - 01_character
+      - marcel
       - **houdini**
     * - 
       - 
