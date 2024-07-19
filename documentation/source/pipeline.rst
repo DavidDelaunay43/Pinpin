@@ -8,32 +8,34 @@ Pipeline
 
 Here is the structure of the parent directories of an ESMA Montpellier film:
 
-* <FILM_NAME>
-    * **.pinpin_data**
-    * 00_managment
-    * 01_externalData
-    * 02_ressources
-    * 03_preprod
-    * 04_asset
-    * 05_sequence
-    * 06_shot
-    * 07_comp
-    * 08_editing
-    * 09_publish
-    * 10_texture
-    * 11_cache
-    * 12_test
-    * 13_jury
-    * 14_com
+.. list-table::
 
-When you set your project, Pinpin will copy this directory to the root of the project :
+    * - **.pinpin_data**
+    * - 00_managment
+    * - 01_externalData
+    * - 02_ressources
+    * - 03_preprod
+    * - 04_asset
+    * - 05_sequence
+    * - 06_shot
+    * - 07_comp
+    * - 08_editing
+    * - 09_publish
+    * - 10_texture
+    * - 11_cache
+    * - 12_test
+    * - 13_jury
+    * - 14_com
 
-* **.pinpin_data**
-    * **preview**
-    * **icons**
-    * **file_data.json**
-    * **prefix.json**
-    * **variants.json**
+When you set your project, Pinpin will copy this directory **.pinpin_data** to the root of the project :
+
+.. list-table::
+
+    * - **preview**
+    * - **icons**
+    * - **file_data.json**
+    * - **prefix.json**
+    * - **variants.json**
 
 ------------
 
@@ -132,6 +134,84 @@ Here is an example of an asset file nomenclature :
 * E : abbreviation for **Edit** because the asset is in edition.
 * 001 : increment.
 * .ma : file extension.
+
+------------
+
+Sequence
+========
+
+Here is an example of an shot file nomenclature :
+
+* CDS_seq010_masterLayout_E_001.ma
+
+------------
+
+Shot
+====
+
+Here is an example of an shot file nomenclature :
+
+* CDS_seq010_sh010_anim_E_001.ma
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - PREFIX
+     - sequenceNum
+     - shotNum
+     - department
+     - step
+     - increment
+     - extension
+   * - CDS
+     - seq010
+     - sh010
+     - anim
+     - E
+     - 001
+     - .ma
+   * - CDS
+     - seq010
+     - sh010
+     - confo
+     - E
+     - 001
+     - .ma
+   * - CDS
+     - seq010
+     - sh010
+     - cloth
+     - E
+     - 001
+     - .ma
+   * - CDS
+     - seq010
+     - sh010
+     - fx
+     - E
+     - 001
+     - .ma
+   * - CDS
+     - seq010
+     - sh010
+     - layout
+     - E
+     - 001
+     - .ma
+   * - CDS
+     - seq010
+     - sh010
+     - lighting
+     - E
+     - 001
+     - .ma
+   * - CDS
+     - seq010
+     - sh010
+     - render
+     - E
+     - 001
+     - .ma
 
 ------------
 
