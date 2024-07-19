@@ -98,6 +98,8 @@ The folder **maya** is a maya project, with these departments : modeling (geo), 
 
 Here is an example of an asset file nomenclature :
 
+* CDS_chr_marcel_geo_E_001.ma
+
 .. list-table:: 
    :header-rows: 1
 
@@ -115,9 +117,13 @@ Here is an example of an asset file nomenclature :
      - E
      - 001
      - .ma
-
-* <PREFIX>_<assetType>_<assetName>_<department>_<step>_<increment>.<extension>
-* CDS_chr_marcel_geo_E_001.ma
+   * - CDS
+     - chr
+     - marcelBob
+     - geoLo
+     - E
+     - 004
+     - .ma
 
 * CDS : prefix corresponding to the title of the film in 3 capital letters.
 * chr : abbreviation of the asset type in three lower case letters.
@@ -126,3 +132,42 @@ Here is an example of an asset file nomenclature :
 * E : abbreviation for **Edit** because the asset is in edition.
 * 001 : increment.
 * .ma : file extension.
+
+------------
+
+Publish
+=======
+
+The publish directory is divided into these directories :
+
+.. list-table::
+
+   * - asset
+   * - sequence 
+   * - shot
+
+Asset 
+-----
+
+The asset directory is divided into these directories :
+
+.. list-table::
+
+   * - 01_character
+   * - 02_prop
+   * - 03_item
+   * - 04_enviro
+   * - 05_module
+   * - 06_diorama
+   * - 07_fx
+   * - 08_camera
+
+Each asset type directory is divied in to these directories :
+
+.. list-table::
+
+   * - clo 
+   * - geo
+   * - grm
+   * - ldv 
+   * - rig
