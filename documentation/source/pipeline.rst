@@ -67,10 +67,10 @@ Here is an example of an asset file nomenclature :
     * <PREFIX>_<assetType>_<assetName>_<department>_<step>_<increment>.<extension>
     * CDS_chr_marcel_geo_E_001.ma
 
-CDS : prefix corresponding to the title of the film in 3 capital letters.
-chr : abbreviation of the asset type in three lower case letters.
-marcel : asset name.
-geo : abbreviation of the department in three lower case letters.
-E : abbreviation for *Edit* because the asset is in edition.
-001 : increment.
-.ma : file extension.
+* CDS : prefix corresponding to the title of the film in 3 capital letters.
+* chr : abbreviation of the asset type in three lower case letters.
+* marcel : asset name.
+* geo : abbreviation of the department in three lower case letters.
+* E : abbreviation for *Edit* because the asset is in edition.
+* 001 : increment.
+* .ma : file extension.
