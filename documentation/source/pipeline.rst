@@ -31,14 +31,37 @@ When you set your project, Pinpin will copy this directory to the root of the pr
 Assets are sorted by these categories :
 
 * 04_asset
-    * 01_character **chr** *animated character*
-    * 02_prop **prp** *animated object*
-    * 03_item **itm** *static object*
-    * 04_enviro **env** *location, outdoor or indoor environment*
-    * 05_module **mod** *assembly of items, whether in an enviro*
-    * 06_diorama **drm** *assembly test scene*
-    * 07_fx **fx** *reusable fx (volume, fluid, grass...)*
-    * 08_camera **cam** camera rig*
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - ID
+     - Abbreviation
+     - Description
+   * - 01_character
+     - **chr**
+     - *animated character*
+   * - 02_prop
+     - **prp**
+     - *animated object*
+   * - 03_item
+     - **itm**
+     - *static object*
+   * - 04_enviro
+     - **env**
+     - *location, outdoor or indoor environment*
+   * - 05_module
+     - **mod**
+     - *assembly of items, whether in an enviro*
+   * - 06_diorama
+     - **drm**
+     - *assembly test scene*
+   * - 07_fx
+     - **fx**
+     - *reusable fx (volume, fluid, grass...)*
+   * - 08_camera
+     - **cam**
+     - *camera rig*
 
 For each asset, the departments are sorted by name, software and department :
 
