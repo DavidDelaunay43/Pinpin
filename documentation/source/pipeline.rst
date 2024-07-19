@@ -10,6 +10,10 @@ Here is the structure of the parent directories of an ESMA Montpellier film:
 
 * <FILM_NAME>
     * **.pinpin_data**
+    * 00_managment
+    * 01_externalData
+    * 02_ressources
+    * 03_preprod
     * 04_asset
     * 05_sequence
     * 06_shot
@@ -18,15 +22,23 @@ Here is the structure of the parent directories of an ESMA Montpellier film:
     * 09_publish
     * 10_texture
     * 11_cache
+    * 12_test
+    * 13_jury
+    * 14_com
 
 When you set your project, Pinpin will copy this directory to the root of the project :
 
 * **.pinpin_data**
     * **preview**
-    * **icon**
+    * **icons**
     * **file_data.json**
     * **prefix.json**
     * **variants.json**
+
+------------
+
+Asset
+=====
 
 Assets are sorted by these categories :
 
@@ -35,7 +47,7 @@ Assets are sorted by these categories :
 .. list-table:: 
    :header-rows: 1
 
-   * - ID
+   * - Asset type
      - Abbreviation
      - Description
    * - 01_character
@@ -66,7 +78,7 @@ Assets are sorted by these categories :
 For each asset, the departments are sorted by name, software and department :
 
 * 01_character
-    * <charName>
+    * <assetName>
         * houdini
         * mari
         * marvelous
@@ -76,7 +88,7 @@ For each asset, the departments are sorted by name, software and department :
 
 The folder **maya** is a maya project, with these departments : modeling (geo), lookdev (ldv), rigging (rig) :
 
-* <charName>
+* <assetName>
     * maya 
         * scenes
             * geo
@@ -86,14 +98,31 @@ The folder **maya** is a maya project, with these departments : modeling (geo), 
 
 Here is an example of an asset file nomenclature :
 
-* geo
-    * <PREFIX>_<assetType>_<assetName>_<department>_<step>_<increment>.<extension>
-    * CDS_chr_marcel_geo_E_001.ma
+.. list-table:: 
+   :header-rows: 1
+
+   * - PREFIX
+     - assetType
+     - assetName
+     - department
+     - step
+     - increment
+     - extension
+   * - CDS
+     - chr
+     - marcel
+     - geo
+     - E
+     - 001
+     - .ma
+
+* <PREFIX>_<assetType>_<assetName>_<department>_<step>_<increment>.<extension>
+* CDS_chr_marcel_geo_E_001.ma
 
 * CDS : prefix corresponding to the title of the film in 3 capital letters.
 * chr : abbreviation of the asset type in three lower case letters.
 * marcel : asset name.
 * geo : abbreviation of the department in three lower case letters.
-* E : abbreviation for *Edit* because the asset is in edition.
+* E : abbreviation for **Edit** because the asset is in edition.
 * 001 : increment.
 * .ma : file extension.
