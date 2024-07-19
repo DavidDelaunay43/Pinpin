@@ -140,7 +140,7 @@ Here is an example of an asset file nomenclature:
 Sequence
 --------
 
-Here is an example of an shot file nomenclature:
+Here is an example of a sequence file nomenclature:
 
 * CDS_seq010_masterLayout_E_001.ma
 
@@ -149,7 +149,7 @@ Here is an example of an shot file nomenclature:
 Shot
 ----
 
-Here is an example of an shot file nomenclature:
+Here is an example of a shot file nomenclature:
 
 * CDS_seq010_sh010_anim_E_001.ma
 
@@ -218,6 +218,13 @@ Here is an example of an shot file nomenclature:
 Publish
 -------
 
+.. important::
+    A published file must not contain any references.
+    Pinpin automatically publishes an asset by importing the references.
+
+.. tip::
+    Before publishing an asset, make sure you have removed any unnecessary namespaces.
+
 The publish directory is divided into these directories:
 
 .. list-table::
@@ -226,10 +233,10 @@ The publish directory is divided into these directories:
    * - sequence 
    * - shot
 
-Asset 
-^^^^^
+Asset publish
+^^^^^^^^^^^^^
 
-The asset directory is divided into these directories:
+The asset publish directory is divided into these directories:
 
 .. list-table::
 
@@ -251,6 +258,8 @@ Each asset type directory is divied in to these directories:
    * - grm
    * - ldv 
    * - rig
+
+Here is an example of a published file tree:
 
 .. list-table:: 
    :header-rows: 1
