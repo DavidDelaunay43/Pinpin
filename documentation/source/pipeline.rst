@@ -40,7 +40,7 @@ When you set your project, Pinpin will copy this directory **.pinpin_data** to t
 ------------
 
 Asset
-=====
+-----
 
 Assets are sorted by these categories:
 
@@ -138,7 +138,7 @@ Here is an example of an asset file nomenclature:
 ------------
 
 Sequence
-========
+--------
 
 Here is an example of an shot file nomenclature:
 
@@ -147,7 +147,7 @@ Here is an example of an shot file nomenclature:
 ------------
 
 Shot
-====
+----
 
 Here is an example of an shot file nomenclature:
 
@@ -216,7 +216,7 @@ Here is an example of an shot file nomenclature:
 ------------
 
 Publish
-=======
+-------
 
 The publish directory is divided into these directories:
 
@@ -227,7 +227,7 @@ The publish directory is divided into these directories:
    * - shot
 
 Asset 
------
+^^^^^
 
 The asset directory is divided into these directories:
 
