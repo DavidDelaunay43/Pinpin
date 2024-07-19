@@ -27,7 +27,7 @@ Here is the structure of the parent directories of an ESMA Montpellier film:
     * - 13_jury
     * - 14_com
 
-When you set your project, Pinpin will copy this directory **.pinpin_data** to the root of the project :
+When you set your project, Pinpin will copy this directory **.pinpin_data** to the root of the project:
 
 .. list-table::
 
@@ -42,7 +42,7 @@ When you set your project, Pinpin will copy this directory **.pinpin_data** to t
 Asset
 =====
 
-Assets are sorted by these categories :
+Assets are sorted by these categories:
 
 * 04_asset
 
@@ -77,7 +77,7 @@ Assets are sorted by these categories :
      - **cam**
      - *camera rig*
 
-For each asset, the departments are sorted by name, software and department :
+For each asset, the departments are sorted by name, software and department:
 
 * 01_character
     * <assetName>
@@ -88,7 +88,7 @@ For each asset, the departments are sorted by name, software and department :
         * substance
         * zbrush 
 
-The folder **maya** is a maya project, with these departments : modeling (geo), lookdev (ldv), rigging (rig) :
+The folder **maya** is a maya project, with these departments : modeling (geo), lookdev (ldv), rigging (rig):
 
 * <assetName>
     * maya 
@@ -98,7 +98,7 @@ The folder **maya** is a maya project, with these departments : modeling (geo), 
             * rig
         * workspace.mel
 
-Here is an example of an asset file nomenclature :
+Here is an example of an asset file nomenclature:
 
 * CDS_chr_marcel_geo_E_001.ma
 
@@ -140,7 +140,7 @@ Here is an example of an asset file nomenclature :
 Sequence
 ========
 
-Here is an example of an shot file nomenclature :
+Here is an example of an shot file nomenclature:
 
 * CDS_seq010_masterLayout_E_001.ma
 
@@ -149,7 +149,7 @@ Here is an example of an shot file nomenclature :
 Shot
 ====
 
-Here is an example of an shot file nomenclature :
+Here is an example of an shot file nomenclature:
 
 * CDS_seq010_sh010_anim_E_001.ma
 
@@ -218,7 +218,7 @@ Here is an example of an shot file nomenclature :
 Publish
 =======
 
-The publish directory is divided into these directories :
+The publish directory is divided into these directories:
 
 .. list-table::
 
@@ -229,7 +229,7 @@ The publish directory is divided into these directories :
 Asset 
 -----
 
-The asset directory is divided into these directories :
+The asset directory is divided into these directories:
 
 .. list-table::
 
@@ -242,7 +242,7 @@ The asset directory is divided into these directories :
    * - 07_fx
    * - 08_camera
 
-Each asset type directory is divied in to these directories :
+Each asset type directory is divied in to these directories:
 
 .. list-table::
 
