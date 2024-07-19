@@ -271,8 +271,8 @@ Each asset type directory is divied in to these directories:
    * - 
      - CDS_chr_petru_geo_P.ma
      -
-   * - *old*
-     - 
+   * - 
+     - *OLD*
      - CDS_chr_chauvesouris_geo_P_001.ma
    * - 
      - 
@@ -299,6 +299,9 @@ Each asset type directory is divied in to these directories:
    * -
      - CDS_chr_petru_ldv_P.ma
      -
+   * - 
+     - *OLD*
+     - 
    
    * - **rig**
      - CDS_chr_chauvesouris_rig_P.ma
@@ -312,3 +315,6 @@ Each asset type directory is divied in to these directories:
    * -
      - CDS_chr_petru_rig_P.ma
      -
+   * - 
+     - *OLD*
+     - 
