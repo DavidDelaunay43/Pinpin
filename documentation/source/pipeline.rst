@@ -6,7 +6,13 @@ Pipeline
     To ensure that Pinpin works properly, the pipeline must be respected. If a file is incorrectly renamed, Pinpin will not recognise it, or in the worst case, will not work at all.
 
 Here is the structure of the parent directories of an ESMA Montpellier film:
+
 * <filmName>
+    * **.pinpin_data**
+        * **preview**
+        * **file_data.json**
+        * **prefix.json**
+        * **variants.json**
     * 04_asset
         * 01_character
         * 02_prop
