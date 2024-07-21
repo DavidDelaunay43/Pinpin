@@ -19,13 +19,6 @@ Pinpin 1.1.4 Documentation
 
 -----------------
 
-| Our main inspirations:
-| Prism: `GitHub repository <https://github.com/PrismPipeline/Prism>`_
-| Pipou: `Demo video <https://vimeo.com/329157278>`_ 
-| Piper: `Demo video <https://www.youtube.com/watch?v=9YwH1fDXUB4>`_
-
------------------
-
 Standalone browser
 ------------------
 
@@ -43,3 +36,10 @@ Houdini browser
 
 .. image::
     _screenshots/browser_houdini.png
+
+-----------------
+
+| Our main inspirations:
+| Prism: `GitHub repository <https://github.com/PrismPipeline/Prism>`_
+| Pipou: `Demo video <https://vimeo.com/329157278>`_ 
+| Piper: `Demo video <https://www.youtube.com/watch?v=9YwH1fDXUB4>`_
