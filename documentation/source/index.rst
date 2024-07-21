@@ -14,8 +14,8 @@ Pinpin 1.1.4 Documentation
 Pinpin is a pipeline manager created for ESMA Montpellier 2023-2024 films.
 
 | Authors:
-| * Backend: David Delaunay
-| * Frontend: Louis Bonnaud
+| Backend: David Delaunay
+| Frontend: Louis Bonnaud
 
 Quick Links : `GitHub repository <https://github.com/DavidDelaunay43/Pinpin>`_ /
 `Demo video <https://drive.google.com/file/d/10YehbPR1uPyZ06t0iNpxC801drbTmxbr/view?usp=sharing>`_
