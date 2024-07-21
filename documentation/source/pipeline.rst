@@ -371,7 +371,7 @@ Cache
 Here is an example of a cache file nomenclature:
 
 CDS_seq020_sh030_marcel_anim.abc
-CDS_seq020_sh030_marcel_bottle.abc
+CDS_seq020_sh030_bottle_anim.abc
 
 .. list-table:: 
    :header-rows: 1
@@ -379,7 +379,7 @@ CDS_seq020_sh030_marcel_bottle.abc
    * - PREFIX
      - sequenceNum
      - shotNum
-     - character / prop
+     - character | prop
      - department
      - extension
    * - CDS
@@ -394,3 +394,91 @@ CDS_seq020_sh030_marcel_bottle.abc
      - bottle
      - anim
      - .abc 
+
+Here is an example of a cache file sequence nomenclature:
+
+CDS_seq020_sh030_smoke_fx.1001.vdb
+CDS_seq020_sh030_smoke_fx.1002.vdb
+CDS_seq020_sh030_smoke_fx.1003.vdb
+CDS_seq020_sh030_smoke_fx.1004.vdb
+...
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - PREFIX
+     - sequenceNum
+     - shotNum
+     - effect
+     - department (fx)
+     - frame number
+     - extension
+   * - CDS
+     - seq020
+     - sh030
+     - smoke
+     - fx
+     - 1001
+     - .vdb
+   * - CDS
+     - seq020
+     - sh030
+     - smoke
+     - fx
+     - 1002
+     - .vdb
+   * - CDS
+     - seq020
+     - sh030
+     - smoke
+     - fx
+     - 1003
+     - .vdb
+   * - CDS
+     - seq020
+     - sh030
+     - smoke
+     - fx
+     - 1004
+     - .vdb
+
+Here is an example of a cache file hierarchy for a shot:
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - **cache directory**
+     - **sequence directory**
+     - **shot directory**
+     - cache file | **folder**
+     - sequence cache file
+   * - **11_cache**
+     - **seq020**
+     - **sh030**
+     - CDS_seq020_sh030_bottle_anim.abc
+     -
+   * - 
+     - 
+     - 
+     - CDS_seq020_sh030_marcel_anim.abc
+     -  
+   * - 
+     - 
+     - 
+     - **CDS_seq020_sh030_smoke_fx**
+     - CDS_seq020_sh030_smoke_fx.1001.vdb
+   * - 
+     - 
+     - 
+     -
+     - CDS_seq020_sh030_smoke_fx.1002.vdb
+   * - 
+     - 
+     - 
+     -
+     - CDS_seq020_sh030_smoke_fx.1003.vdb
+   * - 
+     - 
+     - 
+     -
+     - CDS_seq020_sh030_smoke_fx.1004.vdb
