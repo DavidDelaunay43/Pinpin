@@ -370,8 +370,8 @@ Cache
 
 Here is an example of a cache file nomenclature:
 
-CDS_seq020_sh030_marcel_anim.abc
-CDS_seq020_sh030_bottle_anim.abc
+* CDS_seq020_sh030_marcel_anim.abc
+* CDS_seq020_sh030_bottle_anim.abc
 
 .. list-table:: 
    :header-rows: 1
@@ -397,11 +397,10 @@ CDS_seq020_sh030_bottle_anim.abc
 
 Here is an example of a cache file sequence nomenclature:
 
-CDS_seq020_sh030_smoke_fx.1001.vdb
-CDS_seq020_sh030_smoke_fx.1002.vdb
-CDS_seq020_sh030_smoke_fx.1003.vdb
-CDS_seq020_sh030_smoke_fx.1004.vdb
-...
+* CDS_seq020_sh030_smoke_fx.1001.vdb
+* CDS_seq020_sh030_smoke_fx.1002.vdb
+* CDS_seq020_sh030_smoke_fx.1003.vdb
+* CDS_seq020_sh030_smoke_fx.1004.vdb
 
 .. list-table:: 
    :header-rows: 1
