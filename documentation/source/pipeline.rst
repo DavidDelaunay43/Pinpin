@@ -370,6 +370,9 @@ Cache
 
 Here is an example of a cache file nomenclature:
 
+CDS_seq020_sh030_marcel_anim.abc
+CDS_seq020_sh030_marcel_bottle.abc
+
 .. list-table:: 
    :header-rows: 1
 
@@ -380,14 +383,14 @@ Here is an example of a cache file nomenclature:
      - department
      - extension
    * - CDS
-     - seq010
-     - sh010
+     - seq020
+     - sh030
      - marcel
      - anim
      - .abc
    * - CDS
-     - seq010
-     - sh010
-     - marcel
+     - seq020
+     - sh030
+     - bottle
      - anim
      - .abc 
