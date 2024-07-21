@@ -1,6 +1,5 @@
-.. image::
-   documentation/images/pinpin_image.png
-   :scale: 20%
+.. image:: documentation/images/pinpin_image.png
+   :width: 50px
 
 =============================================
 Pinpin 1.1.4 Documentation (work in progress)
