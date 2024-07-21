@@ -1,6 +1,5 @@
 .. image::
-   ../images/pinpin_image.png
-
+   documentation/images/pinpin_image.png
 
 ==================================
 Pinpin 1.1.4 Documentation
@@ -10,9 +9,13 @@ Pinpin 1.1.4 Documentation
 | You can find the documentation on `pinpin.readthedocs.io <https://pinpin.readthedocs.io/>`_
 | Video demo : `pinpin_demo <https://drive.google.com/file/d/10YehbPR1uPyZ06t0iNpxC801drbTmxbr/view?usp=sharing>`_
 
+-----------------
+
 | Authors:
 | Backend: `David Delaunay <https://www.linkedin.com/in/david-delaunay-472591208/>`_
 | Frontend: `Louis Bonnaud <https://www.linkedin.com/in/louis-bonnaud-306326269/>`_
+
+-----------------
 
 | Our main inspirations:
 | Prism: `GitHub repository <https://github.com/PrismPipeline/Prism>`_
@@ -21,16 +24,20 @@ Pinpin 1.1.4 Documentation
 
 -----------------
 
-Standalone browser:
+Standalone browser
+------------------
 
 .. image::
     _screenshots/browser_standalone.png
 
-Maya browser:
+Maya browser
+------------
 
 .. image::
     _screenshots/browser_maya.png
 
-Houdini browser:
+Houdini browser
+---------------
+
 .. image::
     _screenshots/browser_houdini.png
