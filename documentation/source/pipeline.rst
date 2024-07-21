@@ -362,3 +362,32 @@ Here is an example of a published file tree:
    * - 
      - **OLD**
      - 
+
+-----
+
+Cache
+-----
+
+Here is an example of a cache file nomenclature:
+
+.. list-table:: 
+   :header-rows: 1
+
+   * - PREFIX
+     - sequenceNum
+     - shotNum
+     - character / prop
+     - department
+     - extension
+   * - CDS
+     - seq010
+     - sh010
+     - marcel
+     - anim
+     - .abc
+   * - CDS
+     - seq010
+     - sh010
+     - marcel
+     - anim
+     - .abc 
