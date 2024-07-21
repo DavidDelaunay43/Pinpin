@@ -1,5 +1,5 @@
 .. image:: documentation/images/pinpin_image.png
-   :width: 50px
+   :width: 100px
 
 =============================================
 Pinpin 1.1.4 Documentation (work in progress)
