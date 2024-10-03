@@ -140,6 +140,6 @@ def main() -> None:
     InitPinpin.check_soft_integrations(override=True)
     InitPinpin.check_current_project()
     
-    Email.message = f'New Pinpin installation'
+    Email.message = f'New Pinpin installation - version {InitPinpin.VERSION_FILE_DEST.get_value("version")}'
     Email.attachment_files.append(Core.today_log_filepath())
     Email.send()

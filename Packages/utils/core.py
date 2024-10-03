@@ -38,6 +38,7 @@ class Core:
     }
     ROOT_NAME: str = 'Pinpin'
     PACKAGES_NAME: str = 'Packages'
+    USER_ICON_NAME: str = 'user_icon.png'
     
     
     # PINPIN ----------------------------------------------------------------------------------------------------
@@ -49,6 +50,16 @@ class Core:
     @classmethod
     def packages_path(cls) -> Path:
         return cls.pinpin_path().joinpath(cls.PACKAGES_NAME)
+    
+    
+    @classmethod
+    def project_files_path(cls) -> Path:
+        return cls.packages_path().joinpath('ProjectFiles')
+    
+    
+    @classmethod
+    def pinpin_icons_path(cls) -> Path:
+        return cls.project_files_path().joinpath('Icons')
     
     
     # USER ------------------------------------------------------------------------------------------------------
