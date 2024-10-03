@@ -1,204 +1,145 @@
-import os
-import json
+from datetime import datetime
+import logging
+from pathlib import Path
 import shutil
-import datetime
-from Packages.utils.funcs import find_package_path, get_current
+from Packages.utils.app_finder import AppFinder
+from Packages.utils.core import Core
+from Packages.utils.data_class import SoftwarePaths, PreferencesPaths
+from Packages.utils.enums import Root
+from Packages.utils.json_file import JsonFile
+from Packages.utils.logger import Logger
+from Packages.utils.send_email import Email
 
-ROOT_NAME = "Pinpin"    
-ROOT_PATH = find_package_path(ROOT_NAME)
-PREF_SOURCE_PATH = os.path.join(ROOT_PATH, '.pinpin')
-USER_DIR = os.path.expanduser("~")
-PREFS = os.path.join(USER_DIR, '.pinpin')
 
-def get_file_modification_date_time(file_path: str):
-    '''
-    '''
+class InitPinpin:
     
-    file_stat = os.stat(file_path)
-    modification_time = datetime.datetime.fromtimestamp(file_stat.st_mtime)
-    return modification_time
-
-def check_new_version():
-    '''
-    '''
-
-    VERSION_JSON_FILE_PATH = os.path.join(PREF_SOURCE_PATH, 'version.json')
-    version = get_current(VERSION_JSON_FILE_PATH, 'version')
-    return version
-
-def check_existing_version():
-    '''
-    '''
-
-    VERSION_JSON_FILE_PATH = os.path.join(PREFS, 'version.json')
-    version = get_current(VERSION_JSON_FILE_PATH, 'version')
-    return version
-
-def update_houdini_prefs():
-    '''
-    '''
     
-    print('UPDATE HOUDINI PREFS')
+    PINPIN_PATH: Path = Core.pinpin_path()
     
-    HOUDINI_SOURCE_PATH = os.path.join(ROOT_PATH, 'Packages', 'apps', 'houdini', 'integration')
-    HOUDINI_PREFS = os.path.join(USER_DIR, 'Documents', 'houdini19.5')
-
-    if not os.path.exists(HOUDINI_PREFS):
-        return
+    # User
+    USERNAME: str = Core.username()
+    USERDIR: Path = Core.user_dir()
+    DOCUMENTS_DIR: Path = Core.documents_dir()
     
-    shelf_file = 'pinpin.shelf'
-    shelf_file_source = os.path.join(HOUDINI_SOURCE_PATH, shelf_file)
-    shelf_file_dest = os.path.join(HOUDINI_PREFS, 'toolbar')
+    # Preferences
+    PREFS_PATHS_SOURCE: PreferencesPaths = Core.prefs_paths(Root.SOURCE)
+    PREFS_PATHS_DEST: PreferencesPaths = Core.prefs_paths(Root.DEST)
     
-    if not os.path.exists(shelf_file_dest):
-        os.mkdir(shelf_file_dest)
-        
-    if os.path.exists(os.path.join(shelf_file_dest, shelf_file)):
-        os.remove(os.path.join(shelf_file_dest, shelf_file))
-    shutil.copy(shelf_file_source, shelf_file_dest)
-        
-    # ---------------------------------------------------------------------------------------------------------
+    PREFS_ROOTPATH_SOURCE: Path = PREFS_PATHS_SOURCE.USER_PREFS_ROOT
+    PREFS_ROOTPATH_DEST: Path = PREFS_PATHS_DEST.USER_PREFS_ROOT
     
-    radial_menu_file = 'pinpin.radialmenu'
-    radial_menu_file_source = os.path.join(HOUDINI_SOURCE_PATH, radial_menu_file)
-    radial_menu_file_dest = os.path.join(HOUDINI_PREFS, 'radialmenu')
+    VERSION_FILE_SOURCE: JsonFile = PREFS_PATHS_SOURCE.VERSION_JSONFILE
+    VERSION_FILE_DEST: JsonFile = PREFS_PATHS_DEST.VERSION_JSONFILE
     
-    if not os.path.exists(radial_menu_file_dest):
-        os.mkdir(radial_menu_file_dest)
-
-    if os.path.exists(os.path.join(radial_menu_file_dest, radial_menu_file)):
-        os.remove(os.path.join(radial_menu_file_dest, radial_menu_file))
-    shutil.copy(radial_menu_file_source, radial_menu_file_dest)
-
-def update_maya_prefs():
-    '''
-    '''
-
-    print('UPDATE MAYA PREFS')
-
-    SHELF_FILE = 'shelf_Pinpin.mel'
-    MARKING_MENU_FILE = 'menu_pinpinMenu.mel'
-    USER_SETUP_FILE = 'userSetup.py'
-
-    MAYA_SHELF_PATH = os.path.join(USER_DIR, 'Documents', 'maya', '2023', 'prefs', 'shelves')
-    MAYA_MENU_PATH = os.path.join(USER_DIR, 'Documents', 'maya', '2023', 'prefs', 'markingMenus')
-    MAYA_SCRIPTS_PATH = os.path.join(USER_DIR, 'Documents', 'maya', 'scripts')
-
-    MAYA_SOURCE_PATH = os.path.join(ROOT_PATH, 'Packages', 'apps', 'maya_app', 'integration')
-    MAYA_SHELF_SOURCE_PATH = os.path.join(MAYA_SOURCE_PATH, SHELF_FILE)
-    MAYA_MENU_SOURCE_PATH = os.path.join(MAYA_SOURCE_PATH, MARKING_MENU_FILE)
-    MAYA_USERSETUP_SOURCE_PATH = os.path.join(MAYA_SOURCE_PATH, USER_SETUP_FILE)
-
-    # userSetup.py
-    if os.path.exists(os.path.join(MAYA_SCRIPTS_PATH, 'userSetup.py')):
-        os.remove(os.path.join(MAYA_SCRIPTS_PATH, 'userSetup.py'))
-    shutil.copy(MAYA_USERSETUP_SOURCE_PATH, MAYA_SCRIPTS_PATH)
-
-    # shelf
-    if os.path.exists(os.path.join(MAYA_SHELF_PATH, 'shelf_Pinpin.mel')):
-        os.remove(os.path.join(MAYA_SHELF_PATH, 'shelf_Pinpin.mel'))
-    shutil.copy(MAYA_SHELF_SOURCE_PATH, MAYA_SHELF_PATH)
-
-    # marking menu
-    if os.path.exists(os.path.join(MAYA_MENU_PATH, 'menu_pinpinMenu.mel')):
-        os.remove(os.path.join(MAYA_MENU_PATH, 'menu_pinpinMenu.mel'))
-    shutil.copy(MAYA_MENU_SOURCE_PATH, MAYA_MENU_PATH)
-
-    #
-    MAYA_ICON_DEST_PATH = os.path.join(USER_DIR, 'Documents', 'maya', '2023', 'prefs', 'icons')
-    files = (
-        'pinpin_icon.png',
-        'publish_icon.png',
-        'save_as_icon.png',
-        'thumbnail_icon.png',
-        'usd_icon.ico',
-        'gpu_cache_icon.png',
-        'create_asset_icon.png',
-        'alembic_icon.png',
-        'set_project_icon.png'
-    )
-
-    for file in files:
-
-        source_file_path = os.path.join(MAYA_SOURCE_PATH, file)
-        dest_file_path = os.path.join(MAYA_ICON_DEST_PATH, file)
-
-        if os.path.exists(dest_file_path):
-            os.remove(dest_file_path)
-        shutil.copy(source_file_path, MAYA_ICON_DEST_PATH)
-
-def update_pinpin_prefs():
-    '''
-    '''
-
-    CLICKED_ITEMS_SOURCE_PATH = os.path.join(PREF_SOURCE_PATH, 'clicked_items.json')
-    VERSION_SOURCE_PATH = os.path.join(PREF_SOURCE_PATH, 'version.json')
-    APPS_SOURCE_PATH = os.path.join(PREF_SOURCE_PATH, 'apps_esma.json')
-
-    CLICKED_ITEMS_PREF_PATH = os.path.join(PREFS, 'clicked_items.json')
-    VERSION_PREF_PATH = os.path.join(PREFS, 'version.json')
-    APPS_PREF_PATH = os.path.join(PREFS, 'apps_esma.json')
-
-    if not os.path.exists(PREFS):
-        shutil.copytree(PREF_SOURCE_PATH, PREFS)
-
-    else:
-        if os.path.exists(CLICKED_ITEMS_PREF_PATH):
-            os.remove(CLICKED_ITEMS_PREF_PATH)
-        shutil.copy(CLICKED_ITEMS_SOURCE_PATH, PREFS)
-
-        if os.path.exists(VERSION_PREF_PATH):
-            os.remove(VERSION_PREF_PATH)
-        shutil.copy(VERSION_SOURCE_PATH, PREFS)
-
-        if os.path.exists(APPS_PREF_PATH):
-            os.remove(APPS_PREF_PATH)
-        shutil.copy(APPS_SOURCE_PATH, PREFS)
-        
-        #
-        if not os.path.exists(os.path.join(PREFS, 'recent_files.json')):
-            shutil.copy(os.path.join(PREF_SOURCE_PATH, 'recent_files.json'), PREFS)
-        #
-
-    APPS_ESMA_PATH = os.path.join(PREFS, 'apps_esma.json')
-    with open(APPS_ESMA_PATH, 'r') as file:
-        data = json.load(file)
-
-    data['houdini']['pref'] = os.path.join(USER_DIR, 'Documents', 'houdini19.5')
-    data['maya']['pref'] = os.path.join(USER_DIR, 'Documents', 'maya')
-    data['nuke']['pref'] = os.path.join(USER_DIR, '.nuke')
-
-    with open(APPS_ESMA_PATH, 'w', encoding='utf-8') as file:
-        json.dump(data, file, indent = 4, ensure_ascii=False)
-
-def init_pinpin():
-    '''
-    '''
-    print("Init pinpin")
-
-    if not os.path.exists(PREFS):
-        update_pinpin_prefs()
-        
-    prefs_files = (
-        'special_ui.json',
-        'ui_prefs.json',
-        'recent_files.json',
-        'style.json',
-        'version.json',
-        'dev_mode.json',
-        'clicked_items.json',
-        'apps_esma.json',
+    APPS_FILE_DEST: JsonFile = PREFS_PATHS_DEST.APPS_JSONFILE
+    
+    # Softwares
+    MAYA_INFOS: SoftwarePaths = Core.maya_infos()
+    HOUDINI_INFOS: SoftwarePaths = Core.houdini_infos()
+    
+    SOURCE_PATHS: tuple[Path] = (
+        MAYA_INFOS.PINPIN_MENU_SOURCE_PATH,
+        MAYA_INFOS.PINPIN_SHELF_SOURCE_PATH,
+        HOUDINI_INFOS.PINPIN_MENU_SOURCE_PATH,
+        HOUDINI_INFOS.PINPIN_SHELF_SOURCE_PATH
     )
     
-    for file in prefs_files:
-        if not os.path.exists(os.path.join(PREFS, file)):
-            shutil.copy(os.path.join(PREF_SOURCE_PATH, file), PREFS)
-
-    existing_version = check_existing_version()
-    new_version = check_new_version()
-
-    if new_version != existing_version :
-        print('Nouvelle version')
-        update_houdini_prefs()
-        update_maya_prefs()
-        update_pinpin_prefs()
+    DEST_PATHS: tuple[Path] = (
+        MAYA_INFOS.PINPIN_MENU_DEST_PATH,
+        MAYA_INFOS.PINPIN_SHELF_DEST_PATH,
+        HOUDINI_INFOS.PINPIN_MENU_DEST_PATH,
+        HOUDINI_INFOS.PINPIN_SHELF_DEST_PATH
+    )
+    
+    
+    @classmethod
+    def new_version(cls) -> bool:
+        
+        if not cls.VERSION_FILE_DEST.exists():
+            cls.copy_file(cls.VERSION_FILE_SOURCE.path, cls.VERSION_FILE_DEST.path)
+            return True
+        
+        return cls.VERSION_FILE_DEST.get_value('version') == cls.VERSION_FILE_SOURCE.get_value('version')
+    
+    
+    @classmethod
+    def check_preferences(cls, override: bool = False) -> None:
+        
+        if not cls.PREFS_ROOTPATH_DEST.exists() or override:
+            cls.copy_pinpin_preferences()
+    
+    
+    @classmethod
+    def copy_pinpin_preferences(cls) -> None:
+        
+        if cls.PREFS_ROOTPATH_DEST.exists():
+            shutil.rmtree(cls.PREFS_ROOTPATH_DEST)
+        
+        shutil.copytree(cls.PREFS_ROOTPATH_SOURCE, cls.PREFS_ROOTPATH_DEST)
+        Logger.info(f'Copy Pinpin preferences -> {cls.PREFS_ROOTPATH_DEST}')
+    
+    
+    @classmethod
+    def check_apps_data(cls) -> None:
+        
+        if not AppFinder.json_is_empty(cls.APPS_FILE_DEST.path):
+            return
+        
+        AppFinder.find_3d_applications()
+        AppFinder.write_json_file(cls.APPS_FILE_DEST.path)
+        Logger.info(f'Find 3d applications and write -> {cls.APPS_FILE_DEST.path}')
+        
+        
+    @classmethod
+    def check_current_project(cls) -> None:
+        
+        current_project: Path = cls.PREFS_PATHS_DEST.CURRENT_PROJECT_JSONFILE.get_value('current_project')
+        
+        if current_project:
+            Logger.info(f'Current project is: {current_project}')
+            return
+        
+        cls.PREFS_PATHS_DEST.CURRENT_PROJECT_JSONFILE.set_value('current_project', cls.PREFS_PATHS_DEST.FAKE_PROJECT_DIRPATH)
+        Logger.info(f'Set current project: {cls.PREFS_PATHS_DEST.FAKE_PROJECT_DIRPATH}')
+        
+    
+    # Software
+    @classmethod
+    def check_soft_integrations(cls, override: bool = False) -> None:
+        
+        Logger.info(f'Check 3D softwares integrations')
+        
+        for source_filepath, dest_filepath in zip(cls.SOURCE_PATHS, cls.DEST_PATHS):
+            
+            if not dest_filepath.exists() or override:
+                cls.copy_file(source_filepath, dest_filepath)
+            
+    
+    # Useful methods
+    @staticmethod
+    def copy_file(source_path: Path, dest_path: Path) -> None:
+        
+        dest_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy(source_path, dest_path)
+        Logger.info(f'Copy File:\nSource: {source_path}\nDest: {dest_path}')
+    
+        
+def main() -> None:
+    
+    Logger.LOGGER_NAME = __file__
+        
+    InitPinpin.check_preferences()
+    Logger.write_to_file(path=Core.today_log_filepath(), level=logging.DEBUG)
+    
+    if not InitPinpin.new_version():
+        InitPinpin.check_soft_integrations()
+    
+    Logger.info(f'Pinpin new version: {InitPinpin.VERSION_FILE_DEST.get_value("version")}')
+    InitPinpin.copy_file(InitPinpin.VERSION_FILE_SOURCE.path, InitPinpin.VERSION_FILE_DEST.path)
+    InitPinpin.check_apps_data()
+    InitPinpin.check_soft_integrations(override=True)
+    InitPinpin.check_current_project()
+    
+    Email.message = f'New Pinpin installation'
+    Email.attachment_files.append(Core.today_log_filepath())
+    Email.send()
