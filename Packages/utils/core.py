@@ -54,12 +54,22 @@ class Core:
     
     @classmethod
     def project_files_path(cls) -> Path:
-        return cls.packages_path().joinpath('ProjectFiles')
+        return cls.pinpin_path().joinpath('ProjectFiles')
     
     
     @classmethod
     def pinpin_icons_path(cls) -> Path:
         return cls.project_files_path().joinpath('Icons')
+    
+    
+    @classmethod
+    def pinpin_icon_path(cls) -> Path:
+        return cls.pinpin_icons_path().joinpath('pinpin_icon.ico')
+    
+    
+    @classmethod
+    def current_version(cls) -> str:
+        return cls.prefs_dest().VERSION_JSONFILE.get_value('version')
     
     
     # USER ------------------------------------------------------------------------------------------------------
@@ -96,6 +106,13 @@ class Core:
             FILE_DATA_DICT = project_data.FILE_DATA_JSONFILE.json_to_dict(),
             PREFIX = project_data.PREFIX_JSONFILE.get_value('prefix')
         )
+        
+    
+    @classmethod
+    def current_project_path(cls) -> Path:
+        
+        return Path(cls.prefs_dest().CURRENT_PROJECT_JSONFILE.get_value('current_project'))
+    
     
     # PREFERENCES INFOS & PATHS ---------------------------------------------------------------------------------
     @classmethod

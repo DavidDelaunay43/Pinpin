@@ -6,13 +6,13 @@ from PySide2.QtWidgets import *
 class CheckableButton(QPushButton):
     
     
-    def __init__(self, text: str = '', minimum_size: list = [60, 35]) -> None:
+    def __init__(self, path: Path, text: str = '', minimum_size: list = [60, 35]) -> None:
         super(CheckableButton, self).__init__(text)
         
         self.setCheckable(True)
         self.setMinimumSize(*minimum_size)
         self.setObjectName('checkable_button')
-        self._pipeline_path: Union[Path, None] = None
+        self._pipeline_path: Union[Path, None] = path
 
 
     @property

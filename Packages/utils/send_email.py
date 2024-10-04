@@ -91,7 +91,6 @@ class Email:
         with smtplib.SMTP_SSL('smtp.gmail.com', 465) as smtp:
             smtp.login(cls.MAIL_SENDER, cls.PASSWORD)
             smtp.send_message(cls.email_message)
-            print('Success')
             Logger.info(f'Email sent.')
 
 

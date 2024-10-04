@@ -1,3 +1,7 @@
+from dataclasses import dataclass
+
+
+@dataclass(frozen=True)
 class PipeRoot:
     
     ASSET: str = '04_asset'

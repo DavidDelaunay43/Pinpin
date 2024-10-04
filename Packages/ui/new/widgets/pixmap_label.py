@@ -15,4 +15,4 @@ class PixmapLabel(QLabel):
         self.setAlignment(Qt.AlignmentFlag.AlignVCenter)
         
         if icon_path:
-            self.setPixmap(QPixmap(icon_path))
+            self.setPixmap(QPixmap(str(icon_path)))

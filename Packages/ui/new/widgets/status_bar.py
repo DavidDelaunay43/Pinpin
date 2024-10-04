@@ -6,8 +6,8 @@ from PySide2.QtWidgets import QLabel
 class StatusBar(QLabel):
     
     
-    def __init__(self, path: Union[Path, None] = None):
-        super(StatusBar, self).__init__()
+    def __init__(self, parent=None, path: Union[Path, None] = None):
+        super(StatusBar, self).__init__(parent)
         
         self._pipeline_path: Union[Path, None] = path
         
@@ -23,6 +23,7 @@ class StatusBar(QLabel):
     @pipeline_path.setter
     def pipeline_path(self, path: Path) -> None:
         self._pipeline_path = path
+        self.setText(str(path))
     
     
     @property
