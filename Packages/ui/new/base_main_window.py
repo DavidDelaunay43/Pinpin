@@ -2,11 +2,11 @@ from dataclasses import asdict
 from functools import partial
 from pathlib import Path
 from typing import Union
-from PySide2.QtCore import Qt
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QApplication, QButtonGroup, QDesktopWidget, QHBoxLayout, QMainWindow, QTabWidget, QVBoxLayout, QWidget
+from PySide2.QtWidgets import QApplication, QButtonGroup, QDesktopWidget, QGridLayout, QHBoxLayout, QMainWindow, QTabWidget, QVBoxLayout, QWidget
 from Packages.ui.new import widgets
 from Packages.utils.core import Core
+from Packages.utils.logger import Logger
 from Packages.utils.naming import PipeRoot
 
 
@@ -22,6 +22,7 @@ class BaseMainWindow(QMainWindow):
         self.current_path: Path = project_path
         
         self._create_ui()
+        self.auto_clic(Core.pref_infos().LAST_PATHS)
     
     
     # ------------------------------------------------------------------------------------------------------
@@ -75,10 +76,12 @@ class BaseMainWindow(QMainWindow):
         self._tab_widget: QTabWidget = QTabWidget()
         self._status_bar: widgets.StatusBar = widgets.StatusBar()
         self._create_root_buttons()
-        self._tree_widget: widgets.TreeWidget = widgets.TreeWidget(self.current_path)
-        self._list_01: widgets.ListWidget = widgets.ListWidget(self.current_path)
-        self._list_02: widgets.ListWidget = widgets.ListWidget(self.current_path)
-        self._list_03: widgets.ListWidget = widgets.ListWidget(self.current_path)
+        self._tree_widget: widgets.TreeWidget = widgets.TreeWidget()
+        self._list_01: widgets.ListWidget = widgets.ListWidget()
+        self._list_02: widgets.ListWidget = widgets.ListWidget()
+        self._list_03: widgets.ListWidget = widgets.ListWidget()
+        self._table_widget: widgets.TableWidget = widgets.TableWidget()
+
             
             
     def _create_root_buttons(self) -> None:
@@ -104,12 +107,10 @@ class BaseMainWindow(QMainWindow):
         
         self._create_browser_main_layout()
         self._create_root_buttons_layout()
-        self._create_browser_hlayout()
-        self._create_browser_vlayout()
-        self._create_browser_lists_layout()
+        self._create_browser_grid_layout()
         
         self._create_recent_central_layout()
-        
+
         
     def _create_central_layout(self) -> None:
         
@@ -146,59 +147,41 @@ class BaseMainWindow(QMainWindow):
         
         # Create layout
         self._root_buttons_layout: QHBoxLayout = QHBoxLayout(self._root_buttons_widget)
-        self._root_buttons_layout.setContentsMargins(10,10,10,10)
+        self._root_buttons_layout.setContentsMargins(5,5,5,5)
         
         # Add widgets
         for button in self._root_buttons:
             self._root_buttons_layout.addWidget(button)
 
         self._root_buttons_layout.addStretch(1)
-            
-            
-    def _create_browser_hlayout(self) -> None:
+        
+        
+    def _create_browser_grid_layout(self) -> None:
         
         # Create widget
-        self._browser_hwidget: QWidget = QWidget()
-        self._browser_main_layout.addWidget(self._browser_hwidget)
+        self._browser_grid_widget: QWidget = QWidget()
+        self._browser_main_layout.addWidget(self._browser_grid_widget)
         
         # Create layout
-        self._browser_hlayout: QHBoxLayout = QHBoxLayout()
-        self._browser_hwidget.setLayout(self._browser_hlayout)
+        self._browser_grid_layout: QGridLayout = QGridLayout()
+        self._browser_grid_layout.setContentsMargins(0,0,0,0)
+        self._browser_grid_widget.setLayout(self._browser_grid_layout)
         
         # Add widgets
-        self._browser_hlayout.addWidget(self._tree_widget)
-        self._browser_hlayout.addStretch(1)
+        self._browser_grid_layout.addWidget(self._tree_widget, 0, 0, 3, 1)
+        self._browser_grid_layout.addWidget(self._list_01, 0, 1)
+        self._browser_grid_layout.addWidget(self._list_02, 0, 2)
+        self._browser_grid_layout.addWidget(self._list_03, 0, 3)
+        self._browser_grid_layout.addWidget(self._table_widget, 1, 1, 2, 3)
         
-        
-    def _create_browser_vlayout(self) -> None:
-        
-        # Create widget
-        self._browser_vwidget: QWidget = QWidget()
-        self._browser_hlayout.addWidget(self._browser_vwidget)
-        
-        # Create layout
-        self._browser_vlayout: QVBoxLayout = QVBoxLayout()
-        self._browser_vwidget.setLayout(self._browser_vlayout)
-        
-        # Add widgets
-        
-    
-    def _create_browser_lists_layout(self) -> None:
-        
-        # Create widget
-        self._browser_list_widget: QWidget = QWidget()
-        self._browser_vlayout.addWidget(self._browser_list_widget)
-        
-        # Create layout
-        self._browser_list_layout: QHBoxLayout = QHBoxLayout()
-        self._browser_list_widget.setLayout(self._browser_list_layout)
-        
-        # Add widgets
-        self._browser_list_layout.setAlignment(Qt.AlignTop) 
-        self._browser_list_layout.addWidget(self._list_01)
-        self._browser_list_layout.addWidget(self._list_02)
-        self._browser_list_layout.addWidget(self._list_03)
-        
+        self._browser_grid_layout.setRowStretch(0, 1)
+        self._browser_grid_layout.setRowStretch(1, 2)
+        self._browser_grid_layout.setRowStretch(2, 2)
+        self._browser_grid_layout.setColumnStretch(0, 1)
+        self._browser_grid_layout.setColumnStretch(1, 2)
+        self._browser_grid_layout.setColumnStretch(2, 2)
+        self._browser_grid_layout.setColumnStretch(3, 2)
+   
             
     def _create_recent_central_layout(self) -> None:
         
@@ -211,9 +194,9 @@ class BaseMainWindow(QMainWindow):
     def _create_connections(self) -> None:
         
         for root_button in self._root_buttons:
-            root_button.clicked.connect(self._update_current_path)
-            root_button.clicked.connect(
-                partial(self._tree_widget.populate, self.current_path.joinpath(root_button.pipeline_name))
+            root_button.toggled.connect(self._update_current_path)
+            root_button.toggled.connect(
+                partial(self._populate_widget, widget=self._tree_widget)
             )
             
         self._tree_widget.itemClicked.connect(self._update_current_path)
@@ -232,24 +215,110 @@ class BaseMainWindow(QMainWindow):
         )
         
         self._list_03.itemClicked.connect(self._update_current_path)
+        self._list_03.itemClicked.connect(
+            partial(self._populate_widget, widget=self._table_widget)
+        )
+        
+        self._table_widget.itemClicked.connect(self._update_current_path)
     
     
     # ------------------------------------------------------------------------------------------------------
-    def _update_current_path(self, item: widgets.TreeWidgetItem = None, column: int = None) -> None:
+    def _update_current_path(self, 
+                             item: Union[widgets.PipelineWidgetItem, None] = None, 
+                             column: Union[int, None] = None
+                             ) -> None:
         
         sender: Union[
-            widgets.CheckableButton, widgets.TreeWidgetItem
+            widgets.CheckableButton, widgets.PipelineWidgetItem
         ] = self.sender() if isinstance(self.sender(), widgets.CheckableButton) else item
         
         self.current_path = sender.pipeline_path
         self._status_bar.pipeline_path = sender.pipeline_path
+        self.update_memo_path()
+        Logger.debug(f'Update current path: {self.current_path}')
 
 
-    def _populate_widget(self, item: widgets.TreeWidgetItem = None, column: int = None, widget = None) -> None:
+    def _populate_widget(self,
+                         item: Union[widgets.PipelineWidgetItem, None] = None, 
+                         column: Union[int, None] = None, 
+                         widget: Union[widgets.PipelineWidget, None] = None
+                         ) -> None:
         
-        sender: Union[
-            widgets.CheckableButton, widgets.TreeWidgetItem
-        ] = self.sender() if isinstance(self.sender(), widgets.CheckableButton) else item
+        if widget is self._tree_widget:
+            self._list_01.populate_update_path(None)
+            self._list_02.populate_update_path(None)
+            self._list_03.populate_update_path(None)
+            self._table_widget.populate_update_path(None)
+            widget.populate_update_path(self.current_path)
+            return
+            
+        if widget is self._list_01:
+            self._list_02.populate_update_path(None)
+            self._list_03.populate_update_path(None)
+            self._table_widget.populate_update_path(None)
+            widget.populate_update_path(self.current_path)
+            return
+            
+        if widget is self._list_02:
+            self._list_03.populate_update_path(None)
+            self._table_widget.populate_update_path(None)
+            widget.populate_update_path(self.current_path)
+            return
         
-        self.current_path = sender.pipeline_path
-        widget.populate(self.current_path)
+        widget.populate_update_path(self.current_path)
+        
+
+    def update_memo_path(self) -> None:
+        
+        from Packages.utils.json_file import JsonFile
+        
+        memo_path_jsonfile: JsonFile = Core.prefs_paths().MEMO_PATH_JSONFILE
+        last_paths: list = memo_path_jsonfile.json_to_dict()['last_paths']
+        
+        Logger.debug(f'{last_paths}')
+        
+        for index, path in enumerate(last_paths):
+            
+            if str(self.current_path) == path:
+                return
+            
+            match_path: Path = Core.find_root_dirpath(self.current_path, self.project_path)
+            Logger.debug(f'Current path: {self.current_path}\nLast path: {path}')
+            if match_path and str(match_path) in path or str(self.current_path) in path:
+                last_paths.pop(index)
+        
+        last_paths.insert(0, str(self.current_path))
+        
+        memo_path_jsonfile.dict_to_json({"last_paths": last_paths})
+        
+        
+    def _auto_clic_widget(self, widget: widgets.PipelineWidget, next_widget: widgets.PipelineWidget, path: Path) -> None:
+        
+        column: int = 1 if isinstance(widget, widgets.TreeWidget) else 0
+        
+        for item in widget.iter_items():
+            if path == item.pipeline_path:
+                widget.setCurrentItem(item)
+                self._update_current_path(item, column)
+                self._populate_widget(item, column, next_widget)
+                
+        
+    def auto_clic(self, last_paths: list[str]) -> None:
+        
+        if not last_paths:
+            return
+        
+        all_paths: list[Path] = [Path(last_paths[0])]
+        all_paths.extend(all_paths[0].parents)
+        
+        for parent in reversed(all_paths):
+            
+            for root_button in self._root_buttons:
+                if parent == root_button.pipeline_path:
+                    root_button.setChecked(True)
+                    break
+                    
+            self._auto_clic_widget(self._tree_widget, self._list_01, parent)
+            self._auto_clic_widget(self._list_01, self._list_02, parent)
+            self._auto_clic_widget(self._list_02, self._list_03, parent)
+            self._auto_clic_widget(self._list_03, self._table_widget, parent)

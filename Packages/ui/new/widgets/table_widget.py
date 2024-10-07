@@ -1,15 +1,19 @@
 from pathlib import Path
+from typing import Union
 from PySide2.QtCore import Qt
-from PySide2.QtWidgets import * 
+from PySide2.QtWidgets import QAbstractItemView, QHeaderView, QTableWidget, QTableWidgetItem
+from Packages.ui.new.widgets.table_widget_item import TableWidgetItem
+from Packages.utils.file_info import FileInfo
+from Packages.utils.logger import Logger
 
 
 class TableWidget(QTableWidget):
     
     
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Union[Path, None] = None) -> None:
         super(TableWidget, self).__init__()
         
-        self._pipeline_path: Path = path
+        self._pipeline_path: Union[Path, None] = path
         
         self.setMouseTracking(True)
         self.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
@@ -29,7 +33,7 @@ class TableWidget(QTableWidget):
         self.setFocusPolicy(Qt.NoFocus)
         self.setColumnCount(4)
         
-        for index, column in enumerate('Image', 'Version', 'Comment','Infos'):
+        for index, column in enumerate(['Image', 'Version', 'Comment','Infos']):
             
             row = QTableWidgetItem()
             self.setHorizontalHeaderItem(index, row)
@@ -42,19 +46,55 @@ class TableWidget(QTableWidget):
         
         
     @property
-    def pipeline_path(self) -> Path:
+    def pipeline_path(self) -> Union[Path, None]:
         return self._pipeline_path
     
     
     @pipeline_path.setter
-    def pipeline_path(self, path: Path) -> None:
+    def pipeline_path(self, path: Union[Path, None]) -> None:
         self._pipeline_path = path
         
         
     @property
-    def pipeline_name(self) -> str:
-        self._pipeline_path.name
+    def pipeline_name(self) -> Union[str, None]:
+        self._pipeline_path.name if self._pipeline_path else None
         
+    
+    def populate_update_path(self, path: Union[Path, None]) -> None:
+        self.pipeline_path = path
+        self.populate(path)
+    
+    
+    def populate(self, path: Union[Path, None], reverse: bool = True) -> None:
         
-    def _add_row(self) -> None:
-        ...
+        self.setRowCount(0)
+        if not path or path.is_file():
+            return
+        
+        if not reverse:
+            subdirs: list = list(path.iterdir())
+        
+        else:
+            subdirs: list = reversed(list(path.iterdir()))
+        
+        for file_path in subdirs:
+            
+            if file_path.is_dir():
+                continue
+            
+            self._add_row(file_path=file_path)
+        
+    
+    def _add_row(self, file_path: Path) -> None:
+        
+        file_info: FileInfo = FileInfo(file_path)
+        Logger.debug(f'File info: {file_path.name}\nVersion: {file_info.version}\nComment: {file_info.comment}\nLast user: {file_info.last_user}')
+        
+        row_position: int = self.rowCount()
+        self.insertRow(row_position)
+        self.setRowHeight(row_position, 101)
+        
+        self.setItem(row_position, 0, TableWidgetItem(file_path, 'No preview')) # preview
+        self.setItem(row_position, 1, TableWidgetItem(file_path, file_info.version, size=12)) # version
+        self.setItem(row_position, 2, TableWidgetItem(file_path, file_info.comment)) # comment
+        self.setItem(row_position, 3, TableWidgetItem(file_path, file_info.info_format)) # info

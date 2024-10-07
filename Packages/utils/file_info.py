@@ -2,23 +2,39 @@ from dataclasses import dataclass
 from datetime import datetime
 import os
 from pathlib import Path
-from typing import Union, Literal
+import re
+from typing import Literal, Union
 from Packages.utils.core import Core
 
 
 @dataclass
 class FileInfo:
     
-    file_path: Union[str, Path]
+    _pipeline_path: Path
     
     def __post_init__(self):
         
-        self._name: str = self.file_path.name if isinstance(self.file_path, Path) else os.path.basename(self.file_path)
-        self._size: int = os.path.getsize(self.file_path)
+        self._size: int = os.path.getsize(self._pipeline_path)
         self._format_size: str = self.format_size()
         self._last_time: str = self.get_last_date_time()
         self._last_user: str = self.get_data('comment')
         self._comment: str = self.get_data('user')
+        self._version: str = self.get_version()
+        
+        
+    @property
+    def pipeline_path(self) -> Path:
+        return self._pipeline_path
+    
+    
+    @pipeline_path.setter
+    def pipeline_path(self, path: Path) -> None:
+        self._pipeline_path = path
+        
+    
+    @property
+    def pipeline_name(self) -> str:
+        return self._pipeline_path.name
         
     
     @property
@@ -37,15 +53,21 @@ class FileInfo:
     
     
     @property
-    def last_user(self) -> str:
-        return self._last_user
+    def last_user(self) -> Union[str, None]:
+        return self._last_user if self._last_user else None
     
     
     @property
-    def comment(self) -> str:
-        return self._comment
+    def comment(self) -> Union[str, None]:
+        return self._comment if self._comment else None
+    
+    
+    @property
+    def version(self) -> Union[str, None]:
+        return self._version
         
-        
+    
+    @property    
     def info_format(self) -> str:
         """
         Example:
@@ -56,7 +78,7 @@ class FileInfo:
         10.57 Mo
         """
         
-        return f'{self._last_user}\n{self._last_time}\n{self._format_size}'
+        return f'{self.last_user}\n{self._last_time}\n{self._format_size}' if self.last_user else f'\n{self._last_time}\n{self._format_size}'
     
     
     def format_size(self) -> str:
@@ -80,14 +102,25 @@ class FileInfo:
         
         file_info_dict: dict = Core.project_data().FILE_DATA_DICT
         
-        if not self.file_path in file_info_dict.keys():
+        if not self._pipeline_path in file_info_dict.keys():
             return ''
         
-        return file_info_dict.get(self.file_path.get(data), '')
+        return file_info_dict.get(self._pipeline_path.get(data), '')
 
     
     def get_last_date_time(self) -> str:
-        return datetime.fromtimestamp(os.stat(self.file_path).st_mtime).strftime('%d-%m-%Y\n%H:%M')
+        return datetime.fromtimestamp(os.stat(self._pipeline_path).st_mtime).strftime('%d-%m-%Y\n%H:%M')
+    
+    
+    def get_version(self) -> str:
+        
+        return self.find_three_digits()
+        
+        
+    def find_three_digits(self) -> Union[str, None]:
+        
+        match_string: Union[re.Match[str], None] = re.search('\d{3}', self.pipeline_name)
+        return match_string.group() if match_string else None
     
     
     def external_increment(self):

@@ -8,10 +8,10 @@ from Packages.ui.new.widgets.tree_widget_item import TreeWidgetItem
 class TreeWidget(QTreeWidget):
     
     
-    def __init__(self, path: Path):
+    def __init__(self, path: Union[Path, None] = None):
         super(TreeWidget, self).__init__()
         
-        self._pipeline_path: Path = path
+        self._pipeline_path: Union[Path, None] = path
         
         self.setMinimumWidth(250)
         self.setHeaderHidden(True)
@@ -39,6 +39,11 @@ class TreeWidget(QTreeWidget):
     @property
     def pipeline_name(self) -> Union[str, None]:
         return self._pipeline_path.name if self._pipeline_path else None
+    
+    
+    def populate_update_path(self, path: Union[Path, None]) -> None:
+        self.pipeline_path = path
+        self.populate(path)
     
     
     def _create_context_menu(self) -> None:
@@ -82,10 +87,11 @@ class TreeWidget(QTreeWidget):
         ]
     
     
-    def populate(self, path: Path) -> None:
+    def populate(self, path: Union[Path, None]) -> None:
         
         self.clear()
-        self._pipeline_path = path
+        if not path:
+            return
         
         for dirpath in self._pipeline_path.iterdir():
             

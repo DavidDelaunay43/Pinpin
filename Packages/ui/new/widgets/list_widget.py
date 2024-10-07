@@ -1,5 +1,6 @@
 from pathlib import Path
-from PySide2.QtCore import QPoint, QSize, Qt
+from typing import Union
+from PySide2.QtCore import QPoint, Qt
 from PySide2.QtWidgets import QAbstractItemView, QAction, QMenu, QListWidget
 from Packages.ui.new.widgets.list_widget_item import ListWidgetItem
 
@@ -7,10 +8,10 @@ from Packages.ui.new.widgets.list_widget_item import ListWidgetItem
 class ListWidget(QListWidget):
     
     
-    def __init__(self, path: Path, max_height: int = 100) -> None:
+    def __init__(self, path: Union[Path, None] = None, max_height: int = 100) -> None:
         super(ListWidget, self).__init__()
         
-        self._pipeline_path: Path = path
+        self._pipeline_path: Union[Path, None] = path
         
         self.setVerticalScrollMode(QAbstractItemView.ScrollPerPixel)
         self.setFocusPolicy(Qt.NoFocus)
@@ -21,17 +22,23 @@ class ListWidget(QListWidget):
         
         
     @property
-    def pipeline_path(self) -> Path:
+    def pipeline_path(self) -> Union[Path, None]:
         return self._pipeline_path
     
     
     @pipeline_path.setter
-    def pipeline_path(self, path: Path) -> None:
+    def pipeline_path(self, path: Union[Path, None]) -> None:
         self._pipeline_path = path
-        
+    
+    
     @property
-    def pipeline_name(self) -> str:
-        return self._pipeline_path.name
+    def pipeline_name(self) -> Union[str, None]:
+        return self._pipeline_path.name if self._pipeline_path else None
+    
+    
+    def populate_update_path(self, path: Union[Path, None]) -> None:
+        self.pipeline_path = path
+        self.populate(path)
 
     
     def _create_context_menu(self) -> None:
@@ -65,9 +72,12 @@ class ListWidget(QListWidget):
         ...
 
 
-    def populate(self, path: Path) -> None:
+    def populate(self, path: Union[Path, None]) -> None:
         
         self.clear()
+        if not path:
+            return
+        
         self._pipeline_path = path
             
         for dirpath in self._pipeline_path.iterdir():
@@ -76,3 +86,8 @@ class ListWidget(QListWidget):
                 continue
             
             item: ListWidgetItem = ListWidgetItem(self, dirpath)
+            
+            
+    def iter_items(self) -> list[ListWidgetItem]:
+        return [self.item(i) for i in range(self.count())]
+    

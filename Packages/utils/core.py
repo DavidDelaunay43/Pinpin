@@ -93,7 +93,7 @@ class Core:
     def project_data_paths(cls) -> ProjectDataPaths:
         
         return ProjectDataPaths(
-            PINPIN_DATA_DIRPATH = cls.pref_infos(root=cls.user_dir)
+            PROJECT_PATH = cls.pref_infos(root=Root.DEST).CURRENT_PROJECT
         )
     
     
@@ -116,69 +116,42 @@ class Core:
     
     # PREFERENCES INFOS & PATHS ---------------------------------------------------------------------------------
     @classmethod
-    def pref_infos(cls, root: str) -> PreferencesInfos:
+    def pref_infos(cls, root: Root = Root.DEST) -> PreferencesInfos:
                 
         prefs_paths: PreferencesPaths = cls.prefs_paths(root = root)
         
         return PreferencesInfos(
-            CLICKED_ITEMS = prefs_paths.clicked_items_json_path.get_value('clicked_items'),
-            CURRENT_PROJECT = prefs_paths.current_project_json_path.get_value('current_project'),
-            RECENT_FILES = prefs_paths.recent_files_json_path.get_value('recent_files'),
-            NUM_FILES = prefs_paths.ui_prefs_json_path.get_value('num_files'),
-            REVERSE_SORT_FILES = prefs_paths.ui_prefs_json_path.get_value('reverse_sort_files'),
-            VERSION = prefs_paths.version_json_path.get_value('version')
+            CURRENT_PROJECT = prefs_paths.CURRENT_PROJECT_JSONFILE.get_value('current_project'),
+            LAST_PATHS = prefs_paths.MEMO_PATH_JSONFILE.get_value('last_paths'),
+            RECENT_FILES = prefs_paths.RECENT_FILES_JSONFILE.get_value('recent_files'),
+            NUM_FILES = prefs_paths.UI_PREFS_JSONFILE.get_value('num_files'),
+            REVERSE_SORT_FILES = prefs_paths.UI_PREFS_JSONFILE.get_value('reverse_sort_files'),
+            VERSION = prefs_paths.VERSION_JSONFILE.get_value('version')
         )
         
     
     @classmethod
     def prefs_root(cls, root: Root = Root.DEST) -> Path:
         
-        if sys.version_info.minor == 9:
-            
-            dirs_dict: dict = {
-                Root.DEST: cls.user_dir,
-                Root.SOURCE: cls.pinpin_path
-            }
-
-            return dirs_dict.get(root, Root.DEST)().joinpath('.pinpin')
+        if root == Root.DEST:
+            return cls.user_dir().joinpath('.pinpin')
         
-        """if sys.version_info.minor == 10:
-            match root: # type: ignore
-                
-                case Root.DEST:
-                    return cls.user_dir().joinpath('.pinpin')
-                
-                case Root.SOURCE:
-                    return cls.pinpin_path().joinpath('.pinpin')"""
+        if root == Root.SOURCE:
+            return cls.pinpin_path().joinpath('.pinpin')
     
     
     @classmethod
     def prefs_paths(cls, root: Root = Root.DEST) -> PreferencesPaths:
         
-        if sys.version_info.minor == 9:
-            
-            dirs_dict: dict = {
-                Root.DEST: cls.user_dir,
-                Root.SOURCE: cls.pinpin_path
-            }
-
+        if root == Root.DEST:
             return PreferencesPaths(
-                USER_PREFS_ROOT = dirs_dict.get(root, Root.DEST)().joinpath('.pinpin')
+                USER_PREFS_ROOT = cls.user_dir().joinpath('.pinpin')
             )
-        
-        """if sys.version_info.minor == 10:
-                
-            match root: # type: ignore
-                
-                case Root.DEST:
-                    return PreferencesPaths(
-                        USER_PREFS_ROOT = cls.user_dir().joinpath('.pinpin')
-                    )
-                
-                case Root.SOURCE:
-                    return PreferencesPaths(
-                        USER_PREFS_ROOT = cls.pinpin_path().joinpath('.pinpin')
-                    )"""
+            
+        if root == Root.SOURCE:
+            return PreferencesPaths(
+                USER_PREFS_ROOT = cls.pinpin_path().joinpath('.pinpin')
+            )
     
     
     @classmethod
@@ -291,6 +264,18 @@ class Core:
     @staticmethod
     def is_four_digits(string: str) -> bool:
         return bool(re.match(r'^\d{4}$', string))
+    
+    
+    @staticmethod
+    def find_root_dirpath(file_path: Path, project_path: Path) -> Path:
+        
+        parents = list(file_path.parents)
+        
+        for parent in parents:
+            if parent.parent == project_path:
+                return parent
+
+        return None
     
 
 def main() -> None:

@@ -1,15 +1,18 @@
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Union
 from Packages.utils.json_file import JsonFile
 
 
 @dataclass
 class ProjectDataPaths:
     
-    PINPIN_DATA_DIRPATH: Path
+    PROJECT_PATH: Union[Path, str]
     
     def __post_init__(self):
         
+        self.PROJECT_PATH = Path(self.PROJECT_PATH) if not isinstance(self.PROJECT_PATH, Path) else self.PROJECT_PATH
+        self.PINPIN_DATA_DIRPATH = self.PROJECT_PATH.joinpath('.pinpin_data')
         self.PREVIEW_DIRPATH: Path = self.PINPIN_DATA_DIRPATH.joinpath('preview')
         self.FILE_DATA_JSONFILE: JsonFile = JsonFile(path=self.PINPIN_DATA_DIRPATH.joinpath('file_data.json'))
         self.PREFIX_JSONFILE: JsonFile = JsonFile(path=self.PINPIN_DATA_DIRPATH.joinpath('prefix.json'))
@@ -43,9 +46,9 @@ class PreferencesPaths:
         
         self.LOGS_DIRPATH: Path = self.USER_PREFS_ROOT.joinpath('logs')
         self.APPS_JSONFILE: JsonFile = JsonFile(self.USER_PREFS_ROOT.joinpath('apps.json'))
-        self.CLICKED_ITEMS_JSONFILE: JsonFile = JsonFile(self.USER_PREFS_ROOT.joinpath('clicked_items.json'))
         self.CURRENT_PROJECT_JSONFILE: JsonFile = JsonFile(self.USER_PREFS_ROOT.joinpath('current_project.json'))
         self.FAKE_PROJECT_DIRPATH: Path = self.USER_PREFS_ROOT.joinpath('FakeProject')
+        self.MEMO_PATH_JSONFILE: JsonFile = JsonFile(self.USER_PREFS_ROOT.joinpath('memo_path.json'))
         self.RECENT_FILES_JSONFILE: JsonFile = JsonFile(self.USER_PREFS_ROOT.joinpath('recent_files.json'))
         self.UI_PREFS_JSONFILE: JsonFile = JsonFile(self.USER_PREFS_ROOT.joinpath('ui_prefs.json'))
         self.VERSION_JSONFILE: JsonFile = JsonFile(self.USER_PREFS_ROOT.joinpath('version.json'))
@@ -54,8 +57,8 @@ class PreferencesPaths:
 @dataclass(frozen=True)
 class PreferencesInfos:
     
-    CLICKED_ITEMS: dict
     CURRENT_PROJECT: Path
+    LAST_PATHS: list
     RECENT_FILES: list
     NUM_FILES: int
     REVERSE_SORT_FILES: bool
