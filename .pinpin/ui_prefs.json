@@ -1,5 +1,5 @@
 {
     "num_files": 200,
     "reverse_sort_file": true,
-    "dev_mode": 0
+    "dev_mode": false
 }

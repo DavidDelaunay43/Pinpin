@@ -7,3 +7,4 @@ from Packages.apps.standalone.standalone_app import main as launch_app
 #from Packages.utils.init_pinpin import main as init_pinpin
 
 launch_app()
+ 

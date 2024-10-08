@@ -1,3 +1,5 @@
-from Packages.utils.init_pinpin import main
+a = None
 
-main()
+b = int(a)
+
+print(b)

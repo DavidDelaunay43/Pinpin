@@ -1,8 +1,14 @@
 from pathlib import Path
-from typing import Union
+from subprocess import Popen
+from typing import Callable, Union
 from PySide2.QtCore import QPoint, Qt
 from PySide2.QtWidgets import QAbstractItemView, QAction, QMenu, QListWidget
+from Packages.ui.new.widgets.input_dialog import InputDialog
 from Packages.ui.new.widgets.list_widget_item import ListWidgetItem
+from Packages.utils.logger import Logger
+
+
+Logger.LOGGER_NAME = __file__
 
 
 class ListWidget(QListWidget):
@@ -36,9 +42,15 @@ class ListWidget(QListWidget):
         return self._pipeline_path.name if self._pipeline_path else None
     
     
+    def connect_right_clic(self, function: Callable) -> None:
+        self.customContextMenuRequested.connect(function)
+    
+    
     def populate_update_path(self, path: Union[Path, None]) -> None:
         self.pipeline_path = path
-        self.populate(path)
+        self.clear()
+        if path:
+            self.populate()
 
     
     def _create_context_menu(self) -> None:
@@ -65,27 +77,33 @@ class ListWidget(QListWidget):
         
         
     def _open_explorer(self) -> None:
-        ...
+        Popen(['explorer', self.pipeline_path])
         
         
     def _create_folder(self) -> None:
-        ...
-
-
-    def populate(self, path: Union[Path, None]) -> None:
         
-        self.clear()
-        if not path:
+        input_dialog: InputDialog = InputDialog(self, 'Create Folder', 'Enter folder name:')
+        
+        if input_dialog.exec_() != InputDialog.Accepted:
             return
+    
+        dirname: str = input_dialog.textValue()
+        if not dirname:
+            return
+        item_path: Path = self.pipeline_path.joinpath(dirname)
+        ListWidgetItem(self, item_path)
+        item_path.mkdir(parents=True, exist_ok=True)
+        Logger.info(f'Create directory: {self._pipeline_path.joinpath(dirname)}')
+
+
+    def populate(self) -> None:
         
-        self._pipeline_path = path
-            
         for dirpath in self._pipeline_path.iterdir():
             
             if not dirpath.is_dir():
                 continue
             
-            item: ListWidgetItem = ListWidgetItem(self, dirpath)
+            ListWidgetItem(self, dirpath)
             
             
     def iter_items(self) -> list[ListWidgetItem]:

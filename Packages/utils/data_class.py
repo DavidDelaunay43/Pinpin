@@ -62,6 +62,7 @@ class PreferencesInfos:
     RECENT_FILES: list
     NUM_FILES: int
     REVERSE_SORT_FILES: bool
+    DEV_MODE: bool
     VERSION: str
     
 

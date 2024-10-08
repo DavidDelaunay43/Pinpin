@@ -2,9 +2,9 @@ from datetime import datetime
 import os
 from pathlib import Path
 import re
-import sys
 from Packages.utils.data_class import SoftwarePaths, PreferencesInfos, PreferencesPaths, ProjectDataPaths, ProjectData
 from Packages.utils.enums import Root
+from Packages.utils.json_file import JsonFile
 
 
 class Core:
@@ -68,6 +68,50 @@ class Core:
     
     
     @classmethod
+    def icon_path(cls, icon_name: str) -> Path:
+        return cls.pinpin_icons_path().joinpath(icon_name)
+    
+    
+    @classmethod
+    def pinpin_styles_path(cls) -> Path:
+        return cls.project_files_path().joinpath('Styles')
+    
+    
+    @classmethod
+    def pinpin_style_path(cls, style_file_name: str = 'biiiped.qss') -> Path:
+        return cls.pinpin_styles_path().joinpath(style_file_name)
+    
+    
+    @classmethod
+    def style_sheet(cls, style_file_name: str) -> str:
+        with open(cls.pinpin_styles_path().joinpath(style_file_name), 'r') as qss_file:
+            return qss_file.read()
+    
+    
+    @classmethod
+    def custom_style_sheet(cls) -> str:
+        
+        palette_dict: dict = JsonFile(cls.pinpin_palette_file_path()).json_to_dict()
+        
+        with open(cls.pinpin_style_path(), 'r') as qss_file:
+            style_sheet: str = qss_file.read()
+        style_sheet = style_sheet.replace("MAIN_COLOR", palette_dict["MAIN_COLOR"])
+        style_sheet = style_sheet.replace("SECONDARY_COLOR", palette_dict["SECONDARY_COLOR"])
+        style_sheet = style_sheet.replace("TERTEARY_COLOR", palette_dict["TERTEARY_COLOR"])
+        style_sheet = style_sheet.replace("CUTE_COLOR", palette_dict["CUTE_COLOR"])
+        style_sheet = style_sheet.replace("COLOR_4", palette_dict["COLOR_4"])
+        style_sheet = style_sheet.replace("BORDER_SIZE", palette_dict["BORDER_SIZE"])
+        style_sheet = style_sheet.replace("BORDER_RADIUS", palette_dict["BORDER_RADIUS"])
+        
+        return style_sheet
+    
+    
+    @classmethod
+    def pinpin_palette_file_path(cls) -> Path:
+        return cls.pinpin_styles_path().joinpath('palette_1.json')
+    
+    
+    @classmethod
     def current_version(cls) -> str:
         return cls.prefs_dest().VERSION_JSONFILE.get_value('version')
     
@@ -126,6 +170,7 @@ class Core:
             RECENT_FILES = prefs_paths.RECENT_FILES_JSONFILE.get_value('recent_files'),
             NUM_FILES = prefs_paths.UI_PREFS_JSONFILE.get_value('num_files'),
             REVERSE_SORT_FILES = prefs_paths.UI_PREFS_JSONFILE.get_value('reverse_sort_files'),
+            DEV_MODE = prefs_paths.UI_PREFS_JSONFILE.get_value('dev_mode'),
             VERSION = prefs_paths.VERSION_JSONFILE.get_value('version')
         )
         

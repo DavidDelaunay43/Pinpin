@@ -1,0 +1,80 @@
+/* Global Style */
+QMainWindow {
+    background-color: #1E1E2F; /* Couleur de fond principale */
+    color: #FFFFFF; /* Couleur du texte */
+}
+
+QWidget {
+    background-color: #2B2B3D; /* Couleur de fond des widgets */
+    border: 1px solid #444444; /* Bordure des widgets */
+}
+
+QTabWidget {
+    background-color: #2B2B3D; /* Couleur de fond des onglets */
+    selection-background-color: #4E4E70; /* Couleur de fond de l'onglet sélectionné */
+}
+
+QTabBar::tab {
+    background: #2B2B3D; /* Couleur des onglets */
+    color: #FFFFFF; /* Couleur du texte des onglets */
+    padding: 10px;
+}
+
+QTabBar::tab:selected {
+    background: #4E4E70; /* Couleur de fond des onglets sélectionnés */
+    color: #FFFFFF; /* Couleur du texte des onglets sélectionnés */
+}
+
+QPushButton {
+    background-color: #4E4E70; /* Couleur de fond des boutons */
+    color: #FFFFFF; /* Couleur du texte des boutons */
+    border: none; /* Pas de bordure */
+    padding: 8px 16px; /* Espacement interne */
+    border-radius: 5px; /* Coins arrondis */
+}
+
+QPushButton:hover {
+    background-color: #5E5E80; /* Couleur de fond lors du survol */
+}
+
+QPushButton:pressed {
+    background-color: #6E6E90; /* Couleur de fond lors du clic */
+}
+
+QListWidget, QTreeWidget, QTableWidget {
+    background-color: #2B2B3D; /* Couleur de fond des listes */
+    border: 1px solid #444444; /* Bordure des listes */
+    color: #FFFFFF; /* Couleur du texte des items */
+}
+
+QListWidget::item:selected, QTreeWidget::item:selected, QTableWidget::item:selected {
+    border: 2px solid #1E90FF; /* Bordure bleue pour les éléments sélectionnés */
+    background-color: transparent; /* Pas de changement de fond pour les éléments sélectionnés */
+    color: #FFFFFF; /* Couleur du texte des éléments sélectionnés */
+}
+
+QListWidget::item:hover, QTreeWidget::item:hover, QTableWidget::item:hover {
+    background-color: #5E5E80; /* Couleur de fond des éléments survolés */
+}
+
+QHeaderView {
+    background-color: #2B2B3D; /* Couleur de fond des en-têtes */
+    color: #FFFFFF; /* Couleur du texte des en-têtes */
+    border: 1px solid #444444; /* Bordure des en-têtes */
+}
+
+QStatusBar {
+    background-color: #4E4E70; /* Couleur de fond de la barre d'état */
+    color: #FFFFFF; /* Couleur du texte de la barre d'état */
+}
+
+QLineEdit {
+    background-color: #2B2B3D; /* Couleur de fond des champs de texte */
+    color: #FFFFFF; /* Couleur du texte des champs de texte */
+    border: 1px solid #444444; /* Bordure des champs de texte */
+    padding: 5px; /* Espacement interne */
+}
+
+QLineEdit:focus {
+    border: 1px solid #1E90FF; /* Bordure bleue lors du focus */
+}

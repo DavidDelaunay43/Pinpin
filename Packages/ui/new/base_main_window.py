@@ -16,7 +16,6 @@ class BaseMainWindow(QMainWindow):
     def __init__(self, project_path: Path, parent: Union[QApplication, None] = None) -> None:
         super(BaseMainWindow, self).__init__(parent)
         
-        self._PARENT: QApplication = self.parent()
         self.project_path: Path = project_path
         self.project_name: str = project_path.name
         self.current_path: Path = project_path
@@ -39,20 +38,19 @@ class BaseMainWindow(QMainWindow):
         
     def _init_ui(self) -> None:
         
-        self.resize(820, 900)
+        self.resize(850, 900)
         self._move_main_window()
             
         self.setWindowTitle(f'Pinpin - {Core.current_version()} - {Core.current_project_path().name}')
         self.setWindowIcon(QIcon(str(Core.pinpin_icon_path())))
-        
-        if isinstance(self._PARENT, QApplication):
+        if not self.parent():
             self._set_style()
         
         
     def _move_main_window(self) -> None:
         
-        if self._PARENT:
-            parent_geo = self._PARENT.geometry()
+        if self.parent():
+            parent_geo = self.parent().geometry()
             self.move(
                 parent_geo.x()+(parent_geo.width()-self.width())//2,
                 parent_geo.y()+(parent_geo.height()-self.height())//2+40
@@ -67,7 +65,9 @@ class BaseMainWindow(QMainWindow):
         
     
     def _set_style(self) -> None:
-        pass
+        
+        #self.setStyleSheet(Core.custom_style_sheet())
+        self.setStyleSheet(Core.style_sheet('prism.qss'))
     
         
     # ------------------------------------------------------------------------------------------------------
@@ -168,21 +168,19 @@ class BaseMainWindow(QMainWindow):
         self._browser_grid_widget.setLayout(self._browser_grid_layout)
         
         # Add widgets
-        self._browser_grid_layout.addWidget(self._tree_widget, 0, 0, 3, 1)
-        self._browser_grid_layout.addWidget(self._list_01, 0, 1)
-        self._browser_grid_layout.addWidget(self._list_02, 0, 2)
-        self._browser_grid_layout.addWidget(self._list_03, 0, 3)
-        self._browser_grid_layout.addWidget(self._table_widget, 1, 1, 2, 3)
+        self.TREE_SIZE: tuple = 7, 2
+        self.LIST01_SIZE: tuple = 1, 1
+        self.LIST02_SIZE: tuple = 1, 1
+        self.LIST03_SIZE: tuple = 1, 1
+        self.TABLE_SIZE: tuple = 5, 3
         
-        self._browser_grid_layout.setRowStretch(0, 1)
-        self._browser_grid_layout.setRowStretch(1, 2)
-        self._browser_grid_layout.setRowStretch(2, 2)
-        self._browser_grid_layout.setColumnStretch(0, 1)
-        self._browser_grid_layout.setColumnStretch(1, 2)
-        self._browser_grid_layout.setColumnStretch(2, 2)
-        self._browser_grid_layout.setColumnStretch(3, 2)
-   
-            
+        self._browser_grid_layout.addWidget(self._tree_widget, 0, 0, *self.TREE_SIZE)
+        self._browser_grid_layout.addWidget(self._list_01, 0, self.TREE_SIZE[1], *self.LIST01_SIZE)
+        self._browser_grid_layout.addWidget(self._list_02, 0, self.TREE_SIZE[1]+self.LIST01_SIZE[1], *self.LIST02_SIZE)
+        self._browser_grid_layout.addWidget(self._list_03, 0, self.TREE_SIZE[1]+self.LIST01_SIZE[1]+self.LIST02_SIZE[1], *self.LIST03_SIZE)
+        self._browser_grid_layout.addWidget(self._table_widget, self.LIST01_SIZE[0], self.TREE_SIZE[1], *self.TABLE_SIZE)
+        
+
     def _create_recent_central_layout(self) -> None:
         
         # Create widget
@@ -244,29 +242,23 @@ class BaseMainWindow(QMainWindow):
                          widget: Union[widgets.PipelineWidget, None] = None
                          ) -> None:
         
+        reset_widgets = [self._list_01, self._list_02, self._list_03, self._table_widget]
+
         if widget is self._tree_widget:
-            self._list_01.populate_update_path(None)
-            self._list_02.populate_update_path(None)
-            self._list_03.populate_update_path(None)
-            self._table_widget.populate_update_path(None)
+            for w in reset_widgets:
+                w.populate_update_path(None)
             widget.populate_update_path(self.current_path)
             return
-            
-        if widget is self._list_01:
-            self._list_02.populate_update_path(None)
-            self._list_03.populate_update_path(None)
-            self._table_widget.populate_update_path(None)
+
+        if widget in reset_widgets:
+            widget_index = reset_widgets.index(widget)
+            for w in reset_widgets[widget_index+1:]:
+                w.populate_update_path(None)
             widget.populate_update_path(self.current_path)
             return
-            
-        if widget is self._list_02:
-            self._list_03.populate_update_path(None)
-            self._table_widget.populate_update_path(None)
-            widget.populate_update_path(self.current_path)
-            return
-        
+
         widget.populate_update_path(self.current_path)
-        
+            
 
     def update_memo_path(self) -> None:
         
@@ -275,21 +267,19 @@ class BaseMainWindow(QMainWindow):
         memo_path_jsonfile: JsonFile = Core.prefs_paths().MEMO_PATH_JSONFILE
         last_paths: list = memo_path_jsonfile.json_to_dict()['last_paths']
         
-        Logger.debug(f'{last_paths}')
-        
         for index, path in enumerate(last_paths):
             
             if str(self.current_path) == path:
                 return
             
             match_path: Path = Core.find_root_dirpath(self.current_path, self.project_path)
-            Logger.debug(f'Current path: {self.current_path}\nLast path: {path}')
             if match_path and str(match_path) in path or str(self.current_path) in path:
                 last_paths.pop(index)
         
         last_paths.insert(0, str(self.current_path))
         
         memo_path_jsonfile.dict_to_json({"last_paths": last_paths})
+        Logger.debug(f'Memo path: {self.current_path}')
         
         
     def _auto_clic_widget(self, widget: widgets.PipelineWidget, next_widget: widgets.PipelineWidget, path: Path) -> None:

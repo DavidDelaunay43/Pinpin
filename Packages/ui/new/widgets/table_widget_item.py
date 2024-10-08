@@ -18,6 +18,10 @@ class TableWidgetItem(QTableWidgetItem):
             self.setText(text)
             if size:
                 self.setFont(QFont(QFont().family(), size))
+                
+        self.setToolTip(
+            f'<span style="font-size: 14px; background-color: white; color: black; border: 0px transparent;">{self.pipeline_name}</span>'
+        )
     
     
     @property

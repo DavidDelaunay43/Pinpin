@@ -1,8 +1,14 @@
 from pathlib import Path
-from typing import Union
+from subprocess import Popen
+from typing import Callable, Union
 from PySide2.QtCore import QPoint, QSize, Qt
 from PySide2.QtWidgets import QAction, QMenu, QTreeWidget
+from Packages.ui.new.widgets.input_dialog import InputDialog
 from Packages.ui.new.widgets.tree_widget_item import TreeWidgetItem
+from Packages.utils.logger import Logger
+
+
+Logger.LOGGER_NAME = __file__
 
 
 class TreeWidget(QTreeWidget):
@@ -41,6 +47,10 @@ class TreeWidget(QTreeWidget):
         return self._pipeline_path.name if self._pipeline_path else None
     
     
+    def connect_right_clic(self, function: Callable) -> None:
+        self.customContextMenuRequested.connect(function)
+    
+    
     def populate_update_path(self, path: Union[Path, None]) -> None:
         self.pipeline_path = path
         self.populate(path)
@@ -70,11 +80,36 @@ class TreeWidget(QTreeWidget):
         
         
     def _open_explorer(self) -> None:
-        ...
+        item: TreeWidgetItem = self.currentItem()
+        if item:
+            Popen(['explorer', item.pipeline_path.parent])
+        else:
+            Popen(['explorer', self.pipeline_path])
         
         
     def _create_folder(self) -> None:
-        ...
+        item: TreeWidgetItem = self.currentItem()
+        if item:
+            parent_item: TreeWidgetItem = item.parent()
+            item_size: list[int] = [40,40]
+            parent_path: Path = item.pipeline_path.parent
+            text: str = parent_item.pipeline_name.split('_')[-1]
+        else:
+            parent_item: TreeWidget = self
+            item_size: None = None
+            parent_path: Path = self.pipeline_path
+            text: str = self.pipeline_name.split('_')[-1]
+            
+        input_dialog: InputDialog = InputDialog(self, f'Create {text.capitalize()}', f'Enter {text} name:')
+        
+        if input_dialog.exec_() == InputDialog.Accepted:
+            dirname: str = input_dialog.textValue()
+            if not dirname:
+                return
+            item_path: Path = parent_path.joinpath(dirname)
+            item: TreeWidgetItem = TreeWidgetItem(parent_item, item_path, item_size)
+            parent_path.joinpath(dirname).mkdir(parents=True, exist_ok=True)
+            Logger.info(f'Create directory: {parent_path.joinpath(dirname)}')
     
     
     def iter_items(self) -> list[TreeWidgetItem]:
@@ -106,5 +141,4 @@ class TreeWidget(QTreeWidget):
                 if not subdirpath.is_dir():
                     continue
                 
-                item: TreeWidgetItem = TreeWidgetItem(root_item, subdirpath)
-                item.setSizeHint(0, QSize(40,40))
+                item: TreeWidgetItem = TreeWidgetItem(root_item, subdirpath, [40,40])
