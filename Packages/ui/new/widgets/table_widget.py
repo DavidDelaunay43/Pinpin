@@ -1,23 +1,24 @@
 from pathlib import Path
 from subprocess import Popen
-from typing import Callable, Union
-from PySide2.QtCore import QPoint, Qt
-from PySide2.QtCore import Qt, QEvent, QObject
+from typing import Union
+from PySide2.QtCore import QEvent, QObject, QPoint, Qt
 from PySide2.QtWidgets import QAbstractItemView, QAction, QHeaderView, QMenu, QTableWidget, QTableWidgetItem, QToolTip
 from Packages.ui.new.widgets.input_dialog_multi_line import InputDialogMultiLine
 from Packages.ui.new.widgets.input_dialog import InputDialog
 from Packages.ui.new.widgets.table_widget_item import TableWidgetItem
 from Packages.utils.core import Core
 from Packages.utils.file_info import FileInfo
+from Packages.utils.json_file import JsonFile
 from Packages.utils.logger import Logger
 
 
 class TableWidget(QTableWidget):
     
     
-    def __init__(self, path: Union[Path, None] = None) -> None:
-        super(TableWidget, self).__init__()
+    def __init__(self, parent = None, path: Union[Path, None] = None) -> None:
+        super(TableWidget, self).__init__(parent)
         
+        self._main_window = parent
         self._pipeline_path: Union[Path, None] = path
         self._init_widget()
         self._create_context_menu()
@@ -74,10 +75,6 @@ class TableWidget(QTableWidget):
         self._pipeline_path.name if self._pipeline_path else None
         
         
-    def connect_right_clic(self, function: Callable) -> None:
-        self.customContextMenuRequested.connect(function)
-        
-        
     def eventFilter(self, source: QObject, event: QEvent):
         if source is self.viewport():
             if event.type() == event.ToolTip:
@@ -121,24 +118,46 @@ class TableWidget(QTableWidget):
     
     
     def _show_context_menu(self, pos: QPoint) -> None:
+        
+        self._main_window._update_current_path(self.currentItem())
         self._context_menu.exec_(self.mapToGlobal(pos))
-        
-        
+    
+    
     def _open_explorer(self) -> None:
         Popen(['explorer', self.pipeline_path])
         
         
     def _increment_file(self) -> None:
-        ...
+        pipeline_path: Path = self.currentItem().pipeline_path
+        file_info: FileInfo = FileInfo(pipeline_path)
+        file_info.external_increment()
+        
+        row_pos_arg: Union[int, None] = 0 if Core.prefs_paths().UI_PREFS_JSONFILE.get_value('reverse_sort_file') else None
+        self._add_row(file_info.NEXT_PIPELINE_PATH, row_pos=row_pos_arg)
         
     
     def _edit_comment(self) -> None:
         
-        input_dialog: InputDialogMultiLine = InputDialogMultiLine(self, 'Edit Comment', 'Enter comment:')
+        pipeline_path: Path = self.currentItem().pipeline_path
+        file_info_jsonfile: JsonFile = Core.project_data_paths().FILE_DATA_JSONFILE
+        
+        all_file_info_dict: dict = file_info_jsonfile.json_to_dict()
+        text: str = all_file_info_dict[str(pipeline_path)]['comment'] if str(pipeline_path) in all_file_info_dict.keys() else None
+        
+        input_dialog: InputDialogMultiLine = InputDialogMultiLine(self, 'Edit Comment', 'Enter comment:', text=text)
         
         if input_dialog.exec_() != InputDialogMultiLine.Accepted:
             return
             
+        text = input_dialog.text
+        if not text:
+            return
+        
+        all_file_info_dict[str(pipeline_path)] = {'comment': text, 'user': Core.username()}
+        file_info_jsonfile.dict_to_json(all_file_info_dict)
+        self.selectedItems()[2].setText(text)
+        Logger.info(f'Update comment:\nFile path: {pipeline_path}\nComment: {text}')
+        
             
     def _invert_sort(self) -> None:
         invert_sort: bool = Core.prefs_paths().UI_PREFS_JSONFILE.get_value('reverse_sort_file')
@@ -150,8 +169,6 @@ class TableWidget(QTableWidget):
         
         
     def _set_max_files(self) -> None:
-        
-        max_files: int = Core.prefs_paths().UI_PREFS_JSONFILE.get_value('num_files')
         
         input_dialog: InputDialog = InputDialog(self, 'Edit max files', 'Enter num:')
         
@@ -203,14 +220,19 @@ class TableWidget(QTableWidget):
             self._add_row(file_path=file_path)
         
     
-    def _add_row(self, file_path: Path) -> None:
+    def _add_row(self, file_path: Path, row_pos: Union[int, None] = None) -> None:
         
         file_info: FileInfo = FileInfo(file_path)
         Logger.debug(f'File info: {file_path.name}\nVersion: {file_info.version}\nComment: {file_info.comment}\nLast user: {file_info.last_user}')
         
-        row_position: int = self.rowCount()
-        self.insertRow(row_position)
-        self.setRowHeight(row_position, 101)
+        if row_pos == 0:
+            row_position: int = row_pos
+            self.insertRow(row_position)
+            self.setRowHeight(row_position, 100)
+        else:  
+            row_position: int = self.rowCount()
+            self.insertRow(row_position)
+            self.setRowHeight(row_position, 100)
         
         self.setItem(row_position, 0, TableWidgetItem(file_path, 'No preview')) # preview
         self.setItem(row_position, 1, TableWidgetItem(file_path, file_info.version, size=12)) # version

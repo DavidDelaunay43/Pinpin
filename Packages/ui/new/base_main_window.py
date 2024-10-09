@@ -6,6 +6,7 @@ from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QApplication, QButtonGroup, QDesktopWidget, QGridLayout, QHBoxLayout, QMainWindow, QTabWidget, QVBoxLayout, QWidget
 from Packages.ui.new import widgets
 from Packages.utils.core import Core
+from Packages.utils.json_file import JsonFile
 from Packages.utils.logger import Logger
 from Packages.utils.naming import PipeRoot
 
@@ -31,7 +32,7 @@ class BaseMainWindow(QMainWindow):
         self._create_widgets()
         self._create_layout()
         self._create_connections()
-        self.setMenuBar(widgets.MenuBar())
+        #self.setMenuBar(widgets.MenuBar())
         
         self._status_bar.pipeline_path = self.current_path
         
@@ -80,7 +81,7 @@ class BaseMainWindow(QMainWindow):
         self._list_01: widgets.ListWidget = widgets.ListWidget()
         self._list_02: widgets.ListWidget = widgets.ListWidget()
         self._list_03: widgets.ListWidget = widgets.ListWidget()
-        self._table_widget: widgets.TableWidget = widgets.TableWidget()
+        self._table_widget: widgets.TableWidget = widgets.TableWidget(self)
 
             
             
@@ -192,8 +193,8 @@ class BaseMainWindow(QMainWindow):
     def _create_connections(self) -> None:
         
         for root_button in self._root_buttons:
-            root_button.toggled.connect(self._update_current_path)
-            root_button.toggled.connect(
+            root_button.clicked.connect(self._update_current_path)
+            root_button.clicked.connect(
                 partial(self._populate_widget, widget=self._tree_widget)
             )
             
@@ -218,9 +219,28 @@ class BaseMainWindow(QMainWindow):
         )
         
         self._table_widget.itemClicked.connect(self._update_current_path)
-    
-    
+        
     # ------------------------------------------------------------------------------------------------------
+    def _auto_clic_while_use(self) -> None:
+        
+        root_button: widgets.CheckableButton = self.sender()
+        memo_list: list[str] = Core.prefs_paths().MEMO_PATH_JSONFILE.json_to_dict().get('last_paths')
+        
+        if not memo_list:
+            return
+        
+        if str(root_button.pipeline_path) in memo_list:
+            return
+        
+        for index, memo_path in enumerate(memo_list):
+            
+            if str(root_button.pipeline_path) in memo_path:
+                root_button.setChecked(False)
+                self.current_path = self.project_path
+                self.auto_clic(memo_list, index=index)  
+                break
+
+    
     def _update_current_path(self, 
                              item: Union[widgets.PipelineWidgetItem, None] = None, 
                              column: Union[int, None] = None
@@ -234,7 +254,6 @@ class BaseMainWindow(QMainWindow):
         self._status_bar.pipeline_path = sender.pipeline_path
         self.update_memo_path()
         Logger.debug(f'Update current path: {self.current_path}')
-
 
     def _populate_widget(self,
                          item: Union[widgets.PipelineWidgetItem, None] = None, 
@@ -262,19 +281,19 @@ class BaseMainWindow(QMainWindow):
 
     def update_memo_path(self) -> None:
         
-        from Packages.utils.json_file import JsonFile
-        
         memo_path_jsonfile: JsonFile = Core.prefs_paths().MEMO_PATH_JSONFILE
         last_paths: list = memo_path_jsonfile.json_to_dict()['last_paths']
         
-        for index, path in enumerate(last_paths):
+        if str(self.current_path) in last_paths:
+            Logger.debug(f'Remove: {self.current_path}')
+            last_paths.remove(str(self.current_path))
             
-            if str(self.current_path) == path:
-                return
-            
+        else:
             match_path: Path = Core.find_root_dirpath(self.current_path, self.project_path)
-            if match_path and str(match_path) in path or str(self.current_path) in path:
-                last_paths.pop(index)
+            for path in last_paths:
+                if str(match_path) in path or str(self.current_path) in path:
+                    last_paths.remove(str(path))
+                    break
         
         last_paths.insert(0, str(self.current_path))
         
@@ -293,12 +312,12 @@ class BaseMainWindow(QMainWindow):
                 self._populate_widget(item, column, next_widget)
                 
         
-    def auto_clic(self, last_paths: list[str]) -> None:
+    def auto_clic(self, last_paths: list[str], index: int = 0) -> None:
         
         if not last_paths:
             return
         
-        all_paths: list[Path] = [Path(last_paths[0])]
+        all_paths: list[Path] = [Path(last_paths[index])]
         all_paths.extend(all_paths[0].parents)
         
         for parent in reversed(all_paths):
@@ -306,6 +325,10 @@ class BaseMainWindow(QMainWindow):
             for root_button in self._root_buttons:
                 if parent == root_button.pipeline_path:
                     root_button.setChecked(True)
+                    self.current_path = root_button.pipeline_path
+                    self._status_bar.pipeline_path = root_button.pipeline_path
+                    self.update_memo_path()
+                    self._populate_widget(widget=self._tree_widget)
                     break
                     
             self._auto_clic_widget(self._tree_widget, self._list_01, parent)

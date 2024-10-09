@@ -17,6 +17,7 @@ class InputDialogMultiLine(QDialog):
         
         self._label: QLabel = QLabel(label)
         self._text_edit: QTextEdit = QTextEdit(text if text else '')
+        self._text_edit.moveCursor(self._text_edit.textCursor().End)
         self._ok_button: QPushButton = QPushButton('Ok')
         self._cancel_button: QPushButton = QPushButton('Cancel')
         
@@ -29,3 +30,8 @@ class InputDialogMultiLine(QDialog):
         
         self._ok_button.clicked.connect(self.accept)
         self._cancel_button.clicked.connect(self.reject)
+        
+        
+    @property
+    def text(self) -> Union[str, None]:
+        return self._text_edit.toPlainText()

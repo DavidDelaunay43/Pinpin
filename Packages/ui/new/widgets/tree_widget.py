@@ -8,9 +8,6 @@ from Packages.ui.new.widgets.tree_widget_item import TreeWidgetItem
 from Packages.utils.logger import Logger
 
 
-Logger.LOGGER_NAME = __file__
-
-
 class TreeWidget(QTreeWidget):
     
     

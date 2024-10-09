@@ -8,9 +8,6 @@ from Packages.ui.new.widgets.list_widget_item import ListWidgetItem
 from Packages.utils.logger import Logger
 
 
-Logger.LOGGER_NAME = __file__
-
-
 class ListWidget(QListWidget):
     
     

@@ -4,12 +4,13 @@ import sys
         
 class Logger:
     
-    LOGGER_NAME = 'Logger'
+    
+    LOGGER_NAME = 'Pinpin Logger'
     FORMAT_DEFAULT = "[%(asctime)s][%(name)s][%(levelname)s]\n%(message)s\n"
     FILE_FORMAT_DEFAULT = "[%(asctime)s][%(name)s][%(levelname)s]\n%(message)s\n"
     SECONDS_FMT_DEF = r"%Y-%m-%d %H:%M:%S"
     LEVEL_DEFAULT = logging.DEBUG
-    LEVEL_WRITE_DEFAULT = logging.WARNING
+    LEVEL_WRITE_DEFAULT = logging.INFO
     PROPAGATE_DEFAULT = False
     
     _logger = None
