@@ -2,6 +2,7 @@ from dataclasses import asdict
 from functools import partial
 from pathlib import Path
 from typing import Union
+from PySide2.QtCore import QDir
 from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QApplication, QButtonGroup, QDesktopWidget, QGridLayout, QHBoxLayout, QMainWindow, QTabWidget, QVBoxLayout, QWidget
 from Packages.ui.new import widgets
@@ -39,7 +40,7 @@ class BaseMainWindow(QMainWindow):
         
     def _init_ui(self) -> None:
         
-        self.resize(850, 900)
+        self.resize(850, 890)
         self._move_main_window()
             
         self.setWindowTitle(f'Pinpin - {Core.current_version()} - {Core.current_project_path().name}')
@@ -67,7 +68,7 @@ class BaseMainWindow(QMainWindow):
     
     def _set_style(self) -> None:
         
-        #self.setStyleSheet(Core.custom_style_sheet())
+        QDir.setSearchPaths('icons', [str(Core.style_icons_path())])
         self.setStyleSheet(Core.style_sheet('prism.qss'))
     
         
@@ -110,7 +111,7 @@ class BaseMainWindow(QMainWindow):
         self._create_root_buttons_layout()
         self._create_browser_grid_layout()
         
-        self._create_recent_central_layout()
+        self._create_settings_central_layout()
 
         
     def _create_central_layout(self) -> None:
@@ -182,11 +183,11 @@ class BaseMainWindow(QMainWindow):
         self._browser_grid_layout.addWidget(self._table_widget, self.LIST01_SIZE[0], self.TREE_SIZE[1], *self.TABLE_SIZE)
         
 
-    def _create_recent_central_layout(self) -> None:
+    def _create_settings_central_layout(self) -> None:
         
         # Create widget
-        self._recent_tab: QWidget = QWidget()
-        self._tab_widget.addTab(self._recent_tab, 'Recent')
+        self.settings_tab: QWidget = QWidget()
+        self._tab_widget.addTab(self.settings_tab, 'Settings')
 
     
     # ------------------------------------------------------------------------------------------------------

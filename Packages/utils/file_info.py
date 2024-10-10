@@ -119,6 +119,11 @@ class FileInfo:
         return f'{self.last_user}\n{self._last_time}\n{self._format_size}\n{self.extension}' if self.last_user else f'\n{self._last_time}\n{self._format_size}\n{self.extension}'
     
     
+    @property
+    def preview_image_path(self) -> Union[Path, None]:
+        return self._find_preview_image()
+    
+    
     def format_size(self) -> str:
         
         size_bytes: int = self.size
@@ -170,4 +175,9 @@ class FileInfo:
         shutil.copy(self.pipeline_path, self.next_pipeline_path)
         Core.project_data_paths().FILE_DATA_JSONFILE.set_value(str(self.NEXT_PIPELINE_PATH), {'comment': None, 'user': Core.username()})
         return self.NEXT_PIPELINE_PATH
-     
+    
+    
+    def _find_preview_image(self) -> Union[Path, None]:
+        preview_image_path: Path = Core.project_data_paths().PREVIEW_DIRPATH.joinpath(f'{self.pipeline_name}.jpg')
+        return preview_image_path if preview_image_path.exists() else None
+    

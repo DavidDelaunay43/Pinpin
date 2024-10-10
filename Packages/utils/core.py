@@ -78,6 +78,11 @@ class Core:
     
     
     @classmethod
+    def style_icons_path(cls) -> Path:
+        return Core.pinpin_styles_path().joinpath('rc')
+    
+    
+    @classmethod
     def pinpin_style_path(cls, style_file_name: str = 'biiiped.qss') -> Path:
         return cls.pinpin_styles_path().joinpath(style_file_name)
     

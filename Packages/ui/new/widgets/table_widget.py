@@ -1,7 +1,7 @@
 from pathlib import Path
 from subprocess import Popen
 from typing import Union
-from PySide2.QtCore import QEvent, QObject, QPoint, Qt
+from PySide2.QtCore import QEvent, QObject, QPoint, QSize, Qt
 from PySide2.QtWidgets import QAbstractItemView, QAction, QHeaderView, QMenu, QTableWidget, QTableWidgetItem, QToolTip
 from Packages.ui.new.widgets.input_dialog_multi_line import InputDialogMultiLine
 from Packages.ui.new.widgets.input_dialog import InputDialog
@@ -47,6 +47,7 @@ class TableWidget(QTableWidget):
         self.verticalHeader().setHighlightSections(False)
         self.setFocusPolicy(Qt.NoFocus)
         self.setColumnCount(4)
+        self.setIconSize(QSize(256, 144))
         
         for index, column in enumerate(['Image', 'Version', 'Comment','Infos']):
             
@@ -55,7 +56,7 @@ class TableWidget(QTableWidget):
             self.horizontalHeaderItem(index).setText(column)
             
             try:
-                self.setColumnWidth(index, [200, 50, None, 100][index])
+                self.setColumnWidth(index, [136, None, None, 100][index])
             except:
                 self.horizontalHeader().setSectionResizeMode(index, QHeaderView.Stretch)
         
@@ -225,16 +226,17 @@ class TableWidget(QTableWidget):
         file_info: FileInfo = FileInfo(file_path)
         Logger.debug(f'File info: {file_path.name}\nVersion: {file_info.version}\nComment: {file_info.comment}\nLast user: {file_info.last_user}')
         
-        if row_pos == 0:
+        """if row_pos == 0:
             row_position: int = row_pos
-            self.insertRow(row_position)
-            self.setRowHeight(row_position, 100)
         else:  
-            row_position: int = self.rowCount()
-            self.insertRow(row_position)
-            self.setRowHeight(row_position, 100)
+            row_position: int = self.rowCount()"""
+            
+        row_position: int = row_pos if row_pos == 0 else self.rowCount()
+            
+        self.insertRow(row_position)
+        self.setRowHeight(row_position, 90)
         
-        self.setItem(row_position, 0, TableWidgetItem(file_path, 'No preview')) # preview
+        self.setItem(row_position, 0, TableWidgetItem(file_path, 'No preview', icon=file_info.preview_image_path)) # preview
         self.setItem(row_position, 1, TableWidgetItem(file_path, file_info.version, size=12)) # version
         self.setItem(row_position, 2, TableWidgetItem(file_path, file_info.comment)) # comment
         self.setItem(row_position, 3, TableWidgetItem(file_path, file_info.info_format)) # info

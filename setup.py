@@ -9,7 +9,7 @@ setup(
     executables=executables,
     options={
         "build_exe": {
-            "includes": ["PySide2", "PIL"]
+            "includes": ["PySide2", "requests"]
         }
     }
 )
