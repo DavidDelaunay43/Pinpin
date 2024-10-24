@@ -1,9 +1,9 @@
 from pathlib import Path
 from typing import Union
-from PySide2.QtWidgets import QLabel
+from PySide2.QtWidgets import QLineEdit
 
 
-class StatusBar(QLabel):
+class StatusBar(QLineEdit):
     
     
     def __init__(self, parent=None, path: Union[Path, None] = None):
@@ -11,8 +11,9 @@ class StatusBar(QLabel):
         
         self._pipeline_path: Union[Path, None] = path
         
-        self.setStyleSheet('font-weight: bold;')
-        self.setStyleSheet('font-size: 12px;')
+        self.setReadOnly(True)
+        self.setMinimumHeight(30)
+        self.setStyleSheet('font-size: 14px; color: rgb(220, 220, 220)')
         
         
     @property

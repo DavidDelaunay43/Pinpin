@@ -14,6 +14,13 @@ class PipeRoot:
     CACHE: str = '11_cache'
 
 
+class PublishRoot:
+
+    ASSET: str = 'asset'
+    SEQUENCE: str = 'sequence'
+    SHOT: str = 'shot'
+
+
 class AssetRoot:
     
     CHARACTER: str = '01_character'

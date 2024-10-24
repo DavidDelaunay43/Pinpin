@@ -1,4 +1,3 @@
-from datetime import datetime
 import logging
 from pathlib import Path
 import shutil
@@ -59,7 +58,7 @@ class InitPinpin:
             cls.copy_file(cls.VERSION_FILE_SOURCE.path, cls.VERSION_FILE_DEST.path)
             return True
         
-        return cls.VERSION_FILE_DEST.get_value('version') == cls.VERSION_FILE_SOURCE.get_value('version')
+        return cls.VERSION_FILE_DEST.get_value('version') != cls.VERSION_FILE_SOURCE.get_value('version')
     
     
     @classmethod
@@ -77,6 +76,24 @@ class InitPinpin:
         
         shutil.copytree(cls.PREFS_ROOTPATH_SOURCE, cls.PREFS_ROOTPATH_DEST)
         Logger.info(f'Copy Pinpin preferences -> {cls.PREFS_ROOTPATH_DEST}')
+
+
+    @classmethod
+    def copy_pinpin_pref_file(cls, file_name: str) -> None:
+        source_file_path: Path = Core.pinpin_path().joinpath(
+            '.pinpin',
+            file_name
+        )
+
+        if not source_file_path.exists():
+            Logger.error(f'File: {source_file_path} does not exists.')
+            return
+
+        dest_file_path: Path = Core.user_dir().joinpath(
+            '.pinpin',
+            file_name
+        )
+        shutil.copy(source_file_path, dest_file_path)
     
     
     @classmethod
@@ -125,21 +142,25 @@ class InitPinpin:
     
         
 def main() -> None:
-    
-    Logger.LOGGER_NAME = __file__
-        
+
     InitPinpin.check_preferences()
     Logger.write_to_file(path=Core.today_log_filepath(), level=logging.DEBUG)
-    
-    if not InitPinpin.new_version():
+
+    if InitPinpin.new_version():
+        Logger.info(f'Pinpin new version: {InitPinpin.VERSION_FILE_SOURCE.get_value("version")}')
+        InitPinpin.copy_pinpin_pref_file('version.json')
+
+        InitPinpin.check_apps_data()
+        InitPinpin.check_soft_integrations(override=True)
+        InitPinpin.check_current_project()
+
+        if not Path.home().parts[-1] in ('DAVID', 'David'):
+            Email.message = f'New Pinpin installation - version {InitPinpin.VERSION_FILE_SOURCE.get_value("version")}'
+            Email.attachment_files.append(Core.today_log_filepath())
+            Email.send()
+
+    else:
+        Logger.debug(f'Pinpin current version: {InitPinpin.VERSION_FILE_DEST.get_value("version")}')
+        InitPinpin.check_apps_data()
         InitPinpin.check_soft_integrations()
-    
-    Logger.info(f'Pinpin new version: {InitPinpin.VERSION_FILE_DEST.get_value("version")}')
-    InitPinpin.copy_file(InitPinpin.VERSION_FILE_SOURCE.path, InitPinpin.VERSION_FILE_DEST.path)
-    InitPinpin.check_apps_data()
-    InitPinpin.check_soft_integrations(override=True)
-    InitPinpin.check_current_project()
-    
-    Email.message = f'New Pinpin installation - version {InitPinpin.VERSION_FILE_DEST.get_value("version")}'
-    Email.attachment_files.append(Core.today_log_filepath())
-    Email.send()
+        InitPinpin.check_current_project()

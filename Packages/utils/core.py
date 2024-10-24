@@ -2,9 +2,11 @@ from datetime import datetime
 import os
 from pathlib import Path
 import re
+from typing import Union
 from Packages.utils.data_class import SoftwarePaths, PreferencesInfos, PreferencesPaths, ProjectDataPaths, ProjectData
 from Packages.utils.enums import Root
 from Packages.utils.json_file import JsonFile
+from Packages.utils.naming import PipeRoot, PublishRoot, AssetDepartment
 
 
 class Core:
@@ -71,6 +73,11 @@ class Core:
     def pinpin_icon_path(cls) -> Path:
         return cls.pinpin_icons_path().joinpath('pinpin_icon.ico')
     
+
+    @classmethod
+    def user_icon(cls) -> Path:
+        return cls.pinpin_icons_path().joinpath(cls.USER_ICON_NAME)
+    
     
     @classmethod
     def icon_path(cls, icon_name: str) -> Path:
@@ -96,6 +103,11 @@ class Core:
     def style_sheet(cls, style_file_name: str) -> str:
         with open(cls.pinpin_styles_path().joinpath(style_file_name), 'r') as qss_file:
             return qss_file.read()
+        
+
+    @classmethod
+    def workspace_mel(cls) -> Path:
+        return cls.project_files_path().joinpath('Workspaces', 'workspace.mel')
     
     
     @classmethod
@@ -129,8 +141,26 @@ class Core:
     # USER ------------------------------------------------------------------------------------------------------
     @classmethod
     def username(cls) -> str:
-        return os.getenv('USERNAME')
+        username: Union[str, None] = JsonFile(
+            cls.user_dir().joinpath('.pinpin', 'ui_prefs.json')
+        ).get_value('username')
+
+        return username if username else os.getenv('USERNAME')
+
+
+    @classmethod
+    def username_custom(cls) -> str:
+        return JsonFile(
+            cls.user_dir().joinpath('.pinpin', 'ui_prefs.json')
+        ).get_value('username')
     
+    
+    @classmethod
+    def set_username(cls, new_username: str) -> str:
+        JsonFile(
+            cls.user_dir().joinpath('.pinpin', 'ui_prefs.json')
+        ).set_value('username', new_username if new_username else None)
+
     
     @classmethod
     def user_dir(cls) -> Path:
@@ -167,6 +197,27 @@ class Core:
         
         return Path(cls.prefs_dest().CURRENT_PROJECT_JSONFILE.get_value('current_project'))
     
+    
+    @classmethod
+    def publish_path(cls) -> Path:
+        return cls.current_project_path().joinpath(PipeRoot().PUBLISH)
+    
+
+    @classmethod
+    def publish_asset_path(cls) -> Path:
+        return cls.publish_path().joinpath(PublishRoot.ASSET)
+    
+
+    @classmethod
+    def publish_sequence_path(cls) -> Path:
+        return cls.publish_path().joinpath(PublishRoot.SEQUENCE)
+    
+
+    @classmethod
+    def publish_shot_path(cls) -> Path:
+        return cls.publish_path().joinpath(PublishRoot.SHOT)
+    
+
     
     # PREFERENCES INFOS & PATHS ---------------------------------------------------------------------------------
     @classmethod
@@ -228,25 +279,28 @@ class Core:
     @classmethod
     def houdini_infos(cls) -> SoftwarePaths:
         
-        integration_path: Path = cls.packages_path().joinpath('apps', 'houdini', 'integration')
-        pinpin_menu_source_path : Path = integration_path.joinpath('pinpin.radialmenu')
-        pinpin_shelf_source_path: Path = integration_path.joinpath('pinpin.shelf')
-        
-        preferences_path: Path = cls.find_directory(parent_directory=cls.documents_dir(), directory_string='houdini')
-        pinpin_menu_dest_path: Path = preferences_path.joinpath('radialmenu', 'pinpin.radialmenu')
-        pinpin_shelf_dest_path: Path = preferences_path.joinpath('toolbar', 'pinpin.shelf')
-        
-        return SoftwarePaths(
-            INTEGRATION_PATH=integration_path,
-            PINPIN_MENU_SOURCE_PATH=pinpin_menu_source_path,
-            PINPIN_SHELF_SOURCE_PATH=pinpin_shelf_source_path,
+        try:
+            integration_path: Path = cls.packages_path().joinpath('apps', 'houdini_app', 'integration')
+            pinpin_menu_source_path : Path = integration_path.joinpath('pinpin.radialmenu')
+            pinpin_shelf_source_path: Path = integration_path.joinpath('pinpin.shelf')
             
-            PREFERENCES_PATH=preferences_path,
-            PINPIN_MENU_DEST_PATH=pinpin_menu_dest_path,
-            PINPIN_SHELF_DEST_PATH=pinpin_shelf_dest_path
-        )
+            preferences_path: Path = cls.find_directory(parent_directory=cls.documents_dir(), directory_string='houdini')
+            pinpin_menu_dest_path: Path = preferences_path.joinpath('radialmenu', 'pinpin.radialmenu')
+            pinpin_shelf_dest_path: Path = preferences_path.joinpath('toolbar', 'pinpin.shelf')
+            
+            return SoftwarePaths(
+                INTEGRATION_PATH=integration_path,
+                PINPIN_MENU_SOURCE_PATH=pinpin_menu_source_path,
+                PINPIN_SHELF_SOURCE_PATH=pinpin_shelf_source_path,
+                
+                PREFERENCES_PATH=preferences_path,
+                PINPIN_MENU_DEST_PATH=pinpin_menu_dest_path,
+                PINPIN_SHELF_DEST_PATH=pinpin_shelf_dest_path
+            )
+        except:
+            pass
         
-        
+    
     @classmethod
     def maya_infos(cls) -> SoftwarePaths:
         
@@ -322,15 +376,38 @@ class Core:
     
     
     @staticmethod
-    def find_root_dirpath(file_path: Path, project_path: Path) -> Path:
+    def find_root_dirpath(file_path: Path, project_path: Path, return_name: bool = False) -> Path:
         
         parents = list(file_path.parents)
         
         for parent in parents:
             if parent.parent == project_path:
-                return parent
+                return parent if not return_name else parent.name
 
         return None
+
+
+    @classmethod
+    def repath_integrations(cls, path_override: str = None) -> None:
+
+        root_path: str = str(Core.pinpin_path()) if not path_override else path_override
+
+        maya_shelf_path: Path = Core.packages_path().joinpath(
+            'apps', 'maya_app', 'integration', 'shelf_Pinpin.mel'
+        )
+
+        with open(maya_shelf_path, 'r') as file:
+            file_content = file.read()
+        print(file_content)
+
+
+        pattern = r'(\+\s*";"\s*\+\s*\\")([^\\]+)(\\")'
+    
+        file_content_modified = re.sub(pattern, r'\1' + root_path + r'\3', file_content)
+        print(file_content_modified)
+
+        with open(maya_shelf_path, 'w') as file:
+            file.write(file_content_modified)
     
 
 def main() -> None:

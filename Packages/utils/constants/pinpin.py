@@ -1,5 +1,5 @@
 import os
-from Packages.utils.funcs import find_package_path
+from Packages.utils.old.funcs import find_package_path
 
 
 ROOT_NAME = 'Pinpin'  

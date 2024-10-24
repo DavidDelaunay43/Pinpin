@@ -2,7 +2,7 @@ from functools import partial
 from pathlib import Path
 from typing import Literal, Union
 from PySide2.QtCore import Qt, QPoint, QSize
-from PySide2.QtGui import QIcon
+from PySide2.QtGui import QFont, QIcon
 from PySide2.QtWidgets import QAction, QFileDialog, QHBoxLayout, QMenu, QPushButton, QWidget
 from Packages.utils.core import Core
 from Packages.utils.file_opener import FileOpener
@@ -27,6 +27,9 @@ class OpenFileWidget(QWidget):
         
         self.prefs_button: QPushButton = QPushButton()
         self.open_button: QPushButton = QPushButton('Open file in ')
+        font: QFont = QFont()
+        font.setPointSize(12)
+        self.open_button.setFont(font)
         self.python_button: QPushButton = QPushButton()
         
         self._main_layout.addWidget(self.prefs_button)
@@ -66,6 +69,11 @@ class OpenFileWidget(QWidget):
     
     
     def update_widget(self, path: Union[Path, None]) -> None:
+        if path and not path.exists():
+            Logger.error(f'{path} does not exists.')
+            return
+
+
         self.pipeline_path = path
         if not path:
             self.open_button.setText('Open file in')
@@ -139,7 +147,7 @@ class OpenFileWidget(QWidget):
             file_dialog: QFileDialog = QFileDialog()
             file_dialog.setOption(QFileDialog.ShowDirsOnly, True)
             file_dialog.setDirectory(str(Path.home()))
-            path = file_dialog.getExistingDirectory(self, 'Select directory', options = QFileDialog.Options())
+            path: Union[str, None] = file_dialog.getExistingDirectory(self, 'Select directory', options = QFileDialog.Options())
             
             if not path:
                 return

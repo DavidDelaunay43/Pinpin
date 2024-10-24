@@ -1,5 +1,5 @@
 from PySide2.QtWidgets import QLabel
-from Packages.utils.funcs import forward_slash
+from Packages.utils.old.funcs import forward_slash
 
 class StatusBar(QLabel):
     """

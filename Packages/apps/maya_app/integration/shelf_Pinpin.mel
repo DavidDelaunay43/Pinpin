@@ -2,7 +2,8 @@ global proc shelf_Pinpin () {
     global string $gBuffStr;
     global string $gBuffStr0;
     global string $gBuffStr1;
-
+    //global string $ppPath = "C:/Users/DAVID/Desktop/Pinpin/";
+    global string $ppPath = "C:/Program Files/Pinpin/";
 
     shelfButton
         -enableCommandRepeat 1
@@ -14,12 +15,12 @@ global proc shelf_Pinpin () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "pinpin" 
+        -annotation "loadPinpin" 
         -enableBackground 0
         -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "Pinpin" 
+        -align "center"
+        -label "Load Pinpin" 
         -labelOffset 0
         -rotation 0
         -flipX 0
@@ -28,16 +29,17 @@ global proc shelf_Pinpin () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "pinpin_icon.png" 
-        -image1 "pinpin_icon.png" 
+        -image ($ppPath + "ProjectFiles/Icons/pimento_icon.ico")
+        -image1 ($ppPath + "ProjectFiles/Icons/pimento_icon.ico")
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.maya_class import MayaPinpin\");\npython(\"MayaPinpin()\");" 
+        -command ("putenv \"MAYA_SCRIPT_PATH\" (`getenv \"MAYA_SCRIPT_PATH\"` + \";\" +" + $ppPath + "+ \"Packages/apps/maya_app/integration\");")
         -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
+
     shelfButton
         -enableCommandRepeat 1
         -flexibleWidthType 3
@@ -48,12 +50,12 @@ global proc shelf_Pinpin () {
         -manage 1
         -visible 1
         -preventOverride 0
-        -annotation "increment edit" 
+        -annotation "browser" 
         -enableBackground 0
         -backgroundColor 0 0 0 
         -highlightColor 0.321569 0.521569 0.65098 
         -align "center" 
-        -label "Increment Edit" 
+        -label "Browser" 
         -labelOffset 0
         -rotation 0
         -flipX 0
@@ -62,16 +64,52 @@ global proc shelf_Pinpin () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "save_as_icon.png" 
-        -image1 "save_as_icon.png" 
+        -image ($ppPath + "ProjectFiles/Icons/pinpin_icon.ico")
+        -image1 ($ppPath + "ProjectFiles/Icons/pinpin_icon.ico")
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import EditDialog\");\npython(\"EditDialog()\");" 
+        -command "source \"pinpinProcs.mel\"; ppBrowser" 
         -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "increment file" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Increment file" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image ($ppPath + "ProjectFiles/Icons/save_as.png")
+        -image1 ($ppPath + "ProjectFiles/Icons/save_as.png")
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "source \"pinpinProcs.mel\"; ppIncrement" 
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
     shelfButton
         -enableCommandRepeat 1
         -flexibleWidthType 3
@@ -96,219 +134,84 @@ global proc shelf_Pinpin () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image "publish_icon.png" 
-        -image1 "publish_icon.png" 
+        -image ($ppPath + "ProjectFiles/Icons/publish.png")
+        -image1 ($ppPath + "ProjectFiles/Icons/publish.png")
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import PublishDialog\");\npython(\"PublishDialog()\");\n" 
-        -sourceType "mel" 
-        -commandRepeatable 1
-        -flat 1
-    ;
-    shelfButton
-        -enableCommandRepeat 1
-        -flexibleWidthType 3
-        -flexibleWidthValue 32
-        -enable 1
-        -width 35
-        -height 34
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "update_thumbnail" 
-        -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "Screenshot" 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "thumbnail_icon.png" 
-        -image1 "thumbnail_icon.png" 
-        -style "iconOnly" 
-        -marginWidth 0
-        -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.funcs.playblast import update_thumbnail\");\npython(\"update_thumbnail()\");" 
-        -sourceType "mel" 
-        -commandRepeatable 1
-        -flat 1
-    ;
-    shelfButton
-        -enableCommandRepeat 1
-        -flexibleWidthType 3
-        -flexibleWidthValue 32
-        -enable 1
-        -width 35
-        -height 34
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import PublishDialog\");\npython(\"PublishDialog(usd = True)\");" 
-        -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "Usd Publish" 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "usd_icon.ico" 
-        -image1 "usd_icon.ico" 
-        -style "iconOnly" 
-        -marginWidth 0
-        -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import PublishDialog\");\npython(\"PublishDialog(usd = True)\");" 
-        -sourceType "mel" 
-        -commandRepeatable 1
-        -flat 1
-    ;
-    shelfButton
-        -enableCommandRepeat 1
-        -flexibleWidthType 3
-        -flexibleWidthValue 32
-        -enable 1
-        -width 35
-        -height 34
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import AlembicDialog\");\npython(\"AlembicDialog()\");" 
-        -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "alembic_tools" 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "C:/Users/David/Documents/maya_dev/2023/prefs/icons/alembic_icon.png" 
-        -image1 "C:/Users/David/Documents/maya_dev/2023/prefs/icons/alembic_icon.png" 
-        -style "iconOnly" 
-        -marginWidth 0
-        -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import AlembicDialog\");\npython(\"AlembicDialog()\");" 
-        -sourceType "mel" 
-        -commandRepeatable 1
-        -flat 1
-    ;
-    shelfButton
-        -enableCommandRepeat 1
-        -flexibleWidthType 3
-        -flexibleWidthValue 32
-        -enable 1
-        -width 35
-        -height 34
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import CreateAssetDialog\");\npython(\"CreateAssetDialog()\");" 
-        -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "create_asset" 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "C:/Users/David/Documents/maya_dev/2023/prefs/icons/create_asset_icon.png" 
-        -image1 "C:/Users/David/Documents/maya_dev/2023/prefs/icons/create_asset_icon.png" 
-        -style "iconOnly" 
-        -marginWidth 0
-        -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import CreateAssetDialog\");\npython(\"CreateAssetDialog()\");" 
-        -sourceType "mel" 
-        -commandRepeatable 1
-        -flat 1
-    ;
-    shelfButton
-        -enableCommandRepeat 1
-        -flexibleWidthType 3
-        -flexibleWidthValue 32
-        -enable 1
-        -width 35
-        -height 34
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import GpuCacheDialog\");\npython(\"GpuCacheDialog()\");" 
-        -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "gpu_cache" 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "C:/Users/David/Documents/maya_dev/2023/prefs/icons/gpu_cache_icon.png" 
-        -image1 "C:/Users/David/Documents/maya_dev/2023/prefs/icons/gpu_cache_icon.png" 
-        -style "iconOnly" 
-        -marginWidth 0
-        -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('C:/Program Files/Pinpin')\");\npython(\"from Packages.apps.maya_app.ui.dialogs import GpuCacheDialog\");\npython(\"GpuCacheDialog()\");" 
-        -sourceType "mel" 
-        -commandRepeatable 1
-        -flat 1
-    ;
-    shelfButton
-        -enableCommandRepeat 1
-        -flexibleWidthType 3
-        -flexibleWidthValue 32
-        -enable 1
-        -width 35
-        -height 34
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "python(\"from sys import path\");\npython(\"path.append('D:/Pinpin')\");\npython(\"from Packages.apps.maya_app.funcs.workspace import set_project\");\npython(\"set_project()\");" 
-        -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center" 
-        -label "set_project" 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image "C:/Users/David/Documents/maya_dev/2023/prefs/icons/set_project_icon.png" 
-        -image1 "C:/Users/David/Documents/maya_dev/2023/prefs/icons/set_project_icon.png" 
-        -style "iconOnly" 
-        -marginWidth 0
-        -marginHeight 1
-        -command "python(\"from sys import path\");\npython(\"path.append('D:/Pinpin')\");\npython(\"from Packages.apps.maya_app.funcs.workspace import set_project\");\npython(\"set_project()\");" 
+        -command "source \"pinpinProcs.mel\"; ppPublish" 
         -sourceType "mel" 
         -commandRepeatable 1
         -flat 1
     ;
 
-} 
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "createAsset" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Create Asset" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image ($ppPath + "ProjectFiles/Icons/create_asset_icon.png")
+        -image1 ($ppPath + "ProjectFiles/Icons/create_asset_icon.png")
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "source \"pinpinProcs.mel\"; ppCreateAsset"
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "alembic" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Alembic" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image ($ppPath + "ProjectFiles/Icons/alembic_icon.png")
+        -image1 ($ppPath + "ProjectFiles/Icons/alembic_icon.png")
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "source \"pinpinProcs.mel\"; ppAlembic"
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+}

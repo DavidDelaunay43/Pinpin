@@ -1261,3 +1261,12 @@ QDateEdit::down-arrow:focus
 {
     image: url(icons:down_arrow.png);
 }
+
+QLabel#file_label {
+    color: black;               /* Couleur du texte */
+    background-color: #ffffe0;  /* Couleur de fond légèrement jaunie (light yellow) */
+    padding: 5px;              /* Espace entre le texte et les bordures */
+    border: 2px #76797C;
+    font-weight: 450;
+}
+

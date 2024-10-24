@@ -1,32 +1,29 @@
 import os
 from PySide2.QtWidgets import QAction, QMenuBar
-from Packages.ui.new import widgets
+from Packages.ui.new.widgets import CornerWidget
+from Packages.utils.core import Core
+from Packages.utils.open_documentation import Doc
 
 
 class MenuBar(QMenuBar):
     
     
-    def __init__(self):
-        super(MenuBar, self).__init__()
+    def __init__(self, parent = None):
+        super(MenuBar, self).__init__(parent)
         
-        self._settings_action: QAction = QAction('Settings', self)
-        self._help_action: QAction = QAction('Help', self)
+        self.menu = self.addMenu('Documentation')
+
+        self._rtddoc_action: QAction = QAction('ReadTheDocs', self)
+        self._ggdoc_action: QAction = QAction('GoogleDocs', self)
+        self._videodoc_action: QAction = QAction('Video', self)
         
-        self.addAction(self._settings_action)
-        self.addAction(self._help_action)
+        self.menu.addAction(self._rtddoc_action)
+        self.menu.addAction(self._ggdoc_action)
+        self.menu.addAction(self._videodoc_action)
         
-        self._settings_action.triggered.connect(self.open_settings_dialog)
-        self._help_action.triggered.connect(self.open_documentation)
+        self._rtddoc_action.triggered.connect(Doc.open_rtd_doc)
+        self._ggdoc_action.triggered.connect(Doc.open_ggd_doc)
+        self._videodoc_action.triggered.connect(Doc.open_video_doc)
         
-        self._username_corner_widget: widgets.CornerWidget = widgets.CornerWidget(text = os.getenv('USERNAME'))
-        self.setCornerWidget(self._username_corner_widget)
-        
-        
-    def open_settings_dialog(self) -> None:
-        ...
-        
-    
-    @staticmethod
-    def open_documentation() -> None:
-        ...
-        
+        self.username_widget: CornerWidget = CornerWidget(text = Core.username())
+        self.setCornerWidget(self.username_widget)

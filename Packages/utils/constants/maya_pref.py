@@ -1,6 +1,6 @@
 import os
 from Packages.utils.constants.pinpin import PACKAGES_PATH
-from Packages.utils.funcs import is_four_digits, find_directory
+from Packages.utils.old.funcs import is_four_digits, find_directory
 
 MAYA_INTEG_PATH = os.path.join(PACKAGES_PATH, 'apps', 'maya_app', 'integration')
 

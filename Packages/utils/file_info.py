@@ -5,6 +5,7 @@ import re
 import shutil
 from typing import Literal, Union
 from Packages.utils.core import Core
+from Packages.utils.logger import Logger
 
 
 class FileInfo:
@@ -20,11 +21,19 @@ class FileInfo:
         self._comment: str = self.get_data('comment')
         self._version: str = self.get_version()
         self.NEXT_PIPELINE_PATH: Path = self._find_next_filepath()
-        self.WORDS: list[str] = self.pipeline_name.split('_')
-        self.WORD_COUNT: int = len(self.WORDS)
-        self.EXT: str = self.pipeline_path.suffix
-        
-        
+        self.NEXT_PIPELINE_NAME: str = self.NEXT_PIPELINE_PATH.name if self.NEXT_PIPELINE_PATH else None
+    
+
+    @property
+    def EXT(self) -> str:
+        return self.pipeline_path.suffix
+
+
+    @property
+    def WORDS(self) -> list[str]:
+        return self.pipeline_name.split('_')
+
+
     @property
     def pipeline_path(self) -> Path:
         return self._pipeline_path
@@ -156,16 +165,22 @@ class FileInfo:
     
     
     def get_version(self) -> str:
+        if '_P' in self.pipeline_name:
+            version = self.find_three_digits()
+            return self.pipeline_name.split('_')[-3] if not version else f'{self.pipeline_name.split("_")[-4]}\n{version}'
         return self.find_three_digits()
         
         
     def find_three_digits(self) -> Union[str, None]:
         
-        match_string: Union[re.Match[str], None] = re.search('\d{3}', self.pipeline_name)
-        return match_string.group() if match_string else None
+        match_string: Union[re.Match[str], None] = re.findall('\d{3}', self.pipeline_name)
+        return match_string[-1] if match_string else None
     
     
-    def _find_next_filepath(self) -> Path:
+    def _find_next_filepath(self) -> Union[Path, None]:
+        if '_P.' in self.pipeline_name:
+            return
+
         new_version: int = self.same_files_count+1 if f'{self.same_files_count:03}' in str(self.same_files[-1]) else self.same_files_count
         new_file_name: str = self.pipeline_name.replace(self.version, f'{new_version:03}')
         return self.parent_dirpath.joinpath(new_file_name)
@@ -180,4 +195,3 @@ class FileInfo:
     def _find_preview_image(self) -> Union[Path, None]:
         preview_image_path: Path = Core.project_data_paths().PREVIEW_DIRPATH.joinpath(f'{self.pipeline_name}.jpg')
         return preview_image_path if preview_image_path.exists() else None
-    

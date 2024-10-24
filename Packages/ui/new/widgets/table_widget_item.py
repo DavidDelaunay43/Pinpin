@@ -47,7 +47,7 @@ class TableWidgetItem(QTableWidgetItem):
     
     
     @pipeline_path.setter
-    def pipeline_path(self, path) -> None:
+    def pipeline_path(self, path: Path) -> None:
         self._pipeline_path = path
     
     

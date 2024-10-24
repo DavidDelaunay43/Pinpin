@@ -1,34 +1,35 @@
-import inspect
 import logging
 import sys
-import colorama
-from colorama import Fore, Style
 
+try:
+    from colorama import init, Fore, Style 
 
-colorama.init(autoreset=True)
+    class ColoramaFormatter(logging.Formatter):
+        
+        COLOR_CODES = {
+            logging.DEBUG: Fore.CYAN,
+            logging.INFO: Fore.GREEN,
+            logging.WARNING: Fore.YELLOW,
+            logging.ERROR: Fore.RED,
+            logging.CRITICAL: Fore.MAGENTA,
+        }
 
-
-class ColorFormatter(logging.Formatter):
-
-
-    COLORS: dict[int, str] = {
-        logging.DEBUG: Fore.CYAN,
-        logging.INFO: Fore.GREEN,
-        logging.WARNING: Fore.YELLOW,
-        logging.ERROR: Fore.RED,
-        logging.CRITICAL: Fore.MAGENTA,
-    }
-    
-
-    def format(self, record):
-        return f"{self.COLORS.get(record.levelno, Style.RESET_ALL)}{super().format(record)}{Style.RESET_ALL}"
+        def format(self, record: logging.LogRecord):
+            init(autoreset=True)
+            color = self.COLOR_CODES.get(record.levelno, "")
+            record.levelname = f"{color}[{record.levelname}]{Style.RESET_ALL}"
+            return super(ColoramaFormatter, self).format(record)
+        
+except ModuleNotFoundError as error:
+    class ColoramaFormatter(logging.Formatter):
+        ...    
 
 
 class Logger:
     
     
     LOGGER_NAME = 'Pinpin Logger'
-    FORMAT_DEFAULT = "[%(asctime)s][%(levelname)s]\n%(message)s\n"
+    FORMAT_DEFAULT = "%(levelname)s\n%(message)s\n"
     FILE_FORMAT_DEFAULT = "[%(asctime)s][%(levelname)s]\n%(message)s\n"
     SECONDS_FMT_DEF = r"%Y-%m-%d %H:%M:%S"
     LEVEL_DEFAULT = logging.DEBUG
@@ -52,7 +53,7 @@ class Logger:
                 cls._logger.propagate = cls.PROPAGATE_DEFAULT
             
                 #formatter = logging.Formatter(cls.FORMAT_DEFAULT, cls.SECONDS_FMT_DEF)
-                formatter: ColorFormatter = ColorFormatter(cls.FORMAT_DEFAULT, cls.SECONDS_FMT_DEF)
+                formatter: ColoramaFormatter = ColoramaFormatter(cls.FORMAT_DEFAULT, cls.SECONDS_FMT_DEF)
 
                 handler = logging.StreamHandler(sys.stderr)
                 handler.setFormatter(formatter)

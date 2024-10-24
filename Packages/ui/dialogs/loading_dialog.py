@@ -4,7 +4,7 @@ from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import QDialog, QSizePolicy, QLabel, QWidget, QVBoxLayout, QLayout
 import os
 
-from Packages.utils.funcs import set_style_sheet
+from Packages.utils.old.funcs import set_style_sheet
 from Packages.utils.constants.project_files import CURRENT_STYLE, STYLE_PATH, PALETTE_PATH, ICON_PATH
 
 

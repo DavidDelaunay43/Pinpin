@@ -4,7 +4,7 @@ from pathlib import Path
 from typing import Union
 from PySide2.QtCore import QDir
 from PySide2.QtGui import QIcon
-from PySide2.QtWidgets import QApplication, QButtonGroup, QDesktopWidget, QGridLayout, QHBoxLayout, QMainWindow, QTabWidget, QVBoxLayout, QWidget
+from PySide2.QtWidgets import QApplication, QButtonGroup, QDesktopWidget, QFileDialog, QGridLayout, QHBoxLayout, QMainWindow, QPushButton, QTabWidget, QVBoxLayout, QWidget
 from Packages.ui.new import widgets
 from Packages.utils.core import Core
 from Packages.utils.json_file import JsonFile
@@ -18,12 +18,26 @@ class BaseMainWindow(QMainWindow):
     def __init__(self, project_path: Path, parent: Union[QApplication, None] = None) -> None:
         super(BaseMainWindow, self).__init__(parent)
         
-        self.project_path: Path = project_path
-        self.project_name: str = project_path.name
+        self._project_path: Path = project_path
         self.current_path: Path = project_path
         
         self._create_ui()
         self.auto_clic(Core.pref_infos().LAST_PATHS)
+
+
+    @property
+    def project_path(self) -> Path:
+        return self._project_path
+    
+
+    @project_path.setter
+    def project_path(self, path: Path) -> None:
+        self._project_path = path
+    
+
+    @property
+    def project_name(self) -> str:
+        return self._project_path.name
     
     
     # ------------------------------------------------------------------------------------------------------
@@ -33,14 +47,12 @@ class BaseMainWindow(QMainWindow):
         self._create_widgets()
         self._create_layout()
         self._create_connections()
-        #self.setMenuBar(widgets.MenuBar())
-        
         self._status_bar.pipeline_path = self.current_path
         
         
     def _init_ui(self) -> None:
         
-        self.resize(850, 890)
+        self.resize(850, 910)
         self._move_main_window()
             
         self.setWindowTitle(f'Pinpin - {Core.current_version()} - {Core.current_project_path().name}')
@@ -55,7 +67,7 @@ class BaseMainWindow(QMainWindow):
             parent_geo = self.parent().geometry()
             self.move(
                 parent_geo.x()+(parent_geo.width()-self.width())//2,
-                parent_geo.y()+(parent_geo.height()-self.height())//2+40
+                parent_geo.y()+(parent_geo.height()-self.height())//2-40
             )
             return
         
@@ -75,17 +87,22 @@ class BaseMainWindow(QMainWindow):
     # ------------------------------------------------------------------------------------------------------
     def _create_widgets(self) -> None:
         
-        self._tab_widget: QTabWidget = QTabWidget()
-        self._status_bar: widgets.StatusBar = widgets.StatusBar()
+        self.menu_bar: widgets.MenuBar = widgets.MenuBar()
+        self.setMenuBar(self.menu_bar)
+        
+        self._tab_widget: QTabWidget = QTabWidget(self)
+        self._status_bar: widgets.StatusBar = widgets.StatusBar(self)
+        self._status_bar_button: QPushButton = QPushButton('Copy path', self)
 
         self._create_root_buttons()
+        self._file_label: widgets.FileLabel = widgets.FileLabel(self)
         self._tree_widget: widgets.TreeWidget = widgets.TreeWidget()
         self._list_01: widgets.ListWidget = widgets.ListWidget()
         self._list_02: widgets.ListWidget = widgets.ListWidget()
         self._list_03: widgets.ListWidget = widgets.ListWidget()
         self._table_widget: widgets.TableWidget = widgets.TableWidget(self)
 
-        self._settings_widget: widgets.SettingsWidget = widgets.SettingsWidget(path=self.project_path)
+        self._settings_widget: widgets.SettingsWidget = widgets.SettingsWidget(path=self._project_path)
 
     
     def _create_root_buttons(self) -> None:
@@ -123,12 +140,13 @@ class BaseMainWindow(QMainWindow):
         self.setCentralWidget(self._central_widget)
         
         # Create layout
-        self._central_layout: QVBoxLayout = QVBoxLayout()
+        self._central_layout: QGridLayout = QGridLayout()
         self._central_widget.setLayout(self._central_layout)
         
         # Add widgets
-        self._central_layout.addWidget(self._tab_widget)
-        self._central_layout.addWidget(self._status_bar)
+        self._central_layout.addWidget(self._tab_widget, 0, 0, 1, 2)
+        self._central_layout.addWidget(self._status_bar, 1, 0, 1, 1)
+        self._central_layout.addWidget(self._status_bar_button, 1, 1, 1, 1)
         
         
     def _create_browser_main_layout(self) -> None:
@@ -158,6 +176,8 @@ class BaseMainWindow(QMainWindow):
             self._root_buttons_layout.addWidget(button)
 
         self._root_buttons_layout.addStretch(1)
+
+        self._root_buttons_layout.addWidget(self._file_label)
         
         
     def _create_browser_grid_layout(self) -> None:
@@ -213,15 +233,24 @@ class BaseMainWindow(QMainWindow):
         self._tree_widget.itemClicked.connect(
             partial(self._populate_widget, widget=self._list_01)
         )
+        self._tree_widget.itemClicked.connect(
+            partial(self._populate_widget, widget=self._table_widget)
+        )
         
         self._list_01.itemClicked.connect(self._update_current_path)
         self._list_01.itemClicked.connect(
             partial(self._populate_widget, widget=self._list_02)
         )
+        self._list_01.itemClicked.connect(
+            partial(self._populate_widget, widget=self._table_widget)
+        )
         
         self._list_02.itemClicked.connect(self._update_current_path)
         self._list_02.itemClicked.connect(
             partial(self._populate_widget, widget=self._list_03)
+        )
+        self._list_02.itemClicked.connect(
+            partial(self._populate_widget, widget=self._table_widget)
         )
         
         self._list_03.itemClicked.connect(self._update_current_path)
@@ -230,8 +259,24 @@ class BaseMainWindow(QMainWindow):
         )
         
         self._table_widget.itemClicked.connect(self._update_current_path)
+
+        self._status_bar_button.clicked.connect(self.copy_to_clipboard)
+        self._settings_widget.project_button.clicked.connect(self.change_current_project)
+        self.menu_bar.username_widget.button.clicked.connect(self.update_username)
         
     # ------------------------------------------------------------------------------------------------------
+    def copy_to_clipboard(self) -> None:
+        clipboard = QApplication.clipboard()
+        clipboard.setText(str(self.current_path))
+
+
+    def update_username(self) -> None:
+        dialog: widgets.UsernameDialog = widgets.UsernameDialog(self)
+        dialog.exec_()
+        self.menu_bar.username_widget.button.setText(dialog.USERNAME)
+        #self.menu_bar.username_widget.button.setMinimumSize(self.menu_bar.username_widget.button.sizeHint())
+
+    
     def _auto_clic_while_use(self) -> None:
         
         root_button: widgets.CheckableButton = self.sender()
@@ -247,7 +292,7 @@ class BaseMainWindow(QMainWindow):
             
             if str(root_button.pipeline_path) in memo_path:
                 root_button.setChecked(False)
-                self.current_path = self.project_path
+                self.current_path = self._project_path
                 self.auto_clic(memo_list, index=index)  
                 break
 
@@ -265,6 +310,9 @@ class BaseMainWindow(QMainWindow):
         self._status_bar.pipeline_path = sender.pipeline_path
         self.update_memo_path()
         Logger.debug(f'Update current path: {self.current_path}')
+
+        self._file_label.setVisible(True if self.current_path.is_file() else False)
+        self._file_label.setText(self.current_path.name if self.current_path.is_file() else '')
 
     def _populate_widget(self,
                          item: Union[widgets.PipelineWidgetItem, None] = None, 
@@ -300,7 +348,7 @@ class BaseMainWindow(QMainWindow):
             last_paths.remove(str(self.current_path))
             
         else:
-            match_path: Path = Core.find_root_dirpath(self.current_path, self.project_path)
+            match_path: Path = Core.find_root_dirpath(self.current_path, self._project_path)
             for path in last_paths:
                 if str(match_path) in path or str(self.current_path) in path:
                     last_paths.remove(str(path))
@@ -344,5 +392,23 @@ class BaseMainWindow(QMainWindow):
                     
             self._auto_clic_widget(self._tree_widget, self._list_01, parent)
             self._auto_clic_widget(self._list_01, self._list_02, parent)
+            self._auto_clic_widget(self._list_01, self._table_widget, parent)
             self._auto_clic_widget(self._list_02, self._list_03, parent)
+            self._auto_clic_widget(self._list_02, self._table_widget, parent)
             self._auto_clic_widget(self._list_03, self._table_widget, parent)
+
+
+    def change_current_project(self) -> None:
+
+        file_dialog: QFileDialog = QFileDialog()
+        file_dialog.setOption(QFileDialog.ShowDirsOnly, True)
+        file_dialog.setDirectory(str(self._project_path))
+        path: Union[str, None] = file_dialog.getExistingDirectory(self, 'Select project path', options = QFileDialog.Options())
+
+        if not path:
+            return
+
+        self.project_path = Path(path)
+        self._settings_widget.project_button.setText(self.project_path.name)
+
+        Core.prefs_paths().CURRENT_PROJECT_JSONFILE.set_value('current_project', str(path))

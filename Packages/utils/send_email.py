@@ -20,6 +20,10 @@ class EmailContent:
     def __post_init__(self):
         self.date = self.date_time.date()
         self.time = self.date_time.time().replace(microsecond=0)
+
+
+    def __repr__(self) -> str:
+        return f'Date: {self.date}\nTime: {self.time}\nUser: {self.user}\n{self.get_location()}\n\n{self.message}'
     
     
     def string(self) -> str:

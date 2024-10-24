@@ -1,6 +1,6 @@
 import os
 from Packages.utils.constants.pinpin import PACKAGES_PATH
-from Packages.utils.funcs import find_directory
+from Packages.utils.old.funcs import find_directory
 
 HOUDINI_INTEG_PATH = os.path.join(PACKAGES_PATH, 'apps', 'houdini', 'integration')
 

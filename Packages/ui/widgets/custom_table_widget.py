@@ -7,10 +7,10 @@ from Packages.logic.filefunc import get_version_num, get_file_modification_date_
 from Packages.logic.json_funcs import get_file_data
 from Packages.logic.filefunc import get_files
 from Packages.ui.widgets.image_widget import ImageWidget
-from Packages.utils.funcs import get_size, forward_slash
+from Packages.utils.old.funcs import get_size, forward_slash
 from Packages.utils.constants.project_files import ICON_PATH
 from Packages.utils.constants.preferences import UI_PREFS_JSON_PATH
-from Packages.utils.funcs import get_current_value
+from Packages.utils.old.funcs import get_current_value
 
 class CustomTableWidget(QTableWidget):
     

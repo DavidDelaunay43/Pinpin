@@ -1,7 +1,7 @@
 import os
 from Packages.utils.constants.pinpin import PINPIN_PATH
 from Packages.utils.constants.preferences import CURRENT_PROJECT_JSON_PATH
-from Packages.utils.funcs import get_current_value
+from Packages.utils.old.funcs import get_current_value
 
 
 BLANK_PINPIN_DATA = os.path.join(PINPIN_PATH, '.pinpin_data')

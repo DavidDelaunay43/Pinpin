@@ -1,4 +1,0 @@
-python("from sys import path");
-python("path.append('C:/Program Files/Pinpin')");
-python("from Packages.apps.maya_app.ui.maya_class import MayaPinpin");
-python("MayaPinpin()");

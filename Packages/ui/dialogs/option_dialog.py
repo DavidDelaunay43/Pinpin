@@ -4,7 +4,7 @@ from PySide2.QtGui import QIcon
 from PySide2.QtWidgets import (QDialog, QSizePolicy, QLabel, QPushButton, QSpacerItem, QLineEdit, 
                                QWidget, QHBoxLayout, QComboBox, QVBoxLayout, QLayout, QCheckBox,
                                QColorDialog,QScrollArea,QTabWidget, QGridLayout)
-from Packages.utils.funcs import read_json_file, add_text_to_line_edit, set_style_sheet, write_json_file
+from Packages.utils.old.funcs import read_json_file, add_text_to_line_edit, set_style_sheet, write_json_file
 from Packages.utils.constants.preferences import UI_PREFS_JSON_PATH, APPS_JSON_PATH
 from Packages.utils.constants.project_files import CURRENT_STYLE, STYLE_PATH, PALETTE_PATH, ICON_PATH
 from Packages.utils.logger import init_logger

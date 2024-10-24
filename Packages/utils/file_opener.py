@@ -125,6 +125,15 @@ class FileOpener:
             
         if self.python_path:
             env['PYTHONPATH'] = str(self.python_path)
+
+        if self.software_name == 'maya':
+            env['MAYA_SCRIPT_PATH'] = str(
+                Core.packages_path().joinpath(
+                    'apps',
+                    'maya_app',
+                    'integration'
+                )
+            )
             
         Popen(application_args, env=env)
         Logger.info(f'Open file:\nFile path: {self.pipeline_path}\nApp path: {self.software_name}\nPref path: {self.pref_path}\nPython path: {self.python_path}')

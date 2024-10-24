@@ -1,5 +1,5 @@
 import os
-from Packages.utils.funcs import get_current_value
+from Packages.utils.old.funcs import get_current_value
 from Packages.utils.constants.user import USER_DIR
 from Packages.utils.constants.pinpin import PINPIN_PATH
 

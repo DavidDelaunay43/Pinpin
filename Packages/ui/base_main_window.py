@@ -38,7 +38,7 @@ from Packages.logic.json_funcs import (
 from Packages.logic.filefunc import clean_directory, open_explorer, increment_file_external
 from Packages.logic.file_opener import FileOpener
 from Packages.utils.logger import init_logger
-from Packages.utils.funcs import get_current_value
+from Packages.utils.old.funcs import get_current_value
 from Packages.utils.constants.preferences import CURRENT_PROJECT_JSON_PATH
 
 logger = init_logger(__file__)
