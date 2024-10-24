@@ -9,9 +9,6 @@ import requests
 from Packages.utils.logger import Logger
 
 
-Logger.LOGGER_NAME = __file__
-
-
 @dataclass
 class EmailContent:
     

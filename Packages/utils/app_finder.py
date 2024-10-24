@@ -144,7 +144,7 @@ class AppFinder:
     
     
     @staticmethod
-    def find_directory(parent_directory: Path, directory_string: str, exclude_strings = [], exe=False) -> Path:
+    def find_directory(parent_directory: Path, directory_string: str, exclude_strings: list[str] = [], exe: bool = False) -> Union[Path, None]:
         """
         Searches for a directory or executable file in a given parent directory based on a string pattern.
 
@@ -182,78 +182,76 @@ class AppFinder:
     def find_blender(cls) -> Path:
         exe: str = 'blender.exe'
         parent_dir: Path = cls._program_files.joinpath('Blender Foundation')
-        dir_string: str = 'Blender '
-        return cls.find_directory(parent_directory=parent_dir, directory_string=dir_string).joinpath(exe)
+        exe_parent_path: Union[Path, None] = cls.find_directory(parent_directory=parent_dir, directory_string='Blender ')
+        return exe_parent_path.joinpath(exe) if exe_parent_path else None
         
     
     @classmethod
-    def find_krita(cls) -> Path:
+    def find_krita(cls) -> Union[Path, None]:
         exe: str = 'krita.exe'
-        return cls._program_files.joinpath('Krita (x64)', 'bin', exe)
+        exe_path: Path = cls._program_files.joinpath('Krita (x64)', 'bin', exe)
+        return exe_path if exe_path.exists() else None
     
     
     @classmethod
-    def find_houdini(cls) -> Path:
-        exe: str = 'houdini.exe'
+    def find_houdini(cls) -> Union[Path, None]:
         parent_dir: Path = cls._program_files.joinpath('Side Effects Software')
-        dir_string: str = 'Houdini'
-        return cls.find_directory(parent_directory=parent_dir, directory_string=dir_string, exclude_strings=['Houdini Engine', 'Houdini Server']).joinpath('bin', exe)
+        exe_parent_path: Union[Path, None] = cls.find_directory(parent_directory=parent_dir, directory_string='Houdini', exclude_strings=['Houdini Engine', 'Houdini Server'])
+        return exe_parent_path.joinpath('bin', 'houdini.exe') if exe_parent_path else None
     
     
     @classmethod
-    def find_mari(cls) -> Path:
-        mari: str = 'Mari'
-        parent_dir: Path = cls._program_files.joinpath(cls.find_directory(parent_directory=cls._program_files, directory_string=mari), 'Bundle', 'bin')
-        return cls.find_directory(parent_directory=parent_dir, directory_string=mari)
+    def find_mari(cls) -> Union[Path, None]:
+        parent_dir: Union[Path, None] = cls.find_directory(parent_directory=cls._program_files, directory_string='Mari')
+        return cls.find_directory(parent_directory=parent_dir.joinpath('Bundle', 'bin'), directory_string='Mari') if parent_dir else None
     
     
     @classmethod
-    def find_maya(cls) -> Path:
-        exe: str = 'maya.exe'
+    def find_maya(cls) -> Union[Path, None]:
         parent_dir: Path = cls._program_files.joinpath('Autodesk')
-        dir_string: str = 'Maya'
-        return cls.find_directory(parent_directory=parent_dir, directory_string=dir_string).joinpath('bin', exe)
+        exe_parent_dir: Union[Path, None] = cls.find_directory(parent_directory=parent_dir, directory_string='Maya')
+        return exe_parent_dir.joinpath('bin', 'maya.exe') if exe_parent_dir else None
     
     
     @classmethod
-    def find_nuke(cls) -> Path:
-        nuke: str = 'Nuke'
-        parent_dir: Path = cls._program_files.joinpath(cls.find_directory(parent_directory=cls._program_files, directory_string=nuke))
-        return cls.find_directory(parent_directory=parent_dir, directory_string=nuke, exe=True)
+    def find_nuke(cls) -> Union[Path, None]:
+        parent_dir: Path = cls.find_directory(parent_directory=cls._program_files, directory_string='Nuke')
+        return cls.find_directory(parent_directory=parent_dir, directory_string='Nuke', exe=True) if parent_dir else None
     
     
     @classmethod
-    def find_photoshop(cls) -> Path:
-        exe: str = 'Photoshop.exe'
+    def find_photoshop(cls) -> Union[Path, None]:
         parent_dir: Path = cls._program_files.joinpath('Adobe')
-        dir_string: str = 'Adobe Photoshop '
-        return cls.find_directory(parent_directory=parent_dir, directory_string=dir_string).joinpath(exe)
+        exe_parent_path: Union[Path, None] = cls.find_directory(parent_directory=parent_dir, directory_string='Adobe Photoshop ')
+        return exe_parent_path.joinpath('Photoshop.exe') if exe_parent_path else None
     
     
     @classmethod
-    def find_zbrush(cls) -> Path:
-        exe: str = 'ZBrush.exe'
-        return cls._program_files.joinpath(cls.find_directory(parent_directory=cls._program_files, directory_string='Maxon ZBrush ')).joinpath(exe)
+    def find_zbrush(cls) -> Union[Path, None]:
+        exe_parent_path: Union[Path, None] = cls.find_directory(parent_directory=cls._program_files, directory_string='Maxon ZBrush ')
+        return exe_parent_path.joinpath('ZBrush.exe') if exe_parent_path else None
 
 
     @classmethod
-    def find_houdini_pref(cls) -> str:
-        return cls._documents_dir.joinpath(cls.find_directory(parent_directory=cls._documents_dir, directory_string='houdini'))
+    def find_houdini_pref(cls) -> Union[Path, None]:
+        return cls.find_directory(parent_directory=cls._documents_dir, directory_string='houdini')
     
     
     @classmethod
-    def find_maya_pref(cls) -> Path:
-        return cls._documents_dir.joinpath(cls.find_directory(parent_directory=cls._documents_dir, directory_string='maya'))
+    def find_maya_pref(cls) -> Union[Path, None]:
+        return cls.find_directory(parent_directory=cls._documents_dir, directory_string='maya')
     
     
     @classmethod
-    def find_mari_pref(cls) -> Path:
-        return cls._user_dir.joinpath('.mari')
+    def find_mari_pref(cls) -> Union[Path, None]:
+        pref_path: Path = cls._user_dir.joinpath('.mari')
+        return pref_path if pref_path.exists() else None
     
     
     @classmethod
-    def find_nuke_pref(cls) -> Path:
-        return cls._user_dir.joinpath('.nuke')
+    def find_nuke_pref(cls) -> Union[Path, None]:
+        pref_path: Path = cls._user_dir.joinpath('.nuke')
+        return pref_path if pref_path.exists() else None
 
 
 def main() -> None:
@@ -264,7 +262,7 @@ def main() -> None:
     AppFinder.find_3d_applications()
     print(f'Updated app dict:')
     AppFinder.show_app_dict()
-    AppFinder.write_json_file(json_filepath='tmp.json')
+    #AppFinder.write_json_file(json_filepath='tmp.json')
         
 
 if __name__ == '__main__':

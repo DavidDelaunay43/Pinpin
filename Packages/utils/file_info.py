@@ -1,4 +1,3 @@
-from dataclasses import dataclass
 from datetime import datetime
 import os
 from pathlib import Path
@@ -8,14 +7,12 @@ from typing import Literal, Union
 from Packages.utils.core import Core
 
 
-@dataclass
 class FileInfo:
-    
-    _pipeline_path: Path
-    
-    def __post_init__(self):
-        
-        #self._size: int = os.path.getsize(self._pipeline_path)
+
+
+    def __init__(self, path: Path) -> None:
+
+        self._pipeline_path: Path = path
         self._size: int = self._pipeline_path.stat().st_size
         self._format_size: str = self.format_size()
         self._last_time: str = self.get_last_date_time()
@@ -23,6 +20,9 @@ class FileInfo:
         self._comment: str = self.get_data('comment')
         self._version: str = self.get_version()
         self.NEXT_PIPELINE_PATH: Path = self._find_next_filepath()
+        self.WORDS: list[str] = self.pipeline_name.split('_')
+        self.WORD_COUNT: int = len(self.WORDS)
+        self.EXT: str = self.pipeline_path.suffix
         
         
     @property

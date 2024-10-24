@@ -56,6 +56,11 @@ class Core:
     def project_files_path(cls) -> Path:
         return cls.pinpin_path().joinpath('ProjectFiles')
     
+
+    @classmethod
+    def info_html_path(cls) -> Path:
+        return cls.project_files_path().joinpath('info.html')
+    
     
     @classmethod
     def pinpin_icons_path(cls) -> Path:

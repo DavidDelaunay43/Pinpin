@@ -77,6 +77,7 @@ class BaseMainWindow(QMainWindow):
         
         self._tab_widget: QTabWidget = QTabWidget()
         self._status_bar: widgets.StatusBar = widgets.StatusBar()
+
         self._create_root_buttons()
         self._tree_widget: widgets.TreeWidget = widgets.TreeWidget()
         self._list_01: widgets.ListWidget = widgets.ListWidget()
@@ -84,8 +85,9 @@ class BaseMainWindow(QMainWindow):
         self._list_03: widgets.ListWidget = widgets.ListWidget()
         self._table_widget: widgets.TableWidget = widgets.TableWidget(self)
 
-            
-            
+        self._settings_widget: widgets.SettingsWidget = widgets.SettingsWidget(path=self.project_path)
+
+    
     def _create_root_buttons(self) -> None:
 
         self._root_button_group: QButtonGroup = QButtonGroup()
@@ -186,8 +188,16 @@ class BaseMainWindow(QMainWindow):
     def _create_settings_central_layout(self) -> None:
         
         # Create widget
-        self.settings_tab: QWidget = QWidget()
-        self._tab_widget.addTab(self.settings_tab, 'Settings')
+        self._settings_tab: QWidget = QWidget()
+        self._tab_widget.addTab(self._settings_tab, 'Settings')
+
+        # Create layout
+        self._settings_main_layout: QVBoxLayout = QVBoxLayout()
+        self._settings_main_layout.setContentsMargins(0,0,0,0)
+        self._settings_tab.setLayout(self._settings_main_layout)
+
+        # Add widgets
+        self._settings_main_layout.addWidget(self._settings_widget)
 
     
     # ------------------------------------------------------------------------------------------------------

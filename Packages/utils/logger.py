@@ -1,13 +1,35 @@
+import inspect
 import logging
 import sys
+import colorama
+from colorama import Fore, Style
 
-        
+
+colorama.init(autoreset=True)
+
+
+class ColorFormatter(logging.Formatter):
+
+
+    COLORS: dict[int, str] = {
+        logging.DEBUG: Fore.CYAN,
+        logging.INFO: Fore.GREEN,
+        logging.WARNING: Fore.YELLOW,
+        logging.ERROR: Fore.RED,
+        logging.CRITICAL: Fore.MAGENTA,
+    }
+    
+
+    def format(self, record):
+        return f"{self.COLORS.get(record.levelno, Style.RESET_ALL)}{super().format(record)}{Style.RESET_ALL}"
+
+
 class Logger:
     
     
     LOGGER_NAME = 'Pinpin Logger'
-    FORMAT_DEFAULT = "[%(asctime)s][%(name)s][%(levelname)s]\n%(message)s\n"
-    FILE_FORMAT_DEFAULT = "[%(asctime)s][%(name)s][%(levelname)s]\n%(message)s\n"
+    FORMAT_DEFAULT = "[%(asctime)s][%(levelname)s]\n%(message)s\n"
+    FILE_FORMAT_DEFAULT = "[%(asctime)s][%(levelname)s]\n%(message)s\n"
     SECONDS_FMT_DEF = r"%Y-%m-%d %H:%M:%S"
     LEVEL_DEFAULT = logging.DEBUG
     LEVEL_WRITE_DEFAULT = logging.INFO
@@ -29,7 +51,8 @@ class Logger:
                 cls._logger.setLevel(cls.LEVEL_DEFAULT)
                 cls._logger.propagate = cls.PROPAGATE_DEFAULT
             
-                formatter = logging.Formatter(cls.FORMAT_DEFAULT, cls.SECONDS_FMT_DEF)
+                #formatter = logging.Formatter(cls.FORMAT_DEFAULT, cls.SECONDS_FMT_DEF)
+                formatter: ColorFormatter = ColorFormatter(cls.FORMAT_DEFAULT, cls.SECONDS_FMT_DEF)
 
                 handler = logging.StreamHandler(sys.stderr)
                 handler.setFormatter(formatter)
