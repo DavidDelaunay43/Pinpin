@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pinpin"
-#define MyAppVersion "1.2.0b9"
+#define MyAppVersion "1.2.0b10"
 #define MyAppPublisher "Les Zinzins de l'Esma"
 #define MyAppExeName "pinpin.exe"
 
@@ -27,7 +27,7 @@ ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputBaseFilename=Pinpin_1.2.0b9_SetupWindows
+OutputBaseFilename=Pinpin_1.2.0b10_SetupWindows
 SetupIconFile=C:\Users\DAVID\Desktop\Pinpin\ProjectFiles\Icons\pinpin_icon.ico
 Password=pinpin2024
 Compression=lzma

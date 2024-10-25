@@ -5,6 +5,7 @@ from Packages.utils.app_finder import AppFinder
 from Packages.utils.core import Core
 from Packages.utils.data_class import SoftwarePaths, PreferencesPaths
 from Packages.utils.enums import Root
+from Packages.utils.file_writer import FileWriter
 from Packages.utils.json_file import JsonFile
 from Packages.utils.logger import Logger
 from Packages.utils.send_email import Email
@@ -66,6 +67,8 @@ class InitPinpin:
         
         if not cls.PREFS_ROOTPATH_DEST.exists() or override:
             cls.copy_pinpin_preferences()
+
+        cls.check_maya_script_path()
     
     
     @classmethod
@@ -131,6 +134,20 @@ class InitPinpin:
             if not dest_filepath.exists() or override:
                 cls.copy_file(source_filepath, dest_filepath)
             
+
+    @classmethod
+    def check_maya_script_path(cls) -> None:
+        maya_env_file_path: Path = Core.maya_infos().PREFERENCES_PATH.joinpath('Maya.env')
+        if not maya_env_file_path.exists():
+            maya_env_file_path.touch()
+
+        path_string: str = str(Core.packages_path().joinpath('apps', 'maya_app', 'integration')).replace('\\', '/')
+
+        FileWriter(
+            maya_env_file_path,
+             f"MAYA_SCRIPT_PATH={path_string};"
+        )
+
     
     # Useful methods
     @staticmethod

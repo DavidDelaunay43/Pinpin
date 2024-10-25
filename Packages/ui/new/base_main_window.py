@@ -1,6 +1,7 @@
 from dataclasses import asdict
 from functools import partial
 from pathlib import Path
+import shutil
 from typing import Union
 from PySide2.QtCore import QDir
 from PySide2.QtGui import QIcon
@@ -52,7 +53,7 @@ class BaseMainWindow(QMainWindow):
         
     def _init_ui(self) -> None:
         
-        self.resize(850, 910)
+        self.resize(850, 950)
         self._move_main_window()
             
         self.setWindowTitle(f'Pinpin - {Core.current_version()} - {Core.current_project_path().name}')
@@ -403,12 +404,32 @@ class BaseMainWindow(QMainWindow):
         file_dialog: QFileDialog = QFileDialog()
         file_dialog.setOption(QFileDialog.ShowDirsOnly, True)
         file_dialog.setDirectory(str(self._project_path))
-        path: Union[str, None] = file_dialog.getExistingDirectory(self, 'Select project path', options = QFileDialog.Options())
+        new_project_path: Union[str, None] = file_dialog.getExistingDirectory(self, 'Select project path', options = QFileDialog.Options())
 
-        if not path:
+        if not new_project_path:
             return
+        new_project_path = Path(new_project_path)
 
-        self.project_path = Path(path)
-        self._settings_widget.project_button.setText(self.project_path.name)
-
-        Core.prefs_paths().CURRENT_PROJECT_JSONFILE.set_value('current_project', str(path))
+        if new_project_path.joinpath('.pinpin_data').exists():
+            
+            Core.prefs_paths().CURRENT_PROJECT_JSONFILE.set_value('current_project', str(new_project_path))
+            self.project_path = new_project_path
+            self._settings_widget.project_button.setText(self.project_path.name)
+            Logger.info(f'Set projet: {self.project_path}')
+            return
+        
+        shutil.copytree(
+            Core.pinpin_path().joinpath('.pinpin_data'),
+            new_project_path.joinpath('.pinpin_data')
+        )
+        
+        dialog: widgets.SetPrefixDialog = widgets.SetPrefixDialog(self)
+        if dialog.exec_() == dialog.Accepted:
+            
+            Core.prefs_paths().CURRENT_PROJECT_JSONFILE.set_value('current_project', str(new_project_path))
+            self.project_path = new_project_path
+            Core.project_data_paths().PREFIX_JSONFILE.set_value('prefix', dialog.PREFIX)
+            self._settings_widget.project_button.setText(self.project_path.name)
+            
+            Logger.info(f'Set prefix: {dialog.PREFIX}')
+            Logger.info(f'Set projet: {self.project_path}')

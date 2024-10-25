@@ -1,4 +1,3 @@
-import os
 from PySide2.QtWidgets import QAction, QMenuBar
 from Packages.ui.new.widgets import CornerWidget
 from Packages.utils.core import Core

@@ -96,7 +96,7 @@ class CreateAssetDialog(QDialog):
             self.departments
         )
         asset.create()
-        self.close()
+        super(CreateAssetDialog, self).accept()
 
 
 def main() -> None:

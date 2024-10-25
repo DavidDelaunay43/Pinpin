@@ -4,7 +4,7 @@ executables: list[Executable] = [Executable("pinpin.py", icon = "ProjectFiles/Ic
 
 setup(
     name="pinpin",
-    version="1.2.0b9",
+    version="1.2.0b10",
     description="",
     executables=executables,
     options={
