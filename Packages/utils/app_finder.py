@@ -165,6 +165,9 @@ class AppFinder:
             The path to the matching directory or executable file.
         """
         
+        if not parent_directory.exists():
+            return
+
         for dir in parent_directory.iterdir():
             dir_name: str = dir.name
             if not dir_name.startswith(directory_string):

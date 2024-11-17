@@ -136,14 +136,19 @@ class Core:
     @classmethod
     def current_version(cls) -> str:
         return cls.prefs_dest().VERSION_JSONFILE.get_value('version')
-    
+
     
     # USER ------------------------------------------------------------------------------------------------------
     @classmethod
     def username(cls) -> str:
-        username: Union[str, None] = JsonFile(
+        ui_prefs_jsonfile: JsonFile = JsonFile(
             cls.user_dir().joinpath('.pinpin', 'ui_prefs.json')
-        ).get_value('username')
+        )
+
+        if not ui_prefs_jsonfile.exists():
+            return os.getenv('USERNAME')
+
+        username: Union[str, None] = ui_prefs_jsonfile.get_value('username')
 
         return username if username else os.getenv('USERNAME')
 

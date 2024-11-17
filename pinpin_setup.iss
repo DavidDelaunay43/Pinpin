@@ -2,9 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pinpin"
-#define MyAppVersion "1.2.0b10"
+#define MyAppVersion "v1.2.0-beta.13"
 #define MyAppPublisher "Les Zinzins de l'Esma"
 #define MyAppExeName "pinpin.exe"
+#define SetupName "Pinpin_v1.2.0-beta.13_SetupWindows"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.
@@ -27,9 +28,9 @@ ArchitecturesInstallIn64BitMode=x64compatible
 DisableProgramGroupPage=yes
 ; Uncomment the following line to run in non administrative install mode (install for current user only.)
 ;PrivilegesRequired=lowest
-OutputBaseFilename=Pinpin_1.2.0b10_SetupWindows
+OutputBaseFilename={#SetupName}
 SetupIconFile=C:\Users\DAVID\Desktop\Pinpin\ProjectFiles\Icons\pinpin_icon.ico
-Password=pinpin2024
+; Password=pinpin2024
 Compression=lzma
 SolidCompression=yes
 WizardStyle=modern
@@ -38,7 +39,7 @@ WizardStyle=modern
 Name: "english"; MessagesFile: "compiler:Default.isl"
 
 [Tasks]
-Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
+Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}";
 
 [Files]
 Source: "C:\Users\DAVID\Desktop\Pinpin\build\exe.win-amd64-3.10\{#MyAppExeName}"; DestDir: "{app}"; Flags: ignoreversion
@@ -50,5 +51,6 @@ Name: "{autoprograms}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
 Name: "{autodesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: desktopicon
 
 [Run]
+Filename: "{app}\post_install.exe"
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 

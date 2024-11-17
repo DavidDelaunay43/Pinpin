@@ -1,12 +1,19 @@
 from pathlib import Path
 from typing import Union
 from maya import cmds
+from Packages.apps.maya_app.utils.workspace import set_project
 from Packages.utils.core import Core
 from Packages.utils.file_info import FileInfo
 from Packages.utils.logger import Logger
 
 
 class MayaFileInfo(FileInfo):
+
+
+    EXT_DICT = {
+        '.ma': 'mayaAscii',
+        '.mb': 'mayaBinary'
+    }
 
 
     def __init__(self, path: Path) -> None:
@@ -32,6 +39,20 @@ class MayaFileInfo(FileInfo):
     def publish_file_path(self) -> Path: pass
 
 
+    @property
+    def maya_file_type(self) -> str:
+        return self.EXT_DICT.get(self.extension)
+
+
+    @property
+    def maya_project(self) -> Path:
+        return self.pipeline_path[len(self.pipeline_path.parts)] - self.pipeline_path.index('scenes')
+
+
+    def set_maya_project(self) -> None:
+        set_project()
+
+
     def get_word(self, index: int) -> Union[str, None]:
         return self.WORDS[index] if len(self.WORDS)>index else None
     
@@ -39,7 +60,7 @@ class MayaFileInfo(FileInfo):
     def incremental_save(self, path_override: Path) -> None:
         path: Path = path_override if path_override else self.NEXT_PIPELINE_PATH
         cmds.file(rename=path)
-        cmds.file(save=True)
+        cmds.file(save=True, force=True, options="v=0", type=self.maya_file_type)
         Logger.info(f'Incremental save: {path}')
     
 
@@ -107,7 +128,7 @@ class MayaFileInfo(FileInfo):
         path: Path = path_override if path_override else self.publish_file_path
 
         cmds.file(save=True)
-        cmds.file(str(path), force=True, options="v=0", type="mayaAscii", exportSelected=True, preserveReferences=False)
+        cmds.file(str(path), force=True, options="v=0", type=self.maya_file_type, exportSelected=True, preserveReferences=False)
 
 
     def publish_file(self, path_override: Union[Path, None] = None) -> None:

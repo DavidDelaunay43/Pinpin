@@ -81,6 +81,7 @@ class MayaFileWidget(QWidget):
 
         string_mode = get_mode_text if get_mode_text=='Open' else f'{get_mode_text} {namespace_text}'
         self._namespace_comobo_box.setEnabled(False if get_mode_text=='Open' else True)
+        self._namespace_line_edit.setEnabled(False if get_mode_text=='Open' else True)
 
         self._file_button.setText(string_mode)
         self._mode = [mode for mode in GetMode if mode.value == string_mode][0]

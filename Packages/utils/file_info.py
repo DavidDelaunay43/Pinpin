@@ -11,9 +11,9 @@ from Packages.utils.logger import Logger
 class FileInfo:
 
 
-    def __init__(self, path: Path) -> None:
+    def __init__(self, path: Union[Path, str]) -> None:
 
-        self._pipeline_path: Path = path
+        self._pipeline_path: Path = path if isinstance(path, Path) else Path(path)
         self._size: int = self._pipeline_path.stat().st_size
         self._format_size: str = self.format_size()
         self._last_time: str = self.get_last_date_time()
@@ -31,7 +31,7 @@ class FileInfo:
 
     @property
     def WORDS(self) -> list[str]:
-        return self.pipeline_name.split('_')
+        return self.pipeline_name.split('.')[0].split('_')
 
 
     @property
@@ -124,8 +124,10 @@ class FileInfo:
         10.57 Mo
         .mb
         """
-        
-        return f'{self.last_user}\n{self._last_time}\n{self._format_size}\n{self.extension}' if self.last_user else f'\n{self._last_time}\n{self._format_size}\n{self.extension}'
+        if self.last_user:
+            return f'{self.last_user}\n{self._last_time}\n{self._format_size}\n{self.extension}'
+        else: 
+            return f'\n{self._last_time}\n{self._format_size}\n{self.extension}'
     
     
     @property
@@ -140,7 +142,7 @@ class FileInfo:
         if size_bytes == 0:
             return '0 o'
         
-        suffix = ['o', 'Ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo']
+        suffix = 'o', 'Ko', 'Mo', 'Go', 'To', 'Po', 'Eo', 'Zo', 'Yo'
         
         i = 0
         while size_bytes >= 1024 and i < len(suffix)-1:
@@ -178,10 +180,19 @@ class FileInfo:
     
     
     def _find_next_filepath(self) -> Union[Path, None]:
-        if '_P.' in self.pipeline_name:
+        
+        if not self.find_three_digits():
             return
+        
+        current_version: int = int(self.version)
+        number_of_versions: int = self.same_files_count
+        
+        if current_version==number_of_versions or current_version>number_of_versions or current_version+1==number_of_versions:
+            new_version = current_version+1
 
-        new_version: int = self.same_files_count+1 if f'{self.same_files_count:03}' in str(self.same_files[-1]) else self.same_files_count
+        else:
+            new_version = int(re.findall('\d{3}', self.same_files[-1].name)[-1]) +1
+        
         new_file_name: str = self.pipeline_name.replace(self.version, f'{new_version:03}')
         return self.parent_dirpath.joinpath(new_file_name)
     

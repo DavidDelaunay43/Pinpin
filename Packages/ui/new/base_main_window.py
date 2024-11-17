@@ -56,7 +56,7 @@ class BaseMainWindow(QMainWindow):
         self.resize(850, 950)
         self._move_main_window()
             
-        self.setWindowTitle(f'Pinpin - {Core.current_version()} - {Core.current_project_path().name}')
+        self.setWindowTitle(f'Pinpin | {Core.current_version()} | {Core.current_project_path().name}')
         self.setWindowIcon(QIcon(str(Core.pinpin_icon_path())))
         if not self.parent():
             self._set_style()
@@ -97,6 +97,7 @@ class BaseMainWindow(QMainWindow):
 
         self._create_root_buttons()
         self._file_label: widgets.FileLabel = widgets.FileLabel(self)
+        self._file_label.setVisible(False)
         self._tree_widget: widgets.TreeWidget = widgets.TreeWidget()
         self._list_01: widgets.ListWidget = widgets.ListWidget()
         self._list_02: widgets.ListWidget = widgets.ListWidget()

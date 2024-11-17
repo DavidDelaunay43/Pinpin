@@ -1,17 +1,20 @@
 from typing import Union
 from Packages.ui.new.base_main_window import BaseMainWindow
-from Packages.ui.new.widgets import CheckableButton
-from Packages.ui.new.widgets import OpenFileWidget
-from Packages.ui.new.widgets.protocols import PipelineWidgetItem
+from Packages.ui.new import widgets
 from Packages.utils.core import Core
 
 
 class StandaloneMainWindow(BaseMainWindow):
+
+
+    def _create_ui(self) -> None:
+        super(StandaloneMainWindow, self)._create_ui()
+        widgets.check_release(Core.current_version(), self)
     
     
     def _create_widgets(self) -> None:
         super()._create_widgets()
-        self._open_file_widget: OpenFileWidget = OpenFileWidget(dev_mode = Core.pref_infos().DEV_MODE, ui_pref_jsonfile = Core.prefs_paths().UI_PREFS_JSONFILE)
+        self._open_file_widget: widgets.OpenFileWidget = widgets.OpenFileWidget(dev_mode = Core.pref_infos().DEV_MODE, ui_pref_jsonfile = Core.prefs_paths().UI_PREFS_JSONFILE)
         
         
     def _create_layout(self) -> None:
@@ -25,11 +28,11 @@ class StandaloneMainWindow(BaseMainWindow):
 
 
     def _update_current_path(self, 
-                             item: Union[PipelineWidgetItem, None] = None, 
+                             item: Union[widgets.PipelineWidgetItem, None] = None, 
                              column: Union[int, None] = None
                              ) -> None:
         
         super()._update_current_path(item, column)
-        sender = self.sender() if isinstance(self.sender(), CheckableButton) else item
+        sender = self.sender() if isinstance(self.sender(), widgets.CheckableButton) else item
         self._open_file_widget.update_widget(sender.pipeline_path)
     

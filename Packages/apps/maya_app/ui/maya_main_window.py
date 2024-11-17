@@ -2,7 +2,7 @@ from typing import Union
 from Packages.ui.new.widgets.protocols import PipelineWidgetItem
 from Packages.apps.maya_app.ui.maya_file_widget import MayaFileWidget
 from Packages.ui.new.base_main_window import BaseMainWindow
-from Packages.ui.new.widgets import CheckableButton
+from Packages.ui.new import widgets
 
 
 class MayaMainWindow(BaseMainWindow):
@@ -14,7 +14,7 @@ class MayaMainWindow(BaseMainWindow):
 
 
     def _create_layout(self) -> None:
-        super()._create_layout()
+        super(MayaMainWindow, self)._create_layout()
         self._browser_grid_layout.addWidget(self._maya_file_widget, self.LIST01_SIZE[0]+self.TABLE_SIZE[0], self.TREE_SIZE[1], 1, 3)
 
 
@@ -22,6 +22,6 @@ class MayaMainWindow(BaseMainWindow):
                              item: Union[PipelineWidgetItem, None] = None, 
                              column: Union[int, None] = None
                              ) -> None:
-        super()._update_current_path(item, column)
-        sender = self.sender() if isinstance(self.sender(), CheckableButton) else item
+        super(MayaMainWindow, self)._update_current_path(item, column)
+        sender = self.sender() if isinstance(self.sender(), widgets.CheckableButton) else item
         self._maya_file_widget.update_widget(sender.pipeline_path)

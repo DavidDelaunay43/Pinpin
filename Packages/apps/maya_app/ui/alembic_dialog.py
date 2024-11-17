@@ -48,7 +48,10 @@ class AlembicDialog(QDialog):
     def __init__(self, parent) -> None:
         super(AlembicDialog, self).__init__(parent)
 
-        self.setWindowTitle('Alembic')
+        if not '_sh' in cmds.file(query=True, sceneName=True):
+            cmds.error('You must be in a shot scene.')
+
+        self.setWindowTitle('Alembic - DEV IN PROGRESS')
         self.setMinimumWidth(800)
         self._char_frames: list[CharFrame] = []
         self._file_info: MayaShotFileInfo = init_file_info(Path(cmds.file(query=True, sceneName=True)))

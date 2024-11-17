@@ -8,6 +8,9 @@ from Packages.utils.logger import Logger
 
 class FileOpener:
     
+
+    PYTHONPATH: str = 'PYTHONPATH'
+
     
     def __init__(self, path: Union[Path, None]) -> None:
         
@@ -119,12 +122,13 @@ class FileOpener:
 
         application_args: list[Path] = [self.sofware_path, self.pipeline_path]
         env: dict[str, str] = os.environ.copy()
+        additional_python_paths: list[str] = [str(Core.pinpin_path())]
         
         if self.pref_path:
             env[pref_dict.get(self.software_name)] = str(self.pref_path)
             
         if self.python_path:
-            env['PYTHONPATH'] = str(self.python_path)
+            additional_python_paths.append(str(self.python_path))
 
         if self.software_name == 'maya':
             env['MAYA_SCRIPT_PATH'] = str(
@@ -134,6 +138,8 @@ class FileOpener:
                     'integration'
                 )
             )
+
+        env['PYTHONPATH'] = os.pathsep.join(additional_python_paths)
             
         Popen(application_args, env=env)
         Logger.info(f'Open file:\nFile path: {self.pipeline_path}\nApp path: {self.software_name}\nPref path: {self.pref_path}\nPython path: {self.python_path}')

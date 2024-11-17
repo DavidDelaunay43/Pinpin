@@ -20,7 +20,7 @@ try:
             record.levelname = f"{color}[{record.levelname}]{Style.RESET_ALL}"
             return super(ColoramaFormatter, self).format(record)
         
-except ModuleNotFoundError as error:
+except ImportError as error:
     class ColoramaFormatter(logging.Formatter):
         ...    
 

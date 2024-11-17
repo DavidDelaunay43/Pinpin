@@ -4,20 +4,38 @@ from pathlib import Path
 class FileWriter:
 
 
-    def __init__(self, path: Path, string: str = None):
-        
-        if not string:
-            return
+    def __init__(self, path: Path, string: str = None, line_index: int = None):
 
-        with open(path, 'r') as file:
-            content = file.read()
-
-        if string in content:
+        if not path.exists() or not string:
             return
         
-        content = f'{content}\n{string}'
+        self._file_path = path if isinstance(path, Path) else Path(path)
+        self._string = string
+        self._line_index = line_index
+
+        if not self._line_index:
+            self._add_string()
+            return
         
-        with open(path, 'w') as file:
-            file.write(content)
-        
-        return
+        self._replace_string()
+
+
+    def _add_string(self) -> None:
+        with self._file_path.open(mode='r', encoding='utf-8') as file:
+            existing_lines = file.read().splitlines()
+
+        if self._string in existing_lines:
+            return
+
+        with self._file_path.open(mode='a', encoding='utf-8') as file:
+            file.write(self._string + '\n')
+
+            
+    def _replace_string(self) -> None:
+        with self._file_path.open(mode='r', encoding='utf-8') as file:
+            lines: list[str] = file.readlines()
+
+        lines[self._line_index] = self._string + '\n'
+
+        with self._file_path.open(mode='w', encoding='utf-8') as file:
+            file.writelines(lines)

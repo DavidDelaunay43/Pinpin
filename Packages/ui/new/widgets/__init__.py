@@ -15,4 +15,6 @@ from Packages.ui.new.widgets.table_widget_item import TableWidgetItem
 from Packages.ui.new.widgets.tree_widget import TreeWidget
 from Packages.ui.new.widgets.tree_widget_item import TreeWidgetItem
 from Packages.ui.new.widgets.protocols import PipelineWidget, PipelineWidgetItem
+from Packages.ui.new.widgets.update_dialog import UpdateDialog
+from Packages.ui.new.widgets.update_dialog import main as check_release
 from Packages.ui.new.widgets.username_dialog import UsernameDialog

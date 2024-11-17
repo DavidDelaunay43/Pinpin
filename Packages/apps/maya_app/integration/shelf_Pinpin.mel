@@ -2,43 +2,7 @@ global proc shelf_Pinpin () {
     global string $gBuffStr;
     global string $gBuffStr0;
     global string $gBuffStr1;
-    //global string $ppPath = "C:/Users/DAVID/Desktop/Pinpin/";
-    global string $ppPath = "C:/Program Files/Pinpin/";
-
-    shelfButton
-        -enableCommandRepeat 1
-        -flexibleWidthType 3
-        -flexibleWidthValue 32
-        -enable 1
-        -width 35
-        -height 34
-        -manage 1
-        -visible 1
-        -preventOverride 0
-        -annotation "loadPinpin" 
-        -enableBackground 0
-        -backgroundColor 0 0 0 
-        -highlightColor 0.321569 0.521569 0.65098 
-        -align "center"
-        -label "Load Pinpin" 
-        -labelOffset 0
-        -rotation 0
-        -flipX 0
-        -flipY 0
-        -useAlpha 1
-        -font "plainLabelFont" 
-        -overlayLabelColor 0.8 0.8 0.8 
-        -overlayLabelBackColor 0 0 0 0.5 
-        -image ($ppPath + "ProjectFiles/Icons/pimento_icon.ico")
-        -image1 ($ppPath + "ProjectFiles/Icons/pimento_icon.ico")
-        -style "iconOnly" 
-        -marginWidth 0
-        -marginHeight 1
-        -command ("putenv \"MAYA_SCRIPT_PATH\" (`getenv \"MAYA_SCRIPT_PATH\"` + \";\" +" + $ppPath + "+ \"Packages/apps/maya_app/integration\");")
-        -sourceType "mel" 
-        -commandRepeatable 1
-        -flat 1
-    ;
+    global string $ppPath = "c:/Users/DAVID/Desktop/Pinpin/ProjectFiles/";
 
     shelfButton
         -enableCommandRepeat 1
@@ -64,8 +28,8 @@ global proc shelf_Pinpin () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image ($ppPath + "ProjectFiles/Icons/pinpin_icon.ico")
-        -image1 ($ppPath + "ProjectFiles/Icons/pinpin_icon.ico")
+        -image ($ppPath + "Icons/pinpin_icon.ico")
+        -image1 ($ppPath + "Icons/pinpin_icon.ico")
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
@@ -99,8 +63,8 @@ global proc shelf_Pinpin () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image ($ppPath + "ProjectFiles/Icons/save_as.png")
-        -image1 ($ppPath + "ProjectFiles/Icons/save_as.png")
+        -image ($ppPath + "Icons/save_as.png")
+        -image1 ($ppPath + "Icons/save_as.png")
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
@@ -134,8 +98,8 @@ global proc shelf_Pinpin () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image ($ppPath + "ProjectFiles/Icons/publish.png")
-        -image1 ($ppPath + "ProjectFiles/Icons/publish.png")
+        -image ($ppPath + "Icons/publish.png")
+        -image1 ($ppPath + "Icons/publish.png")
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
@@ -169,8 +133,8 @@ global proc shelf_Pinpin () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image ($ppPath + "ProjectFiles/Icons/create_asset_icon.png")
-        -image1 ($ppPath + "ProjectFiles/Icons/create_asset_icon.png")
+        -image ($ppPath + "Icons/create_asset_icon.png")
+        -image1 ($ppPath + "Icons/create_asset_icon.png")
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
@@ -204,12 +168,47 @@ global proc shelf_Pinpin () {
         -font "plainLabelFont" 
         -overlayLabelColor 0.8 0.8 0.8 
         -overlayLabelBackColor 0 0 0 0.5 
-        -image ($ppPath + "ProjectFiles/Icons/alembic_icon.png")
-        -image1 ($ppPath + "ProjectFiles/Icons/alembic_icon.png")
+        -image ($ppPath + "Icons/alembic_icon.png")
+        -image1 ($ppPath + "Icons/alembic_icon.png")
         -style "iconOnly" 
         -marginWidth 0
         -marginHeight 1
         -command "source \"pinpinProcs.mel\"; ppAlembic"
+        -sourceType "mel" 
+        -commandRepeatable 1
+        -flat 1
+    ;
+
+    shelfButton
+        -enableCommandRepeat 1
+        -flexibleWidthType 3
+        -flexibleWidthValue 32
+        -enable 1
+        -width 35
+        -height 34
+        -manage 1
+        -visible 1
+        -preventOverride 0
+        -annotation "set project" 
+        -enableBackground 0
+        -backgroundColor 0 0 0 
+        -highlightColor 0.321569 0.521569 0.65098 
+        -align "center" 
+        -label "Set Project" 
+        -labelOffset 0
+        -rotation 0
+        -flipX 0
+        -flipY 0
+        -useAlpha 1
+        -font "plainLabelFont" 
+        -overlayLabelColor 0.8 0.8 0.8 
+        -overlayLabelBackColor 0 0 0 0.5 
+        -image ($ppPath + "Icons/set_project_icon.png")
+        -image1 ($ppPath + "Icons/set_project_icon.png")
+        -style "iconOnly" 
+        -marginWidth 0
+        -marginHeight 1
+        -command "source \"pinpinProcs.mel\"; ppSetProject"
         -sourceType "mel" 
         -commandRepeatable 1
         -flat 1

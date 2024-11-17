@@ -1,11 +1,11 @@
 from dataclasses import dataclass
 from datetime import datetime
 from email.message import EmailMessage
-import os
 from pathlib import Path
 import smtplib
 from typing import Union
-import requests
+#import requests
+from Packages.utils.core import Core
 from Packages.utils.logger import Logger
 
 
@@ -32,7 +32,7 @@ class EmailContent:
     
     @staticmethod
     def get_location(return_string: bool = True) -> Union[dict, str]:
-        
+        import requests
         data: dict = requests.get("https://ipinfo.io/").json()
         
         if return_string:
@@ -76,7 +76,7 @@ class Email:
         date_time: datetime = datetime.now()
         content: EmailContent = EmailContent(
             date_time = date_time,
-            user = os.getenv('USERNAME'),
+            user = Core.username(),
             message = cls.message
         )
         subject: str = f'Pinpin Report {date_time.strftime("%Y-%m-%d %H:%M:%S")}'

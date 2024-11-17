@@ -3,6 +3,7 @@ __authors__ = 'Émile Ménard', 'David Delaunay'
 from pathlib import Path
 import shutil
 from maya import cmds
+from Packages.apps.maya_app.utils.workspace import set_project
 from Packages.utils.core import Core
 from Packages.utils.logger import Logger
 
@@ -22,7 +23,7 @@ class CreateAsset:
 
     def __init__(self, asset_name: str, asset_type: str, project_name: str, subfolders: list[str], departments: list[str]) -> None:
         
-        self._asset_name: str = asset_name.lower()
+        self._asset_name: str = asset_name
         self._asset_type: str = asset_type
         self._project_name: str = project_name.lower()
         self._subfolders: list[str] = subfolders
@@ -82,5 +83,6 @@ class CreateAsset:
             geo_path: Path = geo_dir.joinpath(geo_name)
             cmds.file(rename=geo_path)
             cmds.file(save=True)
+            set_project()
 
         Logger.info(f'Save scene as: {geo_path}')

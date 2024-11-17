@@ -1,6 +1,6 @@
 from pathlib import Path
 import sys
-from PySide2.QtWidgets import *
+from PySide2.QtWidgets import QApplication
 from Packages.apps.standalone_app.standalone_main_window import StandaloneMainWindow
 from Packages.utils.core import Core
 
@@ -8,7 +8,7 @@ from Packages.utils.core import Core
 class StandaloneApp(QApplication):
     
     
-    def __init__(self, project_path: Path, argv: list[str] = sys.argv) -> None:
+    def __init__(self, project_path: Path, argv: list[str]=sys.argv) -> None:
         super(StandaloneApp, self).__init__(argv)
         
         self.main_window: StandaloneMainWindow = StandaloneMainWindow(project_path=project_path)

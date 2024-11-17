@@ -5,6 +5,7 @@ from pathlib import Path
 from typing import Union
 from maya import cmds
 from Packages.apps.maya_app.utils.enums import GetMode
+from Packages.apps.maya_app.utils.workspace import set_project
 
 
 class MayaFileGetter:
@@ -65,6 +66,7 @@ class MayaFileGetter:
 
     def open_file(self) -> None:
         cmds.file(self.pipeline_path, open=True, force=True)
+        set_project()
 
 
     def import_file(self) -> None:

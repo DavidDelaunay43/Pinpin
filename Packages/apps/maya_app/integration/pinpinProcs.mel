@@ -1,32 +1,34 @@
-python("from sys import path");
-//python("path.append('C:/Users/DAVID/Desktop/Pinpin')");
-python("path.append('C:/Program Files/Pinpin')");
+python("from Packages.apps.maya_app import launch_maya_app");
+python("from Packages.apps.maya_app import show_increment_dialog");
+python("from Packages.apps.maya_app import show_publish_dialog");
+python("from Packages.apps.maya_app import show_create_asset_dialog");
+python("from Packages.apps.maya_app import show_alembic_dialog");
+python("from Packages.apps.maya_app import set_project");
 
 
 global proc ppBrowser(){
-    python("from Packages.apps.maya_app import launch_maya_app");
     python("launch_maya_app()");
 }
 
 
 global proc ppIncrement(){
-    python("from Packages.apps.maya_app import show_increment_dialog");
     python("show_increment_dialog()");
 }
 
 
 global proc ppPublish(){
-    python("from Packages.apps.maya_app import show_publish_dialog");
     python("show_publish_dialog()");
 }
 
 
 global proc ppCreateAsset(){
-    python("from Packages.apps.maya_app import show_create_asset_dialog");
     python("show_create_asset_dialog()");
 }
 
 global proc ppAlembic(){
-    python("from Packages.apps.maya_app import show_alembic_dialog");
     python("show_alembic_dialog()");
+}
+
+global proc ppSetProject(){
+    python("set_project()");
 }

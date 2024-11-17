@@ -50,6 +50,17 @@ class InitPinpin:
         HOUDINI_INFOS.PINPIN_MENU_DEST_PATH,
         HOUDINI_INFOS.PINPIN_SHELF_DEST_PATH
     )
+
+    PREFS_FILES: tuple[Path] = (
+        'apps.json',
+        'current_project.json',
+        'FakeProject',
+        'AnOtherProject',
+        'memo_path.json',
+        'recent_files.json',
+        'ui_prefs.json',
+        'version.json'
+    )
     
     
     @classmethod
@@ -68,7 +79,23 @@ class InitPinpin:
         if not cls.PREFS_ROOTPATH_DEST.exists() or override:
             cls.copy_pinpin_preferences()
 
+        cls.check_prefs_files()
         cls.check_maya_script_path()
+
+
+    @classmethod
+    def check_prefs_files(cls) -> None:
+        
+        for pref_file in cls.PREFS_FILES:
+
+            source_file: Path = Core.pinpin_path().joinpath('.pinpin', pref_file)
+            dest_file: Path = Core.user_dir().joinpath('.pinpin', pref_file)
+
+            if not dest_file.exists():
+                if source_file.is_dir():
+                    shutil.copytree(source_file, dest_file)
+                else:
+                    shutil.copy(source_file, dest_file)
     
     
     @classmethod
@@ -133,6 +160,17 @@ class InitPinpin:
             
             if not dest_filepath.exists() or override:
                 cls.copy_file(source_filepath, dest_filepath)
+
+        # Update path in maya shelf
+        pinpin_path: str = str(Core.project_files_path()).replace('\\', '/')
+        string: str = f'    global string $ppPath = "{pinpin_path}/";'
+
+        FileWriter(
+            path=Core.maya_infos().PINPIN_SHELF_DEST_PATH,
+            string=string,
+            line_index=4
+        )
+        Logger.debug(f'Update Maya shelf Pinpin path.')
             
 
     @classmethod
@@ -144,11 +182,10 @@ class InitPinpin:
         path_string: str = str(Core.packages_path().joinpath('apps', 'maya_app', 'integration')).replace('\\', '/')
 
         FileWriter(
-            maya_env_file_path,
-             f"MAYA_SCRIPT_PATH={path_string};"
+            path=maya_env_file_path,
+            string=f"MAYA_SCRIPT_PATH={path_string};"
         )
 
-    
     # Useful methods
     @staticmethod
     def copy_file(source_path: Path, dest_path: Path) -> None:
@@ -158,12 +195,12 @@ class InitPinpin:
         Logger.info(f'Copy File:\nSource: {source_path}\nDest: {dest_path}')
     
         
-def main() -> None:
+def main(force_update: bool = False) -> None:
 
     InitPinpin.check_preferences()
     Logger.write_to_file(path=Core.today_log_filepath(), level=logging.DEBUG)
 
-    if InitPinpin.new_version():
+    if InitPinpin.new_version() or force_update:
         Logger.info(f'Pinpin new version: {InitPinpin.VERSION_FILE_SOURCE.get_value("version")}')
         InitPinpin.copy_pinpin_pref_file('version.json')
 
@@ -181,3 +218,7 @@ def main() -> None:
         InitPinpin.check_apps_data()
         InitPinpin.check_soft_integrations()
         InitPinpin.check_current_project()
+
+
+if __name__ == '__main__':
+    main()
