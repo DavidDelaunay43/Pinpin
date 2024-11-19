@@ -2,10 +2,10 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Pinpin"
-#define MyAppVersion "v1.2.0-beta.13"
+#define MyAppVersion "v1.2.0-beta.14"
 #define MyAppPublisher "Les Zinzins de l'Esma"
 #define MyAppExeName "pinpin.exe"
-#define SetupName "Pinpin_v1.2.0-beta.13_SetupWindows"
+#define SetupName "Pinpin_v1.2.0-beta.14_SetupWindows"
 
 [Setup]
 ; NOTE: The value of AppId uniquely identifies this application. Do not use the same AppId value in installers for other applications.

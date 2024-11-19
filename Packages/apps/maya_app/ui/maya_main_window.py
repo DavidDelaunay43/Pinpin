@@ -9,7 +9,7 @@ class MayaMainWindow(BaseMainWindow):
     
 
     def _create_widgets(self) -> None:
-        super()._create_widgets()
+        super(MayaMainWindow, self)._create_widgets()
         self._maya_file_widget: MayaFileWidget = MayaFileWidget(self)
 
 

@@ -7,7 +7,7 @@ executables: list[Executable] = [
 
 setup(
     name="pinpin",
-    version="v1.2.0-beta.13",
+    version="v1.2.0-beta.14",
     description="",
     executables=executables,
     options={

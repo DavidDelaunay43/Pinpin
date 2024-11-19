@@ -6,30 +6,12 @@
  a single file. -->
 
   <toolshelf name="pinpin" label="Pinpin">
-    <memberTool name="pinpin"/>
-    <memberTool name="screenshot"/>
-    <memberTool name="increment"/>
+    <memberTool name="browser"/>
   </toolshelf>
 
-  <tool name="pinpin" label="Pinpin" icon="C:/Program Files/Pinpin/ProjectFiles/Icons/pinpin_icon.png">
-    <script scriptType="python"><![CDATA[from sys import path
-path.append('C:/Program Files/Pinpin')
-from Packages.apps.houdini.ui.houdini_class import HoudiniPinpin
-HoudiniPinpin()]]></script>
-  </tool>
-
-  <tool name="screenshot" label="Screenshot" icon="C:/Program Files/Pinpin/ProjectFiles/Icons/thumbnail_icon.png">
-    <script scriptType="python"><![CDATA[from sys import path
-path.append('C:/Program Files/Pinpin')
-from Packages.apps.houdini.funcs.save_thumbnail import save_thumbnail
-save_thumbnail()]]></script>
-  </tool>
-
-  <tool name="increment" label="Increment" icon="C:/Program Files/Pinpin/ProjectFiles/Icons/save_as.png">
-    <script scriptType="python"><![CDATA[from sys import path
-path.append('C:/Program Files/Pinpin')
-from Packages.apps.houdini.ui.dialogs import EditDialog
-EditDialog()]]></script>
+  <tool name="browser" label="Pinpin" icon="C:/Program Files/Pinpin/ProjectFiles/Icons/pinpin_icon.png">
+    <script scriptType="python"><![CDATA[from Packages.apps.houdini_app.ui.houdini_application import main as ppBrowser
+ppBrowser()]]></script>
   </tool>
 
   <shelfSetEdit name="shelf_set_1" fileLocation="C:/PROGRA~1/SIDEEF~1/HOUDIN~1.640/houdini/toolbar/ShelfDefinitions.shelf">

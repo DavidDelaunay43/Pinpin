@@ -237,7 +237,9 @@ class TableWidget(QTableWidget):
         file_info: FileInfo = FileInfo(file_path)
         Logger.debug(f'File info: {file_path.name}\nVersion: {file_info.version}\nComment: {file_info.comment}\nLast user: {file_info.last_user}')
         
+        version: str = file_info.version if not file_info.parent_dirpath.name.lower()=='old' else f'{file_info.pipeline_name.split("_")[-4]}\n{file_info.version}'
+
         self.setItem(row_position, 0, TableWidgetItem(file_path, 'No preview', icon=file_info.preview_image_path)) # preview
-        self.setItem(row_position, 1, TableWidgetItem(file_path, file_info.version, size=12)) # version
+        self.setItem(row_position, 1, TableWidgetItem(file_path, version, size=12)) # version
         self.setItem(row_position, 2, TableWidgetItem(file_path, file_info.comment)) # comment
         self.setItem(row_position, 3, TableWidgetItem(file_path, file_info.info_format)) # info

@@ -167,9 +167,9 @@ class FileInfo:
     
     
     def get_version(self) -> str:
-        if '_P' in self.pipeline_name:
+        if '_P.' in self.pipeline_name:
             version = self.find_three_digits()
-            return self.pipeline_name.split('_')[-3] if not version else f'{self.pipeline_name.split("_")[-4]}\n{version}'
+            return self.pipeline_name.split('_')[-3] # if not version else f'{self.pipeline_name.split("_")[-4]}\n{version}'
         return self.find_three_digits()
         
         
@@ -193,7 +193,8 @@ class FileInfo:
         else:
             new_version = int(re.findall('\d{3}', self.same_files[-1].name)[-1]) +1
         
-        new_file_name: str = self.pipeline_name.replace(self.version, f'{new_version:03}')
+        #new_file_name: str = self.pipeline_name.replace(self.version, f'{new_version:03}')
+        new_file_name: str = re.sub(r'(\d{3})(?!.*\d{3})', f'{new_version:03}', self.pipeline_name)
         return self.parent_dirpath.joinpath(new_file_name)
     
     
