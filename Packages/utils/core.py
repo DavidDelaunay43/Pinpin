@@ -7,6 +7,7 @@ from Packages.utils.data_class import SoftwarePaths, PreferencesInfos, Preferenc
 from Packages.utils.enums import Root
 from Packages.utils.json_file import JsonFile
 from Packages.utils.naming import PipeRoot, PublishRoot, AssetDepartment
+import platform
 
 
 class Core:
@@ -41,8 +42,8 @@ class Core:
     ROOT_NAME: str = 'Pinpin'
     PACKAGES_NAME: str = 'Packages'
     USER_ICON_NAME: str = 'user_icon.png'
-    
-    
+    SYSTEM = platform.system()
+
     # PINPIN ----------------------------------------------------------------------------------------------------
     @classmethod
     def pinpin_path(cls) -> Path:
@@ -289,7 +290,11 @@ class Core:
             pinpin_menu_source_path : Path = integration_path.joinpath('pinpin.radialmenu')
             pinpin_shelf_source_path: Path = integration_path.joinpath('pinpin.shelf')
             
-            preferences_path: Path = cls.find_directory(parent_directory=cls.documents_dir(), directory_string='houdini')
+            if cls.SYSTEM.lower() == "windows":
+                preferences_path: Path = cls.find_directory(parent_directory=cls.documents_dir(), directory_string='houdini')
+            elif cls.SYSTEM.lower() == "linux":
+                preferences_path: Path = cls.find_directory(parent_directory=cls.user_dir(), directory_string='houdini')
+
             pinpin_menu_dest_path: Path = preferences_path.joinpath('radialmenu', 'pinpin.radialmenu')
             pinpin_shelf_dest_path: Path = preferences_path.joinpath('toolbar', 'pinpin.shelf')
             
@@ -313,7 +318,11 @@ class Core:
         pinpin_menu_source_path : Path = integration_path.joinpath('menu_pinpinMenu.mel')
         pinpin_shelf_source_path: Path = integration_path.joinpath('shelf_Pinpin.mel')
         
-        preferences_path: Path = cls.documents_dir().joinpath('maya')
+        if cls.SYSTEM.lower() == "windows":
+            preferences_path: Path = cls.documents_dir().joinpath('maya')
+        elif cls.SYSTEM.lower() == "linux":
+            preferences_path: Path = cls.user_dir().joinpath('maya')
+
         preferences_path: Path = next((preferences_path.joinpath(dir) for dir in os.listdir(preferences_path) if cls.is_four_digits(dir)), '2024')
         pinpin_menu_dest_path: Path = preferences_path.joinpath('prefs', 'markingMenus', 'menu_pinpinMenu.mel')
         pinpin_shelf_dest_path: Path = preferences_path.joinpath('prefs', 'shelves', 'shelf_Pinpin.mel')
@@ -364,6 +373,10 @@ class Core:
         
         for dir in parent_directory.iterdir():
             dir_name: str = dir.name
+
+            if dir_name.startswith(directory_string) and not exe:
+                return dir
+
             if not dir_name.startswith(directory_string):
                 continue
             if dir_name in exclude_strings:

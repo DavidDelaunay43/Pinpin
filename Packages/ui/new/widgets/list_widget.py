@@ -74,9 +74,18 @@ class ListWidget(QListWidget):
         
         
     def _open_explorer(self) -> None:
-        Popen(['explorer', self.pipeline_path])
+        import platform
+        import distro
+
+        if platform.system().lower() == "windows":
+            explorer = "explorer"
+        elif platform.system().lower() == "linux":
+            if distro.id().lower() == "rocky":
+                explorer = "dolphin"
+
+        Popen([explorer, self.pipeline_path])
         
-        
+    
     def _create_folder(self) -> None:
         
         input_dialog: InputDialog = InputDialog(self, 'Create Folder', 'Enter folder name:')

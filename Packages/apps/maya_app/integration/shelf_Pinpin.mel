@@ -3,6 +3,7 @@ global proc shelf_Pinpin () {
     global string $gBuffStr0;
     global string $gBuffStr1;
     global string $ppPath = "c:/Program Files/Pinpin/ProjectFiles/";
+    //global string $ppPath = "/home/david/"
 
     shelfButton
         -enableCommandRepeat 1
